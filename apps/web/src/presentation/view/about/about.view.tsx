@@ -6,7 +6,9 @@ import { useSiteConfigQuery } from '@/presentation/hooks/use-site-config-query/u
 import { useSkillsQuery } from '@/presentation/hooks/use-skills-query/use-skills-query.hook';
 import { useAdminStore } from '@/presentation/store/admin/admin.store';
 import { EditButton } from '@/presentation/view/shared/edit-button/edit-button.component';
+import { fadeUp, stagger } from '@/shared/utils/motion/motion.variants';
 import { Button, Text } from '@portfolio/design-system';
+import { motion } from 'framer-motion';
 import Image from 'next/image';
 import { useMemo, useState } from 'react';
 import { CreateExperienceModal } from './components/create-experience-modal/create-experience-modal.component';
@@ -22,6 +24,7 @@ const SKILL_CATEGORY_LABELS: Record<SkillCategory, string> = {
   ai: 'IA & ML',
   devops: 'DevOps',
   database: 'Banco de Dados',
+  other: 'Outros',
 };
 
 export function AboutView() {
@@ -68,8 +71,14 @@ export function AboutView() {
   return (
     <main className="mx-auto w-full max-w-6xl px-6 py-24">
       {/* Bio */}
-      <section className="mb-24 grid grid-cols-1 gap-12 md:grid-cols-2 md:items-center">
-        <div>
+      <motion.section
+        className="mb-24 grid grid-cols-1 gap-12 md:grid-cols-2 md:items-center"
+        variants={stagger}
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, margin: '-80px' }}
+      >
+        <motion.div variants={fadeUp}>
           <div className="mb-4 flex items-center justify-between gap-4">
             <Text variant="h2">{aboutConfig.title}</Text>
             {isEditMode && siteConfig && (
@@ -92,9 +101,9 @@ export function AboutView() {
               </span>
             ))}
           </div>
-        </div>
+        </motion.div>
 
-        <div className="flex justify-center">
+        <motion.div variants={fadeUp} className="flex justify-center">
           <div className="relative h-64 w-64 overflow-hidden rounded-2xl border border-[#2A2A2A]">
             <Image
               src={aboutConfig.imageUrl}
@@ -113,11 +122,17 @@ export function AboutView() {
               }}
             />
           </div>
-        </div>
-      </section>
+        </motion.div>
+      </motion.section>
 
       {/* Skills */}
-      <section className="mb-24">
+      <motion.section
+        className="mb-24"
+        variants={fadeUp}
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, margin: '-80px' }}
+      >
         <div className="mb-8 flex items-center justify-between gap-4">
           <Text variant="h3">Stack Técnica</Text>
           {isEditMode && (
@@ -142,10 +157,15 @@ export function AboutView() {
             ),
           )}
         </div>
-      </section>
+      </motion.section>
 
       {/* Experience */}
-      <section>
+      <motion.section
+        variants={fadeUp}
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, margin: '-80px' }}
+      >
         <div className="mb-8 flex items-center justify-between gap-4">
           <Text variant="h3">Experiência</Text>
           {isEditMode && (
@@ -163,7 +183,7 @@ export function AboutView() {
         ) : (
           <p className="text-sm text-[#737373]">Em breve...</p>
         )}
-      </section>
+      </motion.section>
 
       {isCreateSkillModalOpen && (
         <CreateSkillModal
