@@ -1,0 +1,41 @@
+@import "tailwindcss";
+
+/* Tell Tailwind v4 to also scan the design system components */
+@source "../../node_modules/@portfolio/design-system/src";
+
+/* Design System CSS Variables — inlined to avoid @import path resolution issues */
+:root {
+  --color-bg-base: #000000;
+  --color-bg-subtle: #0a0a0a;
+  --color-bg-muted: #111111;
+  --color-bg-elevated: #1a1a1a;
+  --color-bg-overlay: #222222;
+
+  --color-border-subtle: #2a2a2a;
+  --color-border-default: #3d3d3d;
+  --color-border-strong: #525252;
+
+  --color-text-primary: #ffffff;
+  --color-text-secondary: #a3a3a3;
+  --color-text-muted: #737373;
+  --color-text-disabled: #404040;
+
+  --color-accent-primary: #ffffff;
+  --color-accent-hover: #e5e5e5;
+  --color-accent-highlight: #6ee7b7;
+
+  --color-state-error: #ef4444;
+  --color-state-success: #22c55e;
+  --color-state-warning: #eab308;
+  --color-state-info: #3b82f6;
+}
+
+::selection {
+  background-color: #6ee7b7;
+  color: #000000;
+}
+
+:focus-visible {
+  outline: 2px solid #6ee7b7;
+  outline-offset: 2px;
+}
