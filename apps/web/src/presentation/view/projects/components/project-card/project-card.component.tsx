@@ -4,7 +4,9 @@ import type { Project } from '@/domain/entities/project/project.entity';
 import { useAdminStore } from '@/presentation/store/admin/admin.store';
 import { EditProjectModal } from '@/presentation/view/projects/components/edit-project-modal/edit-project-modal.component';
 import { EditButton } from '@/presentation/view/shared/edit-button/edit-button.component';
+import { fadeUp } from '@/shared/utils/motion/motion.variants';
 import { Badge, Card, Text } from '@portfolio/design-system';
+import { motion } from 'framer-motion';
 import { useState } from 'react';
 
 interface ProjectCardProps {
@@ -17,7 +19,14 @@ export function ProjectCard({ project }: Readonly<ProjectCardProps>) {
 
   return (
     <>
-      <div className="relative block h-full">
+      <motion.div
+        className="relative block h-full"
+        variants={fadeUp}
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, margin: '-40px' }}
+        whileHover={{ y: -4, transition: { type: 'spring', stiffness: 300, damping: 20 } }}
+      >
         <a href={`/projects/${project.slug}`} className="block h-full">
           <Card hoverable className="flex h-full flex-col">
             <div className="mb-3 flex items-center justify-between">
@@ -43,7 +52,7 @@ export function ProjectCard({ project }: Readonly<ProjectCardProps>) {
             <EditButton onClick={() => setIsModalOpen(true)} />
           </div>
         )}
-      </div>
+      </motion.div>
       {isModalOpen && (
         <EditProjectModal
           project={project}
