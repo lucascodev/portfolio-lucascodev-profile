@@ -1,5 +1,6 @@
 'use client';
 
+import { motion, useMotionTemplate, useScroll, useTransform } from 'framer-motion';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 
@@ -12,9 +13,15 @@ const NAV_LINKS = [
 
 export function Header() {
   const pathname = usePathname();
+  const { scrollY } = useScroll();
+  const bgOpacity = useTransform(scrollY, [0, 80], [0.6, 0.97]);
+  const bgColor = useMotionTemplate`rgba(0, 0, 0, ${bgOpacity})`;
 
   return (
-    <header className="fixed inset-x-0 top-0 z-50 border-b border-[#1A1A1A] bg-black/80 backdrop-blur-md">
+    <motion.header
+      className="fixed inset-x-0 top-0 z-50 border-b border-[#1A1A1A] backdrop-blur-md"
+      style={{ backgroundColor: bgColor }}
+    >
       <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-6">
         <Link
           href="/"
@@ -43,6 +50,6 @@ export function Header() {
           })}
         </nav>
       </div>
-    </header>
+    </motion.header>
   );
 }
