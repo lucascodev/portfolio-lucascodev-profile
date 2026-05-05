@@ -52,7 +52,7 @@ export function Text({
       className={[variantClasses[variant], colorClasses[color], className]
         .filter(Boolean)
         .join(' ')}
-      {...(props as HTMLAttributes<HTMLElement>)}
+      {...props}
     >
       {children}
     </Tag>
