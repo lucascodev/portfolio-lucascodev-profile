@@ -5,7 +5,9 @@ import { useSiteConfigQuery } from '@/presentation/hooks/use-site-config-query/u
 import { useAdminStore } from '@/presentation/store/admin/admin.store';
 import { EditHeroModal } from '@/presentation/view/home/components/edit-hero-modal/edit-hero-modal.component';
 import { EditButton } from '@/presentation/view/shared/edit-button/edit-button.component';
+import { fadeUp, heroStagger } from '@/shared/utils/motion/motion.variants';
 import { Text } from '@portfolio/design-system';
+import { motion } from 'framer-motion';
 import Image from 'next/image';
 import { useMemo, useState } from 'react';
 
@@ -27,27 +29,28 @@ export function HeroSection({ initialData }: HeroSectionProps) {
         data?.heroDescription ??
         'Especializado em Flutter, React Native, NestJS e Python/FastAPI. Construo soluções integradas com IA e Visão Computacional.',
       profileImageUrl: data?.profileImageUrl ?? '/avatar.jpg',
-      heroTags: data?.heroTags ?? [
-        'Flutter',
-        'React Native',
-        'NestJS',
-        'FastAPI',
-        'YOLOv8',
-        'LLMs',
-      ],
+      heroTags: data?.heroTags ?? ['Flutter', 'React Native', 'NestJS', 'FastAPI', 'YOLOv8', 'LLMs'],
     }),
     [data],
   );
 
   return (
-    <section className="relative flex min-h-[92vh] flex-col items-center justify-center px-6 text-center">
+    <motion.section
+      className="relative flex min-h-[92vh] flex-col items-center justify-center px-6 text-center"
+      initial="hidden"
+      animate="visible"
+      variants={heroStagger}
+    >
       {isEditMode && data && (
         <div className="absolute right-4 top-4 z-20">
           <EditButton onClick={() => setIsEditModalOpen(true)} />
         </div>
       )}
 
-      <div className="mb-8 h-28 w-28 overflow-hidden rounded-full border-2 border-[#2A2A2A] ring-4 ring-[#6EE7B7]/10">
+      <motion.div
+        variants={fadeUp}
+        className="mb-8 h-28 w-28 overflow-hidden rounded-full border-2 border-[#2A2A2A] ring-4 ring-[#6EE7B7]/10"
+      >
         <Image
           src={config.profileImageUrl}
           unoptimized
@@ -66,23 +69,31 @@ export function HeroSection({ initialData }: HeroSectionProps) {
             }
           }}
         />
-      </div>
+      </motion.div>
 
-      <p className="mb-3 font-mono text-sm text-[#6EE7B7]">{config.heroGreeting}</p>
+      <motion.p variants={fadeUp} className="mb-3 font-mono text-sm text-[#6EE7B7]">
+        {config.heroGreeting}
+      </motion.p>
 
-      <Text variant="h1" className="mb-4 max-w-3xl">
-        {config.heroName}
-      </Text>
+      <motion.div variants={fadeUp}>
+        <Text variant="h1" className="mb-4 max-w-3xl">
+          {config.heroName}
+        </Text>
+      </motion.div>
 
-      <Text variant="h3" color="secondary" className="mb-2 max-w-2xl font-normal">
-        {config.heroRole}
-      </Text>
+      <motion.div variants={fadeUp}>
+        <Text variant="h3" color="secondary" className="mb-2 max-w-2xl font-normal">
+          {config.heroRole}
+        </Text>
+      </motion.div>
 
-      <Text variant="body" color="muted" className="mb-10 max-w-xl">
-        {config.heroDescription}
-      </Text>
+      <motion.div variants={fadeUp}>
+        <Text variant="body" color="muted" className="mb-10 max-w-xl">
+          {config.heroDescription}
+        </Text>
+      </motion.div>
 
-      <div className="flex flex-wrap justify-center gap-3">
+      <motion.div variants={fadeUp} className="flex flex-wrap justify-center gap-3">
         <a
           href="/projects"
           className="inline-flex h-11 items-center rounded-lg bg-white px-6 text-sm font-semibold text-black transition-colors hover:bg-[#E5E5E5]"
@@ -101,9 +112,9 @@ export function HeroSection({ initialData }: HeroSectionProps) {
         >
           Contato →
         </a>
-      </div>
+      </motion.div>
 
-      <div className="mt-12 flex flex-wrap justify-center gap-2">
+      <motion.div variants={fadeUp} className="mt-12 flex flex-wrap justify-center gap-2">
         {config.heroTags.map((tech) => (
           <span
             key={tech}
@@ -112,7 +123,7 @@ export function HeroSection({ initialData }: HeroSectionProps) {
             {tech}
           </span>
         ))}
-      </div>
+      </motion.div>
 
       {data && (
         <EditHeroModal
@@ -121,6 +132,6 @@ export function HeroSection({ initialData }: HeroSectionProps) {
           config={data}
         />
       )}
-    </section>
+    </motion.section>
   );
 }

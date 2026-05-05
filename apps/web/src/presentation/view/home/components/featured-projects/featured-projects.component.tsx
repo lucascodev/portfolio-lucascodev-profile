@@ -1,7 +1,9 @@
 'use client';
 
-import { Card, Text, Badge } from '@portfolio/design-system';
 import { useProjectsQuery } from '@/presentation/hooks/use-projects-query/use-projects-query.hook';
+import { fadeUp, stagger } from '@/shared/utils/motion/motion.variants';
+import { Badge, Card, Text } from '@portfolio/design-system';
+import { motion } from 'framer-motion';
 
 export function FeaturedProjects() {
   const { data: projects, isLoading } = useProjectsQuery();
@@ -10,17 +12,28 @@ export function FeaturedProjects() {
   if (isLoading) {
     return (
       <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
-        {Array.from({ length: 3 }).map((_, i) => (
-          <div key={i} className="h-48 animate-pulse rounded-xl bg-[#111111]" />
+        {['sk-1', 'sk-2', 'sk-3'].map((k) => (
+          <div key={k} className="h-48 animate-pulse rounded-xl bg-[#111111]" />
         ))}
       </div>
     );
   }
 
   return (
-    <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
+    <motion.div
+      className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3"
+      variants={stagger}
+      initial="hidden"
+      whileInView="visible"
+      viewport={{ once: true, margin: '-60px' }}
+    >
       {featured.map((project) => (
-        <a key={project.id} href={`/projects/${project.slug}`}>
+        <motion.a
+          key={project.id}
+          href={`/projects/${project.slug}`}
+          variants={fadeUp}
+          whileHover={{ y: -4, transition: { type: 'spring', stiffness: 300, damping: 20 } }}
+        >
           <Card hoverable className="h-full">
             <Badge variant="highlight" className="mb-3">
               {project.category}
@@ -37,8 +50,8 @@ export function FeaturedProjects() {
               ))}
             </div>
           </Card>
-        </a>
+        </motion.a>
       ))}
-    </div>
+    </motion.div>
   );
 }
