@@ -1,10 +1,10 @@
 # Portfolio — lucascodev
 
-Portfólio profissional de Lucas Pereira dos Reis. Monorepo Turborepo + pnpm com Next.js 15 App Router, Clean Architecture e sistema de edição inline via painel admin.
+Portfólio profissional de Lucas Pereira dos Reis. Monorepo Turborepo + pnpm com Next.js 16 App Router, Clean Architecture e sistema de edição inline via painel admin.
 
 ## Stack
 
-- **Frontend:** Next.js 15 (App Router), React, Tailwind CSS v4
+- **Frontend:** Next.js 16.2.4 (App Router), React, Tailwind CSS v4
 - **Design System:** `@portfolio/design-system` (componentes base + tokens)
 - **Banco de dados:** PostgreSQL via Prisma 7 + `@prisma/adapter-pg`
 - **Auth:** iron-session v8 (cookie HTTP-only criptografado)
@@ -15,24 +15,43 @@ Portfólio profissional de Lucas Pereira dos Reis. Monorepo Turborepo + pnpm com
 
 - Node.js 20+
 - pnpm 9+
-- PostgreSQL (local ou Neon/Supabase)
+- PostgreSQL (local via Docker ou Neon/Supabase)
 
 ## Setup
 
+**1. Instalar dependências**
+
 ```bash
-# Instalar dependências
 pnpm install
+```
 
-# Configurar variáveis de ambiente
+**2. Subir o banco de dados localmente (opcional — usa Docker)**
+
+```bash
+docker-compose up -d
+```
+
+Isso inicia um PostgreSQL na porta `5432` com usuário/senha/db `portfolio`.
+
+**3. Configurar variáveis de ambiente**
+
+```bash
 cp apps/web/.env.example apps/web/.env
-# Editar DATABASE_URL com a connection string PostgreSQL
-# Editar SESSION_PASSWORD com uma string aleatória >= 32 chars
+```
 
-# Executar migrações e seed
+Edite `apps/web/.env` e preencha os valores (veja a tabela abaixo).
+
+**4. Gerar o Prisma Client, executar migrações e seed**
+
+```bash
+pnpm --filter web exec prisma generate
 pnpm --filter web exec prisma migrate dev
 pnpm --filter web exec prisma db seed
+```
 
-# Iniciar desenvolvimento
+**5. Iniciar o servidor de desenvolvimento**
+
+```bash
 pnpm dev
 ```
 
@@ -41,20 +60,24 @@ pnpm dev
 | Variável | Descrição |
 |---|---|
 | `DATABASE_URL` | PostgreSQL connection string (`postgresql://user:pass@host:5432/db`) |
-| `SESSION_PASSWORD` | Senha do cookie iron-session (mín. 32 chars) |
+| `SESSION_SECRET` | Senha do cookie iron-session (mín. 32 chars, qualquer string aleatória) |
+| `ADMIN_EMAIL` | E-mail do usuário admin criado pelo seed |
+| `ADMIN_PASSWORD` | Senha do usuário admin criado pelo seed |
+
+O Docker Compose local já usa `postgresql://portfolio:portfolio@localhost:5432/portfolio`.
 
 ## Comandos
 
 ```bash
-pnpm dev                          # Todos os apps em paralelo
-pnpm build                        # Build de produção (Turborepo)
-pnpm typecheck                    # TypeScript em todos os packages
-pnpm lint                         # ESLint em todos os packages
+pnpm dev                                    # Todos os apps em paralelo
+pnpm build                                  # Build de produção (Turborepo)
+pnpm typecheck                              # TypeScript em todos os packages
+pnpm lint                                   # ESLint em todos os packages
 
-pnpm --filter web dev             # Apenas o Next.js
-pnpm --filter web exec prisma studio   # Abrir Prisma Studio
-pnpm --filter web exec prisma migrate dev  # Nova migração
-pnpm --filter web exec prisma db seed     # Re-executar seed
+pnpm --filter web dev                       # Apenas o Next.js
+pnpm --filter web exec prisma studio        # Abrir Prisma Studio
+pnpm --filter web exec prisma migrate dev   # Nova migração
+pnpm --filter web exec prisma db seed       # Re-executar seed
 ```
 
 ## Estrutura do Monorepo
@@ -62,11 +85,12 @@ pnpm --filter web exec prisma db seed     # Re-executar seed
 ```
 portfolio-lucascodev-profile/
 ├── apps/
-│   └── web/                  # Next.js 15 App Router
+│   └── web/                  # Next.js 16 App Router
 ├── packages/
 │   ├── design-system/        # Tokens + componentes base
 │   ├── tsconfig/             # tsconfig base compartilhado
 │   └── eslint-config/        # ESLint config compartilhado
+├── docker-compose.yml        # PostgreSQL local
 ```
 
 ## Arquitetura (Clean Architecture)
@@ -81,6 +105,6 @@ domain → use-cases → infrastructure → presentation → app
 - **presentation:** React components, hooks React Query, Zustand stores
 - **app:** Next.js App Router (pages, API routes, layout)
 
-## Admin
+## Painel Admin
 
-Acesse `/login` com as credenciais do seed para ativar o modo de edição inline. A `AdminToolbar` aparece na parte inferior da tela e permite editar todos os dados do portfólio sem sair da página.
+Acesse `/login` com as credenciais definidas em `ADMIN_EMAIL` e `ADMIN_PASSWORD` no `.env`. Após o login, a `AdminToolbar` aparece na parte inferior da tela — ative o modo de edição para ver os botões de lápis em cada seção e editar os dados do portfólio diretamente na página.
