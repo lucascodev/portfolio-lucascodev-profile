@@ -19,6 +19,7 @@ pnpm --filter web build
 pnpm --filter web typecheck
 
 # Database (run from apps/web/):
+pnpm --filter web exec prisma generate
 pnpm --filter web exec prisma migrate dev
 pnpm --filter web exec prisma db seed
 pnpm --filter web exec prisma studio
@@ -55,8 +56,11 @@ domain → use-cases → infrastructure
 ### Key wiring points
 
 - **API routes** (`app/api/*/route.ts`) — instantiate repository + use-case directly, no DI container.
-- **Prisma singleton** (`shared/lib/prisma/prisma.lib.ts`) — uses **Prisma 7** with `@prisma/adapter-libsql`; `new PrismaClient({ adapter })` is mandatory (Prisma 7 requires a driver adapter, no default SQLite driver).
-- **Prisma client** is generated to `src/generated/prisma/` (see `schema.prisma` `output` field) — import from `@/generated/prisma/client`.
+- **Prisma singleton** (`shared/lib/prisma/prisma.lib.ts`) — uses **Prisma 7** with `@prisma/adapter-pg` (PostgreSQL); `new PrismaClient({ adapter })` is mandatory (Prisma 7 requires a driver adapter).
+- **Prisma client** is generated to `src/generated/prisma/` (see `schema.prisma` `output` field) — import from `@/generated/prisma/client`. Run `prisma generate` after any schema change.
+- **Auth** (`shared/config/session/session.config.ts`) — iron-session v8 with `SESSION_SECRET` env var (≥32 chars). Middleware at `src/middleware.ts` blocks POST/PATCH/DELETE on `/api/projects`, `/api/skills`, `/api/experiences`, `/api/site-config` for unauthenticated requests.
+- **Admin system** — `AdminToolbar` (bottom-center pill) toggles edit mode via Zustand (`presentation/store/admin/admin.store.ts`). In edit mode, `EditButton` overlays appear on each section opening their respective modal. `AuthProvider` (`presentation/providers/auth/`) polls `/api/auth/me` to detect admin session.
+- **SSR + React Query pattern** — Server Components (pages, layout) fetch `SiteConfig` directly via use-case and pass as `initialData` to hooks. This prevents hydration mismatch between server-rendered fallbacks and client-cached real data. See `app/page.tsx` and `app/layout.tsx`.
 - **QueryClientProvider** lives in `presentation/providers/providers.tsx` (client component) and is mounted in `app/layout.tsx`.
 - **Env validation** (`shared/config/env/env.config.ts`) — Zod schema, throws on startup if `DATABASE_URL` is missing or not a valid URL.
 
@@ -88,4 +92,4 @@ utils/format-date/format-date.util.ts
 
 ### Database
 
-SQLite via libSQL. The `.db` file lives at `apps/web/dev.db` (relative to the app root, not to `prisma/`). Seed file: `apps/web/prisma/seed.ts`.
+PostgreSQL. Connection string goes in `apps/web/.env` as `DATABASE_URL`. For local development, `docker-compose up -d` at the repo root starts a PostgreSQL container pre-configured for `DATABASE_URL` in `.env.example`. Seed file: `apps/web/prisma/seed.ts` — reads `ADMIN_EMAIL` and `ADMIN_PASSWORD` from env to create the admin user.
