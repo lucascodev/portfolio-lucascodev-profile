@@ -1,10 +1,11 @@
 FROM node:20-alpine AS base
 RUN corepack enable && corepack prepare pnpm@9.0.0 --activate
 
-# ── deps: install all dependencies ────────────────────────────────────────────
-FROM base AS deps
+# ── builder: install deps + generate prisma + next build ──────────────────────
+FROM base AS builder
 WORKDIR /app
 
+# copy manifests first — layer cached until any package.json changes
 COPY package.json pnpm-lock.yaml pnpm-workspace.yaml ./
 COPY apps/web/package.json ./apps/web/
 COPY packages/design-system/package.json ./packages/design-system/
@@ -13,11 +14,7 @@ COPY packages/eslint-config/package.json ./packages/eslint-config/
 
 RUN pnpm install --frozen-lockfile
 
-# ── builder: generate prisma client + next build ───────────────────────────────
-FROM base AS builder
-WORKDIR /app
-
-COPY --from=deps /app/node_modules ./node_modules
+# copy source after install so the cache above is reused on code-only changes
 COPY . .
 
 RUN pnpm --filter web exec prisma generate
@@ -36,7 +33,7 @@ ENV NEXT_TELEMETRY_DISABLED=1
 ENV PORT=3000
 ENV HOSTNAME=0.0.0.0
 
-# prisma CLI is needed to run migrations at startup
+# prisma CLI needed to run migrations at startup
 RUN npm install -g prisma@7
 
 RUN addgroup --system --gid 1001 nodejs && \
