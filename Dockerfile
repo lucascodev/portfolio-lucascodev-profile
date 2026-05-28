@@ -33,8 +33,9 @@ ENV NEXT_TELEMETRY_DISABLED=1
 ENV PORT=3000
 ENV HOSTNAME=0.0.0.0
 
-# prisma CLI needed to run migrations at startup
-RUN npm install -g prisma@7
+# install prisma locally so the binary is available AND prisma/config is importable
+# (global install only provides the binary — the module resolution needs a local install)
+RUN npm install prisma@7
 
 RUN addgroup --system --gid 1001 nodejs && \
     adduser --system --uid 1001 nextjs
