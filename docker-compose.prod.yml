@@ -3,20 +3,16 @@ services:
     image: postgres:16-alpine
     restart: unless-stopped
     env_file: .env.production
-    environment:
-      POSTGRES_USER: ${DB_USER}
-      POSTGRES_PASSWORD: ${DB_PASSWORD}
-      POSTGRES_DB: ${DB_NAME}
     volumes:
       - postgres_data:/var/lib/postgresql/data
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U ${DB_USER} -d ${DB_NAME}"]
+      test: ["CMD-SHELL", "pg_isready -U $$POSTGRES_USER -d $$POSTGRES_DB"]
       interval: 10s
       timeout: 5s
       retries: 5
 
   app:
-    image: ghcr.io/${GITHUB_REPOSITORY}:${IMAGE_TAG:-latest}
+    image: ghcr.io/lucascodev/portfolio-lucascodev-profile:latest
     restart: unless-stopped
     env_file: .env.production
     expose:
