@@ -65,15 +65,18 @@ jobs:
             set -e
             cd /opt/portfolio-lucascodev-profile
 
-            # pull latest image
+            # sync repo files (nginx configs, compose files, scripts)
+            git pull
+
+            # pull latest app image
             echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
             docker compose -f docker-compose.prod.yml pull app
 
             # restart app (zero-downtime swap)
             docker compose -f docker-compose.prod.yml up -d --no-deps app
 
-            # reload nginx config in-place (picks up any conf.d changes without dropping connections)
-            docker compose -f docker-compose.prod.yml exec -T nginx nginx -s reload || true
+            # restart nginx to apply any config changes
+            docker compose -f docker-compose.prod.yml restart nginx
 
             # remove dangling images
             docker image prune -f
