@@ -1,6 +1,6 @@
 'use client';
 
-import { STORAGE_BUCKET, supabase } from '@/shared/lib/supabase/supabase.lib';
+import { STORAGE_BUCKET, getSupabase } from '@/shared/lib/supabase/supabase.lib';
 import Image from 'next/image';
 import { useRef, useState } from 'react';
 
@@ -26,7 +26,8 @@ export function ImageUpload({ value, onChange, folder, label = 'Imagem' }: Reado
     const ext = file.name.split('.').pop() ?? 'jpg';
     const path = `${folder}/${crypto.randomUUID()}.${ext}`;
 
-    const { error: uploadError } = await supabase.storage
+    const client = getSupabase();
+    const { error: uploadError } = await client.storage
       .from(STORAGE_BUCKET)
       .upload(path, file, { upsert: true });
 
@@ -36,7 +37,7 @@ export function ImageUpload({ value, onChange, folder, label = 'Imagem' }: Reado
       return;
     }
 
-    const { data } = supabase.storage.from(STORAGE_BUCKET).getPublicUrl(path);
+    const { data } = client.storage.from(STORAGE_BUCKET).getPublicUrl(path);
     onChange(data.publicUrl);
     setIsUploading(false);
 
