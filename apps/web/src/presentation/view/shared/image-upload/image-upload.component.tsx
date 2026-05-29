@@ -11,7 +11,12 @@ interface ImageUploadProps {
   label?: string;
 }
 
-export function ImageUpload({ value, onChange, folder, label = 'Imagem' }: Readonly<ImageUploadProps>) {
+export function ImageUpload({
+  value,
+  onChange,
+  folder,
+  label = 'Imagem',
+}: Readonly<ImageUploadProps>) {
   const [isUploading, setIsUploading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const inputRef = useRef<HTMLInputElement>(null);
@@ -49,8 +54,17 @@ export function ImageUpload({ value, onChange, folder, label = 'Imagem' }: Reado
       <label className="text-sm text-[#A3A3A3]">{label}</label>
       <div className="flex items-center gap-3">
         {value && (
-          <div className="relative h-12 w-12 shrink-0 overflow-hidden rounded-lg border border-[#2A2A2A]">
-            <Image src={value} alt={label} fill className="object-cover" unoptimized />
+          <div className="relative h-12 w-12 shrink-0 overflow-hidden rounded-lg border border-[#2A2A2A] bg-[#111111]">
+            <Image
+              src={value}
+              alt={label}
+              fill
+              className="object-cover"
+              unoptimized
+              onError={(e) => {
+                (e.target as HTMLImageElement).style.display = 'none';
+              }}
+            />
           </div>
         )}
         <div className="flex flex-1 flex-col gap-1">
@@ -62,9 +76,7 @@ export function ImageUpload({ value, onChange, folder, label = 'Imagem' }: Reado
           >
             {isUploading ? 'Enviando...' : value ? 'Trocar imagem' : 'Selecionar imagem'}
           </button>
-          {value && (
-            <p className="truncate font-mono text-xs text-[#525252]">{value}</p>
-          )}
+          {value && <p className="truncate font-mono text-xs text-[#525252]">{value}</p>}
         </div>
         <input
           ref={inputRef}
