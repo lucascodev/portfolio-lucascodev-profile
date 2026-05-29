@@ -1,7 +1,6 @@
 'use client';
 
 import { STORAGE_BUCKET, getSupabase } from '@/shared/lib/supabase/supabase.lib';
-import Image from 'next/image';
 import { useCallback, useRef, useState } from 'react';
 import ReactCrop, { type Crop, centerCrop, makeAspectCrop } from 'react-image-crop';
 import 'react-image-crop/dist/ReactCrop.css';
@@ -18,6 +17,8 @@ function centerAspectCrop(width: number, height: number, aspect: number): Crop {
   return centerCrop(makeAspectCrop({ unit: '%', width: 90 }, aspect, width, height), width, height);
 }
 
+const MAX_OUTPUT_PX = 800;
+
 async function getCroppedBlob(
   image: HTMLImageElement,
   crop: Crop,
@@ -28,12 +29,16 @@ async function getCroppedBlob(
   const cropWidth = (crop.width / 100) * image.naturalWidth;
   const cropHeight = (crop.height / 100) * image.naturalHeight;
 
+  const scale = Math.min(1, MAX_OUTPUT_PX / Math.max(cropWidth, cropHeight));
+  const outputWidth = Math.round(cropWidth * scale);
+  const outputHeight = Math.round(cropHeight * scale);
+
   const canvas = document.createElement('canvas');
-  canvas.width = cropWidth;
-  canvas.height = cropHeight;
+  canvas.width = outputWidth;
+  canvas.height = outputHeight;
 
   const ctx = canvas.getContext('2d')!;
-  ctx.drawImage(image, cropX, cropY, cropWidth, cropHeight, 0, 0, cropWidth, cropHeight);
+  ctx.drawImage(image, cropX, cropY, cropWidth, cropHeight, 0, 0, outputWidth, outputHeight);
 
   return new Promise((resolve, reject) => {
     canvas.toBlob(
@@ -157,13 +162,12 @@ export function ImageUpload({
 
       <div className="flex min-h-[40px] items-center gap-3">
         {value && !previewError && (
-          <div className="relative h-12 w-12 shrink-0 overflow-hidden rounded-lg border border-[#2A2A2A] bg-[#111111]">
-            <Image
+          <div className="h-12 w-12 shrink-0 overflow-hidden rounded-lg border border-[#2A2A2A] bg-[#111111]">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
               src={value}
               alt={label}
-              fill
-              className="object-cover"
-              unoptimized
+              className="h-full w-full object-cover"
               onError={() => setPreviewError(true)}
             />
           </div>
