@@ -17,6 +17,7 @@ interface HeroSectionProps {
 
 export function HeroSection({ initialData }: HeroSectionProps) {
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+  const [avatarError, setAvatarError] = useState(false);
   const isEditMode = useAdminStore((state) => state.isEditMode);
   const { data } = useSiteConfigQuery(initialData);
 
@@ -29,7 +30,14 @@ export function HeroSection({ initialData }: HeroSectionProps) {
         data?.heroDescription ??
         'Especializado em Flutter, React Native, NestJS e Python/FastAPI. Construo soluções integradas com IA e Visão Computacional.',
       profileImageUrl: data?.profileImageUrl ?? '/avatar.jpg',
-      heroTags: data?.heroTags ?? ['Flutter', 'React Native', 'NestJS', 'FastAPI', 'YOLOv8', 'LLMs'],
+      heroTags: data?.heroTags ?? [
+        'Flutter',
+        'React Native',
+        'NestJS',
+        'FastAPI',
+        'YOLOv8',
+        'LLMs',
+      ],
     }),
     [data],
   );
@@ -51,24 +59,22 @@ export function HeroSection({ initialData }: HeroSectionProps) {
         variants={fadeUp}
         className="mb-8 h-28 w-28 overflow-hidden rounded-full border-2 border-[#2A2A2A] ring-4 ring-[#6EE7B7]/10"
       >
-        <Image
-          src={config.profileImageUrl}
-          unoptimized
-          alt={config.heroName}
-          width={112}
-          height={112}
-          className="h-full w-full object-cover"
-          priority
-          onError={(e) => {
-            const target = e.target as HTMLImageElement;
-            target.style.display = 'none';
-            const parent = target.parentElement;
-            if (parent) {
-              parent.innerHTML =
-                '<div class="flex h-full w-full items-center justify-center bg-[#111111] font-mono text-2xl font-bold text-[#6EE7B7]">LC</div>';
-            }
-          }}
-        />
+        {avatarError ? (
+          <div className="flex h-full w-full items-center justify-center bg-[#111111] font-mono text-2xl font-bold text-[#6EE7B7]">
+            LC
+          </div>
+        ) : (
+          <Image
+            src={config.profileImageUrl}
+            unoptimized
+            alt={config.heroName}
+            width={112}
+            height={112}
+            className="h-full w-full object-cover"
+            priority
+            onError={() => setAvatarError(true)}
+          />
+        )}
       </motion.div>
 
       <motion.p variants={fadeUp} className="mb-3 font-mono text-sm text-[#6EE7B7]">

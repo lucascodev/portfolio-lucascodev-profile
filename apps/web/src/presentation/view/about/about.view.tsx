@@ -56,6 +56,7 @@ export function AboutView() {
   const { data: languages = [] } = useLanguagesQuery();
   const { data: siteConfig } = useSiteConfigQuery();
   const isEditMode = useAdminStore((s) => s.isEditMode);
+  const [avatarError, setAvatarError] = useState(false);
   const [isCreateSkillModalOpen, setIsCreateSkillModalOpen] = useState(false);
   const [isCreateExperienceModalOpen, setIsCreateExperienceModalOpen] = useState(false);
   const [isCreateCertificationModalOpen, setIsCreateCertificationModalOpen] = useState(false);
@@ -135,22 +136,20 @@ export function AboutView() {
 
         <motion.div variants={fadeUp} className="flex justify-center">
           <div className="relative h-64 w-64 overflow-hidden rounded-2xl border border-[#2A2A2A]">
-            <Image
-              src={aboutConfig.imageUrl}
-              alt={aboutConfig.imageAlt}
-              unoptimized
-              fill
-              className="object-cover"
-              onError={(e) => {
-                const target = e.target as HTMLImageElement;
-                target.style.display = 'none';
-                const parent = target.parentElement;
-                if (parent) {
-                  parent.innerHTML =
-                    '<div class="flex h-full w-full items-center justify-center bg-[#111111] font-mono text-5xl font-bold text-[#6EE7B7]">LC</div>';
-                }
-              }}
-            />
+            {avatarError ? (
+              <div className="flex h-full w-full items-center justify-center bg-[#111111] font-mono text-5xl font-bold text-[#6EE7B7]">
+                LC
+              </div>
+            ) : (
+              <Image
+                src={aboutConfig.imageUrl}
+                alt={aboutConfig.imageAlt}
+                unoptimized
+                fill
+                className="object-cover"
+                onError={() => setAvatarError(true)}
+              />
+            )}
           </div>
         </motion.div>
       </motion.section>
@@ -230,22 +229,45 @@ export function AboutView() {
       )}
 
       {/* Education */}
-      <motion.section className="mb-24" variants={fadeUp} initial="hidden" whileInView="visible" viewport={{ once: true, margin: '-80px' }}>
+      <motion.section
+        className="mb-24"
+        variants={fadeUp}
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, margin: '-80px' }}
+      >
         <div className="mb-8 flex items-center justify-between gap-4">
           <Text variant="h3">Formação Acadêmica</Text>
           {isEditMode && (
-            <Button variant="secondary" size="sm" onClick={() => setIsCreateEducationModalOpen(true)}>Nova formação</Button>
+            <Button
+              variant="secondary"
+              size="sm"
+              onClick={() => setIsCreateEducationModalOpen(true)}
+            >
+              Nova formação
+            </Button>
           )}
         </div>
         {education.length > 0 ? (
           <div className="flex flex-col gap-4">
             {education.map((edu) => (
-              <div key={edu.id} className="relative rounded-xl border border-[#1A1A1A] bg-[#0A0A0A] p-5">
+              <div
+                key={edu.id}
+                className="relative rounded-xl border border-[#1A1A1A] bg-[#0A0A0A] p-5"
+              >
                 {isEditMode && (
-                  <button onClick={() => setEditingEducation(edu)} className="absolute right-4 top-4 rounded-md border border-[#2A2A2A] px-2 py-1 font-mono text-xs text-[#525252] transition-colors hover:border-[#6EE7B7] hover:text-[#6EE7B7]">editar</button>
+                  <button
+                    onClick={() => setEditingEducation(edu)}
+                    className="absolute right-4 top-4 rounded-md border border-[#2A2A2A] px-2 py-1 font-mono text-xs text-[#525252] transition-colors hover:border-[#6EE7B7] hover:text-[#6EE7B7]"
+                  >
+                    editar
+                  </button>
                 )}
                 <p className="font-semibold text-white">{edu.institution}</p>
-                <p className="text-sm text-[#A3A3A3]">{edu.degree}{edu.field ? ` — ${edu.field}` : ''}</p>
+                <p className="text-sm text-[#A3A3A3]">
+                  {edu.degree}
+                  {edu.field ? ` — ${edu.field}` : ''}
+                </p>
                 <p className="mt-1 font-mono text-xs text-[#525252]">
                   {edu.startYear} — {edu.current ? 'presente' : (edu.endYear ?? '?')}
                 </p>
@@ -258,34 +280,70 @@ export function AboutView() {
       </motion.section>
 
       {/* Certifications */}
-      <motion.section className="mb-24" variants={fadeUp} initial="hidden" whileInView="visible" viewport={{ once: true, margin: '-80px' }}>
+      <motion.section
+        className="mb-24"
+        variants={fadeUp}
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, margin: '-80px' }}
+      >
         <div className="mb-8 flex items-center justify-between gap-4">
           <Text variant="h3">Certificações</Text>
           {isEditMode && (
-            <Button variant="secondary" size="sm" onClick={() => setIsCreateCertificationModalOpen(true)}>Nova certificação</Button>
+            <Button
+              variant="secondary"
+              size="sm"
+              onClick={() => setIsCreateCertificationModalOpen(true)}
+            >
+              Nova certificação
+            </Button>
           )}
         </div>
         {certifications.length > 0 ? (
           <div className="grid grid-cols-1 gap-3 md:grid-cols-2">
             {certifications.map((cert) => (
-              <div key={cert.id} className="relative flex items-start gap-3 rounded-xl border border-[#1A1A1A] bg-[#0A0A0A] p-4">
+              <div
+                key={cert.id}
+                className="relative flex items-start gap-3 rounded-xl border border-[#1A1A1A] bg-[#0A0A0A] p-4"
+              >
                 {isEditMode && (
-                  <button onClick={() => setEditingCertification(cert)} className="absolute right-3 top-3 rounded-md border border-[#2A2A2A] px-2 py-0.5 font-mono text-xs text-[#525252] transition-colors hover:border-[#6EE7B7] hover:text-[#6EE7B7]">editar</button>
+                  <button
+                    onClick={() => setEditingCertification(cert)}
+                    className="absolute right-3 top-3 rounded-md border border-[#2A2A2A] px-2 py-0.5 font-mono text-xs text-[#525252] transition-colors hover:border-[#6EE7B7] hover:text-[#6EE7B7]"
+                  >
+                    editar
+                  </button>
                 )}
                 {cert.badgeUrl ? (
                   <div className="relative h-10 w-10 shrink-0 overflow-hidden rounded-md border border-[#2A2A2A]">
-                    <Image src={cert.badgeUrl} alt={cert.name} fill className="object-contain" unoptimized />
+                    <Image
+                      src={cert.badgeUrl}
+                      alt={cert.name}
+                      fill
+                      className="object-contain"
+                      unoptimized
+                    />
                   </div>
                 ) : (
                   <span className="mt-0.5 text-[#6EE7B7]">▸</span>
                 )}
                 <div className="min-w-0 flex-1 pr-10">
                   {cert.url ? (
-                    <a href={cert.url} target="_blank" rel="noopener noreferrer" className="font-medium text-white transition-colors hover:text-[#6EE7B7]">{cert.name}</a>
+                    <a
+                      href={cert.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="font-medium text-white transition-colors hover:text-[#6EE7B7]"
+                    >
+                      {cert.name}
+                    </a>
                   ) : (
                     <p className="font-medium text-white">{cert.name}</p>
                   )}
-                  <p className="text-sm text-[#525252]">{cert.issuer}{cert.year ? ` · ${cert.year}` : ''}</p>
+                  <p className="text-sm text-[#525252]">
+                    {cert.issuer}
+                    {cert.year ? ` · ${cert.year}` : ''}
+                  </p>
                 </div>
               </div>
             ))}
@@ -296,22 +354,44 @@ export function AboutView() {
       </motion.section>
 
       {/* Languages */}
-      <motion.section className="mb-24" variants={fadeUp} initial="hidden" whileInView="visible" viewport={{ once: true, margin: '-80px' }}>
+      <motion.section
+        className="mb-24"
+        variants={fadeUp}
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, margin: '-80px' }}
+      >
         <div className="mb-8 flex items-center justify-between gap-4">
           <Text variant="h3">Idiomas</Text>
           {isEditMode && (
-            <Button variant="secondary" size="sm" onClick={() => setIsCreateLanguageModalOpen(true)}>Novo idioma</Button>
+            <Button
+              variant="secondary"
+              size="sm"
+              onClick={() => setIsCreateLanguageModalOpen(true)}
+            >
+              Novo idioma
+            </Button>
           )}
         </div>
         {languages.length > 0 ? (
           <div className="flex flex-wrap gap-3">
             {languages.map((lang) => (
-              <div key={lang.id} className="relative flex items-center gap-3 rounded-xl border border-[#1A1A1A] bg-[#0A0A0A] px-5 py-3">
+              <div
+                key={lang.id}
+                className="relative flex items-center gap-3 rounded-xl border border-[#1A1A1A] bg-[#0A0A0A] px-5 py-3"
+              >
                 {isEditMode && (
-                  <button onClick={() => setEditingLanguage(lang)} className="absolute -right-1 -top-1 rounded-full border border-[#2A2A2A] bg-[#0A0A0A] px-1.5 py-0.5 font-mono text-xs text-[#525252] transition-colors hover:border-[#6EE7B7] hover:text-[#6EE7B7]">✎</button>
+                  <button
+                    onClick={() => setEditingLanguage(lang)}
+                    className="absolute -right-1 -top-1 rounded-full border border-[#2A2A2A] bg-[#0A0A0A] px-1.5 py-0.5 font-mono text-xs text-[#525252] transition-colors hover:border-[#6EE7B7] hover:text-[#6EE7B7]"
+                  >
+                    ✎
+                  </button>
                 )}
                 <span className="font-medium text-white">{lang.name}</span>
-                <span className="rounded-full bg-[#6EE7B7]/10 px-2 py-0.5 font-mono text-xs text-[#6EE7B7]">{LANGUAGE_LEVEL_LABELS[lang.level]}</span>
+                <span className="rounded-full bg-[#6EE7B7]/10 px-2 py-0.5 font-mono text-xs text-[#6EE7B7]">
+                  {LANGUAGE_LEVEL_LABELS[lang.level]}
+                </span>
               </div>
             ))}
           </div>
@@ -329,24 +409,45 @@ export function AboutView() {
       )}
 
       {isCreateCertificationModalOpen && (
-        <CreateCertificationModal isOpen={isCreateCertificationModalOpen} onClose={() => setIsCreateCertificationModalOpen(false)} />
+        <CreateCertificationModal
+          isOpen={isCreateCertificationModalOpen}
+          onClose={() => setIsCreateCertificationModalOpen(false)}
+        />
       )}
       {editingCertification && (
-        <EditCertificationModal certification={editingCertification} isOpen={true} onClose={() => setEditingCertification(null)} />
+        <EditCertificationModal
+          certification={editingCertification}
+          isOpen={true}
+          onClose={() => setEditingCertification(null)}
+        />
       )}
 
       {isCreateEducationModalOpen && (
-        <CreateEducationModal isOpen={isCreateEducationModalOpen} onClose={() => setIsCreateEducationModalOpen(false)} />
+        <CreateEducationModal
+          isOpen={isCreateEducationModalOpen}
+          onClose={() => setIsCreateEducationModalOpen(false)}
+        />
       )}
       {editingEducation && (
-        <EditEducationModal education={editingEducation} isOpen={true} onClose={() => setEditingEducation(null)} />
+        <EditEducationModal
+          education={editingEducation}
+          isOpen={true}
+          onClose={() => setEditingEducation(null)}
+        />
       )}
 
       {isCreateLanguageModalOpen && (
-        <CreateLanguageModal isOpen={isCreateLanguageModalOpen} onClose={() => setIsCreateLanguageModalOpen(false)} />
+        <CreateLanguageModal
+          isOpen={isCreateLanguageModalOpen}
+          onClose={() => setIsCreateLanguageModalOpen(false)}
+        />
       )}
       {editingLanguage && (
-        <EditLanguageModal language={editingLanguage} isOpen={true} onClose={() => setEditingLanguage(null)} />
+        <EditLanguageModal
+          language={editingLanguage}
+          isOpen={true}
+          onClose={() => setEditingLanguage(null)}
+        />
       )}
     </main>
   );
