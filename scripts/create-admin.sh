@@ -24,15 +24,10 @@ if [ -z "$ADMIN_EMAIL" ] || [ -z "$ADMIN_PASSWORD" ]; then
   exit 1
 fi
 
-echo "Creating admin user..."
+# Write the Node.js script to a temp file to avoid heredoc/stdin issues with docker run
+SCRIPT_FILE=$(mktemp /tmp/create-admin-XXXXXX.js)
 
-docker run --rm -i \
-  --network portfolio-lucascodev-profile_default \
-  -e DB_URL="$DB_URL" \
-  -e ADMIN_EMAIL="$ADMIN_EMAIL" \
-  -e ADMIN_PASSWORD="$ADMIN_PASSWORD" \
-  node:20-alpine \
-  sh -c 'npm install --quiet --no-progress bcryptjs pg >/dev/null 2>&1 && node -' << 'EOF'
+cat > "$SCRIPT_FILE" << 'JSEOF'
 const bcrypt = require('bcryptjs');
 const { Client } = require('pg');
 (async () => {
@@ -53,6 +48,19 @@ const { Client } = require('pg');
   }
   await client.end();
 })().catch(e => { console.error('Error:', e.message); process.exit(1); });
-EOF
+JSEOF
+
+echo "Creating admin user..."
+
+docker run --rm \
+  --network portfolio-lucascodev-profile_default \
+  -e DB_URL="$DB_URL" \
+  -e ADMIN_EMAIL="$ADMIN_EMAIL" \
+  -e ADMIN_PASSWORD="$ADMIN_PASSWORD" \
+  -v "$SCRIPT_FILE":/create-admin.js \
+  node:20-alpine \
+  sh -c 'npm install --quiet --no-progress bcryptjs pg >/dev/null 2>&1 && node /create-admin.js'
+
+rm -f "$SCRIPT_FILE"
 
 echo "Done! Log in at: https://lucascodev.com.br/login"
