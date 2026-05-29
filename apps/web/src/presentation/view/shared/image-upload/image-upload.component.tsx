@@ -70,6 +70,7 @@ export function ImageUpload({
   const [previewSrc, setPreviewSrc] = useState<string | null>(null);
   const [crop, setCrop] = useState<Crop>();
   const [originalFileName, setOriginalFileName] = useState('image.jpg');
+  const [previewError, setPreviewError] = useState(false);
   const imgRef = useRef<HTMLImageElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
 
@@ -107,6 +108,7 @@ export function ImageUpload({
       const { data } = client.storage.from(STORAGE_BUCKET).getPublicUrl(path);
       onChange(data.publicUrl);
       setPreviewSrc(null);
+      setPreviewError(false);
     } catch (err) {
       setError('Erro ao fazer upload: ' + (err instanceof Error ? err.message : 'tente novamente'));
     } finally {
@@ -162,7 +164,7 @@ export function ImageUpload({
       )}
 
       <div className="flex min-h-[40px] items-center gap-3">
-        {value && (
+        {value && !previewError && (
           <div className="relative h-12 w-12 shrink-0 overflow-hidden rounded-lg border border-[#2A2A2A] bg-[#111111]">
             <Image
               src={value}
@@ -170,9 +172,7 @@ export function ImageUpload({
               fill
               className="object-cover"
               unoptimized
-              onError={(e) => {
-                (e.target as HTMLImageElement).style.display = 'none';
-              }}
+              onError={() => setPreviewError(true)}
             />
           </div>
         )}
