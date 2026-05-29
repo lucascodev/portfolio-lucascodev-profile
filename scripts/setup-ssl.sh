@@ -51,7 +51,7 @@ sleep 3
 
 # ── step 3: obtain SSL certificate ────────────────────────────────────────────
 echo "[3/4] Running Certbot..."
-$COMPOSE run --rm certbot certonly \
+$COMPOSE run --rm --entrypoint certbot certbot certonly \
   --webroot -w /var/www/certbot \
   -d "$DOMAIN" \
   --email "$EMAIL" \
