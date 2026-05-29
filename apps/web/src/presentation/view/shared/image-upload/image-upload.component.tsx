@@ -128,7 +128,12 @@ export function ImageUpload({
           <div className="flex w-full max-w-md flex-col gap-4 rounded-xl border border-[#2A2A2A] bg-[#0A0A0A] p-6">
             <p className="text-sm font-medium text-white">Ajustar imagem</p>
             <div className="flex justify-center overflow-hidden rounded-lg">
-              <ReactCrop crop={crop} onChange={setCrop} aspect={aspect} circularCrop={aspect === 1}>
+              <ReactCrop
+                crop={crop}
+                onChange={(_, pct) => setCrop(pct)}
+                aspect={aspect}
+                circularCrop={aspect === 1}
+              >
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
                   ref={imgRef}
