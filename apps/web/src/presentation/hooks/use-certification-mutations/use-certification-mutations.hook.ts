@@ -8,6 +8,7 @@ interface CreateCertificationPayload {
   issuer: string;
   year?: number | null;
   url?: string | null;
+  badgeUrl?: string | null;
   order?: number;
 }
 
