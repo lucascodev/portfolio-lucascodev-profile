@@ -11,8 +11,18 @@ interface CreateCertificationModalProps {
   onClose: () => void;
 }
 
-export function CreateCertificationModal({ isOpen, onClose }: Readonly<CreateCertificationModalProps>) {
-  const [form, setForm] = useState({ name: '', issuer: '', year: '', url: '', badgeUrl: null as string | null, order: '0' });
+export function CreateCertificationModal({
+  isOpen,
+  onClose,
+}: Readonly<CreateCertificationModalProps>) {
+  const [form, setForm] = useState({
+    name: '',
+    issuer: '',
+    year: '',
+    url: '',
+    badgeUrl: null as string | null,
+    order: '0',
+  });
   const [error, setError] = useState<string | null>(null);
   const { mutate, isPending } = useCreateCertification();
 
@@ -35,23 +45,52 @@ export function CreateCertificationModal({ isOpen, onClose }: Readonly<CreateCer
   return (
     <EditModal title="Nova Certificação" isOpen={isOpen} onClose={onClose}>
       <form onSubmit={handleSubmit} className="flex flex-col gap-4">
-        <Input label="Nome" value={form.name} onChange={(e) => setForm((p) => ({ ...p, name: e.target.value }))} />
-        <Input label="Emissor" value={form.issuer} onChange={(e) => setForm((p) => ({ ...p, issuer: e.target.value }))} />
+        <Input
+          label="Nome"
+          value={form.name}
+          onChange={(e) => setForm((p) => ({ ...p, name: e.target.value }))}
+        />
+        <Input
+          label="Emissor"
+          value={form.issuer}
+          onChange={(e) => setForm((p) => ({ ...p, issuer: e.target.value }))}
+        />
         <div className="grid grid-cols-2 gap-4">
-          <Input label="Ano" type="number" value={form.year} onChange={(e) => setForm((p) => ({ ...p, year: e.target.value }))} />
-          <Input label="Ordem" type="number" value={form.order} onChange={(e) => setForm((p) => ({ ...p, order: e.target.value }))} />
+          <Input
+            label="Ano"
+            type="number"
+            value={form.year}
+            onChange={(e) => setForm((p) => ({ ...p, year: e.target.value }))}
+          />
+          <Input
+            label="Ordem"
+            type="number"
+            value={form.order}
+            onChange={(e) => setForm((p) => ({ ...p, order: e.target.value }))}
+          />
         </div>
-        <Input label="URL do certificado (opcional)" value={form.url} onChange={(e) => setForm((p) => ({ ...p, url: e.target.value }))} placeholder="https://..." />
+        <Input
+          label="URL do certificado (opcional)"
+          value={form.url}
+          onChange={(e) => setForm((p) => ({ ...p, url: e.target.value }))}
+          placeholder="https://..."
+        />
         <ImageUpload
           label="Badge da certificação"
           value={form.badgeUrl}
           onChange={(url) => setForm((p) => ({ ...p, badgeUrl: url }))}
           folder="certifications"
+          aspect={undefined}
+          circular={false}
         />
         {error && <p className="text-xs text-red-400">{error}</p>}
         <div className="flex justify-end gap-2 pt-2">
-          <Button type="button" variant="secondary" onClick={onClose}>Cancelar</Button>
-          <Button type="submit" isLoading={isPending}>Criar</Button>
+          <Button type="button" variant="secondary" onClick={onClose}>
+            Cancelar
+          </Button>
+          <Button type="submit" isLoading={isPending}>
+            Criar
+          </Button>
         </div>
       </form>
     </EditModal>

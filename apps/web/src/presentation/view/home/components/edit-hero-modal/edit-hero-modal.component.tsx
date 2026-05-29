@@ -91,6 +91,8 @@ export function EditHeroModal({ isOpen, onClose, config }: Readonly<EditHeroModa
           value={form.profileImageUrl}
           onChange={(url) => setForm((prev) => ({ ...prev, profileImageUrl: url }))}
           folder="avatar"
+          aspect={1}
+          circular={true}
         />
         <div className="flex flex-col gap-1.5">
           <label className="text-sm text-[#A3A3A3]">Descrição</label>

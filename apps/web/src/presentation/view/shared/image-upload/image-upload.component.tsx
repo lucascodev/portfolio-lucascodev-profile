@@ -11,6 +11,7 @@ interface ImageUploadProps {
   folder: string;
   label?: string;
   aspect?: number;
+  circular?: boolean;
 }
 
 function centerAspectCrop(width: number, height: number, aspect: number): Crop {
@@ -60,7 +61,8 @@ export function ImageUpload({
   onChange,
   folder,
   label = 'Imagem',
-  aspect = 1,
+  aspect,
+  circular,
 }: Readonly<ImageUploadProps>) {
   const [isUploading, setIsUploading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -84,7 +86,7 @@ export function ImageUpload({
   const onImageLoad = useCallback(
     (e: React.SyntheticEvent<HTMLImageElement>) => {
       const { width, height } = e.currentTarget;
-      setCrop(centerAspectCrop(width, height, aspect));
+      setCrop(centerAspectCrop(width, height, aspect ?? 1));
     },
     [aspect],
   );
@@ -132,7 +134,7 @@ export function ImageUpload({
                 crop={crop}
                 onChange={(_, pct) => setCrop(pct)}
                 aspect={aspect}
-                circularCrop={aspect === 1}
+                circularCrop={circular ?? aspect === 1}
               >
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
