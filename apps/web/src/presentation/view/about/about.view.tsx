@@ -93,7 +93,7 @@ export function AboutView() {
         'DDD',
         'Minimalismo',
       ],
-      imageUrl: siteConfig?.profileImageUrl ?? '/avatar.jpg',
+      imageUrl: siteConfig?.profileImageUrl ?? '',
       imageAlt: siteConfig?.heroName ?? 'Lucas Codev',
     }),
     [siteConfig],
@@ -136,7 +136,7 @@ export function AboutView() {
 
         <motion.div variants={fadeUp} className="flex justify-center">
           <div className="relative h-64 w-64 overflow-hidden rounded-2xl border border-[#2A2A2A]">
-            {failedAvatarUrl === aboutConfig.imageUrl ? (
+            {!aboutConfig.imageUrl || failedAvatarUrl === aboutConfig.imageUrl ? (
               <div className="flex h-full w-full items-center justify-center bg-[#111111] font-mono text-5xl font-bold text-[#6EE7B7]">
                 LC
               </div>

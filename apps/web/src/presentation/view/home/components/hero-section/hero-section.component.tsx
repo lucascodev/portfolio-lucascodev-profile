@@ -29,7 +29,7 @@ export function HeroSection({ initialData }: HeroSectionProps) {
       heroDescription:
         data?.heroDescription ??
         'Especializado em Flutter, React Native, NestJS e Python/FastAPI. Construo soluções integradas com IA e Visão Computacional.',
-      profileImageUrl: data?.profileImageUrl ?? '/avatar.jpg',
+      profileImageUrl: data?.profileImageUrl ?? '',
       heroTags: data?.heroTags ?? [
         'Flutter',
         'React Native',
@@ -59,7 +59,7 @@ export function HeroSection({ initialData }: HeroSectionProps) {
         variants={fadeUp}
         className="mb-8 h-28 w-28 overflow-hidden rounded-full border-2 border-[#2A2A2A] ring-4 ring-[#6EE7B7]/10"
       >
-        {failedAvatarUrl === config.profileImageUrl ? (
+        {!config.profileImageUrl || failedAvatarUrl === config.profileImageUrl ? (
           <div className="flex h-full w-full items-center justify-center bg-[#111111] font-mono text-2xl font-bold text-[#6EE7B7]">
             LC
           </div>
