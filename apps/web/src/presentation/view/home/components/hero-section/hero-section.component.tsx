@@ -17,7 +17,7 @@ interface HeroSectionProps {
 
 export function HeroSection({ initialData }: HeroSectionProps) {
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
-  const [avatarError, setAvatarError] = useState(false);
+  const [failedAvatarUrl, setFailedAvatarUrl] = useState<string | null>(null);
   const isEditMode = useAdminStore((state) => state.isEditMode);
   const { data } = useSiteConfigQuery(initialData);
 
@@ -59,7 +59,7 @@ export function HeroSection({ initialData }: HeroSectionProps) {
         variants={fadeUp}
         className="mb-8 h-28 w-28 overflow-hidden rounded-full border-2 border-[#2A2A2A] ring-4 ring-[#6EE7B7]/10"
       >
-        {avatarError ? (
+        {failedAvatarUrl === config.profileImageUrl ? (
           <div className="flex h-full w-full items-center justify-center bg-[#111111] font-mono text-2xl font-bold text-[#6EE7B7]">
             LC
           </div>
@@ -72,7 +72,7 @@ export function HeroSection({ initialData }: HeroSectionProps) {
             height={112}
             className="h-full w-full object-cover"
             priority
-            onError={() => setAvatarError(true)}
+            onError={() => setFailedAvatarUrl(config.profileImageUrl)}
           />
         )}
       </motion.div>

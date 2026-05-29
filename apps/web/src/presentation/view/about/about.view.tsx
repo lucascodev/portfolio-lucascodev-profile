@@ -56,7 +56,7 @@ export function AboutView() {
   const { data: languages = [] } = useLanguagesQuery();
   const { data: siteConfig } = useSiteConfigQuery();
   const isEditMode = useAdminStore((s) => s.isEditMode);
-  const [avatarError, setAvatarError] = useState(false);
+  const [failedAvatarUrl, setFailedAvatarUrl] = useState<string | null>(null);
   const [isCreateSkillModalOpen, setIsCreateSkillModalOpen] = useState(false);
   const [isCreateExperienceModalOpen, setIsCreateExperienceModalOpen] = useState(false);
   const [isCreateCertificationModalOpen, setIsCreateCertificationModalOpen] = useState(false);
@@ -136,7 +136,7 @@ export function AboutView() {
 
         <motion.div variants={fadeUp} className="flex justify-center">
           <div className="relative h-64 w-64 overflow-hidden rounded-2xl border border-[#2A2A2A]">
-            {avatarError ? (
+            {failedAvatarUrl === aboutConfig.imageUrl ? (
               <div className="flex h-full w-full items-center justify-center bg-[#111111] font-mono text-5xl font-bold text-[#6EE7B7]">
                 LC
               </div>
@@ -147,7 +147,7 @@ export function AboutView() {
                 unoptimized
                 fill
                 className="object-cover"
-                onError={() => setAvatarError(true)}
+                onError={() => setFailedAvatarUrl(aboutConfig.imageUrl)}
               />
             )}
           </div>

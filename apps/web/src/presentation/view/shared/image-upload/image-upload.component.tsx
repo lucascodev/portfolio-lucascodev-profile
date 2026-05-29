@@ -23,25 +23,17 @@ async function getCroppedBlob(
   crop: Crop,
   fileName: string,
 ): Promise<File> {
-  const canvas = document.createElement('canvas');
-  const scaleX = image.naturalWidth / image.width;
-  const scaleY = image.naturalHeight / image.height;
+  const cropX = (crop.x / 100) * image.naturalWidth;
+  const cropY = (crop.y / 100) * image.naturalHeight;
+  const cropWidth = (crop.width / 100) * image.naturalWidth;
+  const cropHeight = (crop.height / 100) * image.naturalHeight;
 
-  canvas.width = (crop.width / 100) * image.naturalWidth;
-  canvas.height = (crop.height / 100) * image.naturalHeight;
+  const canvas = document.createElement('canvas');
+  canvas.width = cropWidth;
+  canvas.height = cropHeight;
 
   const ctx = canvas.getContext('2d')!;
-  ctx.drawImage(
-    image,
-    (crop.x / 100) * image.naturalWidth * scaleX,
-    (crop.y / 100) * image.naturalHeight * scaleY,
-    canvas.width,
-    canvas.height,
-    0,
-    0,
-    canvas.width,
-    canvas.height,
-  );
+  ctx.drawImage(image, cropX, cropY, cropWidth, cropHeight, 0, 0, cropWidth, cropHeight);
 
   return new Promise((resolve, reject) => {
     canvas.toBlob(
