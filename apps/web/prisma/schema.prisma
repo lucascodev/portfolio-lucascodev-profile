@@ -64,12 +64,13 @@ model User {
 }
 
 model Certification {
-  id     String  @id @default(cuid())
-  name   String
-  issuer String
-  year   Int?
-  url    String?
-  order  Int     @default(0)
+  id       String  @id @default(cuid())
+  name     String
+  issuer   String
+  year     Int?
+  url      String?
+  badgeUrl String?
+  order    Int     @default(0)
 }
 
 model Education {

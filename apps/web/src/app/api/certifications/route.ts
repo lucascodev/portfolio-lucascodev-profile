@@ -13,6 +13,7 @@ const createSchema = z.object({
   issuer: z.string().min(1).max(200),
   year: z.number().int().min(1900).max(2100).nullable().optional(),
   url: z.string().url().nullable().optional(),
+  badgeUrl: z.string().url().nullable().optional(),
   order: z.number().int().optional(),
 });
 

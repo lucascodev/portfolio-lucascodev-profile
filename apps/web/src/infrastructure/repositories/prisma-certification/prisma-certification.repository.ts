@@ -18,6 +18,7 @@ export class PrismaCertificationRepository implements CertificationRepository {
         issuer: data.issuer,
         year: data.year ?? null,
         url: data.url ?? null,
+        badgeUrl: data.badgeUrl ?? null,
         order: data.order ?? 0,
       },
     });

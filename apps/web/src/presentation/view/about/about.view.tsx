@@ -1,6 +1,7 @@
 'use client';
 
 import type { Certification } from '@/domain/entities/certification/certification.entity';
+import Image from 'next/image';
 import type { Education } from '@/domain/entities/education/education.entity';
 import type { Language } from '@/domain/entities/language/language.entity';
 import type { SkillCategory } from '@/domain/entities/skill/skill.entity';
@@ -272,10 +273,16 @@ export function AboutView() {
                 {isEditMode && (
                   <button onClick={() => setEditingCertification(cert)} className="absolute right-3 top-3 rounded-md border border-[#2A2A2A] px-2 py-0.5 font-mono text-xs text-[#525252] transition-colors hover:border-[#6EE7B7] hover:text-[#6EE7B7]">editar</button>
                 )}
-                <span className="mt-0.5 text-[#6EE7B7]">▸</span>
+                {cert.badgeUrl ? (
+                  <div className="relative h-10 w-10 shrink-0 overflow-hidden rounded-md border border-[#2A2A2A]">
+                    <Image src={cert.badgeUrl} alt={cert.name} fill className="object-contain" unoptimized />
+                  </div>
+                ) : (
+                  <span className="mt-0.5 text-[#6EE7B7]">▸</span>
+                )}
                 <div className="min-w-0 flex-1 pr-10">
                   {cert.url ? (
-                    <a href={cert.url} target="_blank" rel="noopener noreferrer" className="font-medium text-white hover:text-[#6EE7B7] transition-colors">{cert.name}</a>
+                    <a href={cert.url} target="_blank" rel="noopener noreferrer" className="font-medium text-white transition-colors hover:text-[#6EE7B7]">{cert.name}</a>
                   ) : (
                     <p className="font-medium text-white">{cert.name}</p>
                   )}

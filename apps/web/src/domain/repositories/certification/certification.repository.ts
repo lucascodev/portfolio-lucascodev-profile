@@ -5,6 +5,7 @@ export interface CreateCertificationInput {
   issuer: string;
   year?: number | null;
   url?: string | null;
+  badgeUrl?: string | null;
   order?: number;
 }
 
@@ -13,6 +14,7 @@ export interface UpdateCertificationInput {
   issuer?: string;
   year?: number | null;
   url?: string | null;
+  badgeUrl?: string | null;
   order?: number;
 }
 
