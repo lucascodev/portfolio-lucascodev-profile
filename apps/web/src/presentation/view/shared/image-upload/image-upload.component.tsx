@@ -52,7 +52,7 @@ export function ImageUpload({
   return (
     <div className="flex flex-col gap-1.5">
       <label className="text-sm text-[#A3A3A3]">{label}</label>
-      <div className="flex items-center gap-3">
+      <div className="flex min-h-[40px] items-center gap-3">
         {value && (
           <div className="relative h-12 w-12 shrink-0 overflow-hidden rounded-lg border border-[#2A2A2A] bg-[#111111]">
             <Image
