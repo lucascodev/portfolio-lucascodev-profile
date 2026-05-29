@@ -177,16 +177,20 @@ export function ImageUpload({
             />
           </div>
         )}
-        <div className="flex flex-1 flex-col gap-1">
+        <div className="min-w-0 flex-1">
           <button
             type="button"
             onClick={() => inputRef.current?.click()}
             disabled={isUploading}
-            className="rounded-lg border border-dashed border-[#2A2A2A] bg-[#0A0A0A] px-3 py-2 text-sm text-[#A3A3A3] transition-colors hover:border-[#6EE7B7] hover:text-[#6EE7B7] disabled:cursor-not-allowed disabled:opacity-50"
+            className="w-full rounded-lg border border-dashed border-[#2A2A2A] bg-[#0A0A0A] px-3 py-2 text-sm text-[#A3A3A3] transition-colors hover:border-[#6EE7B7] hover:text-[#6EE7B7] disabled:cursor-not-allowed disabled:opacity-50"
           >
             {isUploading ? 'Enviando...' : value ? 'Trocar imagem' : 'Selecionar imagem'}
           </button>
-          {value && <p className="truncate font-mono text-xs text-[#525252]">{value}</p>}
+          {value && (
+            <p className="mt-1 truncate font-mono text-xs text-[#525252]">
+              {value.split('/').pop()}
+            </p>
+          )}
         </div>
         <input
           ref={inputRef}
