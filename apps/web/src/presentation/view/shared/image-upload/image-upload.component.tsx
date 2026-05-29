@@ -42,17 +42,14 @@ async function getCroppedBlob(
   ctx.drawImage(image, cropX, cropY, cropWidth, cropHeight, 0, 0, outputWidth, outputHeight);
 
   return new Promise((resolve, reject) => {
-    canvas.toBlob(
-      (blob) => {
-        if (!blob) {
-          reject(new Error('Canvas vazio'));
-          return;
-        }
-        resolve(new File([blob], fileName, { type: 'image/jpeg' }));
-      },
-      'image/jpeg',
-      0.92,
-    );
+    canvas.toBlob((blob) => {
+      if (!blob) {
+        reject(new Error('Canvas vazio'));
+        return;
+      }
+      const baseName = fileName.replace(/\.[^/.]+$/, '');
+      resolve(new File([blob], `${baseName}.png`, { type: 'image/png' }));
+    }, 'image/png');
   });
 }
 
@@ -97,7 +94,7 @@ export function ImageUpload({
     setError(null);
     try {
       const croppedFile = await getCroppedBlob(imgRef.current, crop, originalFileName);
-      const ext = originalFileName.split('.').pop() ?? 'jpg';
+      const ext = 'png';
       const path = `${folder}/${crypto.randomUUID()}.${ext}`;
       const client = getSupabase();
       const { error: uploadError } = await client.storage
