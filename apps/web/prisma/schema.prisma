@@ -63,6 +63,33 @@ model User {
   createdAt    DateTime @default(now())
 }
 
+model Certification {
+  id     String  @id @default(cuid())
+  name   String
+  issuer String
+  year   Int?
+  url    String?
+  order  Int     @default(0)
+}
+
+model Education {
+  id          String   @id @default(cuid())
+  institution String
+  degree      String
+  field       String?
+  startYear   Int
+  endYear     Int?
+  current     Boolean  @default(false)
+  order       Int      @default(0)
+}
+
+model Language {
+  id    String @id @default(cuid())
+  name  String
+  level String
+  order Int    @default(0)
+}
+
 model SiteConfig {
   id               String   @id @default(cuid())
   heroGreeting     String
