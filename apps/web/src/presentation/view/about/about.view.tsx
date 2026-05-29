@@ -1,7 +1,6 @@
 'use client';
 
 import type { Certification } from '@/domain/entities/certification/certification.entity';
-import Image from 'next/image';
 import type { Education } from '@/domain/entities/education/education.entity';
 import type { Language } from '@/domain/entities/language/language.entity';
 import type { SkillCategory } from '@/domain/entities/skill/skill.entity';
