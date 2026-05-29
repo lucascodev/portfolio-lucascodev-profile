@@ -315,7 +315,7 @@ export function AboutView() {
                   </button>
                 )}
                 {cert.badgeUrl ? (
-                  <div className="relative h-10 w-10 shrink-0 overflow-hidden rounded-md border border-[#2A2A2A]">
+                  <div className="relative h-10 w-10 shrink-0">
                     <Image
                       src={cert.badgeUrl}
                       alt={cert.name}
