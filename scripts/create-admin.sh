@@ -57,9 +57,9 @@ docker run --rm \
   -e DB_URL="$DB_URL" \
   -e ADMIN_EMAIL="$ADMIN_EMAIL" \
   -e ADMIN_PASSWORD="$ADMIN_PASSWORD" \
-  -v "$SCRIPT_FILE":/create-admin.js \
+  -v "$SCRIPT_FILE":/app/create-admin.js \
   node:20-alpine \
-  sh -c 'mkdir -p /app && cd /app && npm install --quiet --no-progress bcryptjs pg >/dev/null 2>&1 && node /create-admin.js'
+  sh -c 'cd /app && npm install --quiet --no-progress bcryptjs pg >/dev/null 2>&1 && node /app/create-admin.js'
 
 rm -f "$SCRIPT_FILE"
 
