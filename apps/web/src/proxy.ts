@@ -14,7 +14,7 @@ const PROTECTED_PATHS = [
   '/api/languages',
 ];
 
-export async function middleware(request: NextRequest) {
+export async function proxy(request: NextRequest) {
   const { pathname, method } = { pathname: request.nextUrl.pathname, method: request.method };
 
   const isProtectedPath = PROTECTED_PATHS.some((p) => pathname.startsWith(p));

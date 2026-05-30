@@ -30,6 +30,22 @@
   --color-state-info: #3b82f6;
 }
 
+/* Certifications marquee */
+@keyframes marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+.animate-marquee {
+  animation: marquee 22s linear infinite;
+}
+.animate-marquee-wrap:hover .animate-marquee {
+  animation-play-state: paused;
+}
+
 /* Rich text editor (TipTap) */
 .rich-editor .ProseMirror {
   min-height: 6rem;
@@ -62,6 +78,35 @@
 }
 .rich-content li {
   margin-bottom: 0.125rem;
+}
+.rich-content ul ul,
+.rich-content ol ol,
+.rich-content ul ol,
+.rich-content ol ul {
+  margin-top: 0.125rem;
+  margin-bottom: 0;
+  padding-left: 1.25rem;
+}
+
+/* Editor nested lists */
+.rich-editor .ProseMirror ul,
+.rich-editor .ProseMirror ol {
+  padding-left: 1.25rem;
+}
+.rich-editor .ProseMirror ul {
+  list-style: disc;
+}
+.rich-editor .ProseMirror ol {
+  list-style: decimal;
+}
+.rich-editor .ProseMirror li p {
+  margin: 0;
+}
+.rich-editor .ProseMirror ul ul,
+.rich-editor .ProseMirror ol ol,
+.rich-editor .ProseMirror ul ol,
+.rich-editor .ProseMirror ol ul {
+  padding-left: 1.25rem;
 }
 
 ::selection {

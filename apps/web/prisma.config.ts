@@ -1,3 +1,10 @@
+import { existsSync } from 'node:fs';
+import { resolve } from 'node:path';
+
+if (existsSync(resolve(__dirname, '.env'))) {
+  await import('dotenv/config');
+}
+
 import { defineConfig } from 'prisma/config';
 
 export default defineConfig({

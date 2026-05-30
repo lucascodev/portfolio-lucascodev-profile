@@ -12,8 +12,38 @@ import { AnimatePresence, motion } from 'framer-motion';
 import Image from 'next/image';
 import { useMemo, useState } from 'react';
 
+import type { Certification } from '@/domain/entities/certification/certification.entity';
+
 interface HeroSectionProps {
   readonly initialData?: SiteConfig;
+}
+
+function CertBadge({ cert }: { cert: Certification }) {
+  const inner = cert.badgeUrl ? (
+    <div className="relative h-7 w-7 opacity-40 transition-opacity duration-200 group-hover:opacity-100">
+      <Image src={cert.badgeUrl} alt={cert.name} fill className="object-contain" unoptimized />
+    </div>
+  ) : (
+    <span className="whitespace-nowrap font-mono text-xs text-[#525252] opacity-40 transition-opacity duration-200 group-hover:opacity-100">
+      {cert.name}
+    </span>
+  );
+
+  return cert.url ? (
+    <a
+      href={cert.url}
+      target="_blank"
+      rel="noopener noreferrer"
+      title={`${cert.name} — ${cert.issuer}`}
+      className="group flex items-center"
+    >
+      {inner}
+    </a>
+  ) : (
+    <div title={`${cert.name} — ${cert.issuer}`} className="group flex items-center">
+      {inner}
+    </div>
+  );
 }
 
 export function HeroSection({ initialData }: HeroSectionProps) {
@@ -137,50 +167,29 @@ export function HeroSection({ initialData }: HeroSectionProps) {
         {certifications.length > 0 && (
           <motion.div
             key="certifications"
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, ease: 'easeOut', delay: 0.9 }}
-            className="mt-10 flex flex-col items-center gap-3"
+            className="absolute bottom-8 left-0 right-0 flex flex-col items-center gap-2"
           >
-            <p className="font-mono text-[10px] font-semibold uppercase tracking-widest text-[#3D3D3D]">
+            <p className="mb-1 font-mono text-[10px] font-semibold uppercase tracking-widest text-[#3D3D3D]">
               Certificações
             </p>
-            <div className="flex flex-wrap justify-center gap-5">
-              {certifications.map((cert) => {
-                const badge = cert.badgeUrl ? (
-                  <div className="relative h-8 w-8 opacity-50 transition-opacity duration-200 group-hover:opacity-100">
-                    <Image
-                      src={cert.badgeUrl}
-                      alt={cert.name}
-                      fill
-                      className="object-contain"
-                      unoptimized
-                    />
-                  </div>
-                ) : (
-                  <span className="font-mono text-xs text-[#525252] opacity-50 transition-opacity duration-200 group-hover:opacity-100">
-                    {cert.name}
-                  </span>
-                );
-
-                return cert.url ? (
-                  <a
-                    key={cert.id}
-                    href={cert.url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    title={`${cert.name} — ${cert.issuer}`}
-                    className="group"
-                  >
-                    {badge}
-                  </a>
-                ) : (
-                  <div key={cert.id} title={`${cert.name} — ${cert.issuer}`} className="group">
-                    {badge}
-                  </div>
-                );
-              })}
-            </div>
+            {certifications.length >= 5 ? (
+              <div className="animate-marquee-wrap w-full overflow-hidden [mask-image:linear-gradient(to_right,transparent,black_15%,black_85%,transparent)]">
+                <div className="animate-marquee flex w-max gap-8">
+                  {[...certifications, ...certifications].map((cert, i) => (
+                    <CertBadge key={`${cert.id}-${i}`} cert={cert} />
+                  ))}
+                </div>
+              </div>
+            ) : (
+              <div className="flex items-center justify-center gap-8 px-6">
+                {certifications.map((cert) => (
+                  <CertBadge key={cert.id} cert={cert} />
+                ))}
+              </div>
+            )}
           </motion.div>
         )}
       </AnimatePresence>

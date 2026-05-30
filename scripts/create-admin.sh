@@ -1,15 +1,26 @@
 #!/bin/sh
 set -e
 
-if [ ! -f .env.production ]; then
-  echo "Error: .env.production not found. Run this script from /opt/portfolio-lucascodev-profile"
+# Detect environment: pass "prod" as first argument to use .env.production
+ENV="${1:-dev}"
+
+if [ "$ENV" = "prod" ]; then
+  ENV_FILE=".env.production"
+else
+  ENV_FILE=".env"
+fi
+
+if [ ! -f "$ENV_FILE" ]; then
+  echo "Error: $ENV_FILE not found. Run this script from the repo root."
   exit 1
 fi
 
-DB_URL=$(grep '^DATABASE_URL=' .env.production | cut -d'=' -f2-)
+echo "Using environment: $ENV ($ENV_FILE)"
+
+DB_URL=$(grep '^DATABASE_URL=' "$ENV_FILE" | cut -d'=' -f2-)
 
 if [ -z "$DB_URL" ]; then
-  echo "Error: DATABASE_URL not found in .env.production"
+  echo "Error: DATABASE_URL not found in $ENV_FILE"
   exit 1
 fi
 
@@ -24,10 +35,18 @@ if [ -z "$ADMIN_EMAIL" ] || [ -z "$ADMIN_PASSWORD" ]; then
   exit 1
 fi
 
-# Write the Node.js script to a temp file to avoid heredoc/stdin issues with docker run
-SCRIPT_FILE=$(mktemp /tmp/create-admin-XXXXXX.js)
+echo "Creating admin user..."
 
-cat > "$SCRIPT_FILE" << 'JSEOF'
+NETWORK="--network portfolio-lucascodev-profile_default"
+
+# Pass the script via stdin to avoid Windows path conversion issues with volume mounts
+docker run --rm -i \
+  $NETWORK \
+  -e DB_URL="$DB_URL" \
+  -e ADMIN_EMAIL="$ADMIN_EMAIL" \
+  -e ADMIN_PASSWORD="$ADMIN_PASSWORD" \
+  node:20-alpine \
+  sh -c 'mkdir -p /app && cd /app && npm install --quiet --no-progress bcryptjs pg >/dev/null 2>&1 && cat > /app/run.js && node /app/run.js' << 'JSEOF'
 const bcrypt = require('bcryptjs');
 const { Client } = require('pg');
 (async () => {
@@ -50,17 +69,8 @@ const { Client } = require('pg');
 })().catch(e => { console.error('Error:', e.message); process.exit(1); });
 JSEOF
 
-echo "Creating admin user..."
-
-docker run --rm \
-  --network portfolio-lucascodev-profile_default \
-  -e DB_URL="$DB_URL" \
-  -e ADMIN_EMAIL="$ADMIN_EMAIL" \
-  -e ADMIN_PASSWORD="$ADMIN_PASSWORD" \
-  -v "$SCRIPT_FILE":/app/create-admin.js \
-  node:20-alpine \
-  sh -c 'cd /app && npm install --quiet --no-progress bcryptjs pg >/dev/null 2>&1 && node /app/create-admin.js'
-
-rm -f "$SCRIPT_FILE"
-
-echo "Done! Log in at: https://lucascodev.com.br/login"
+if [ "$ENV" = "prod" ]; then
+  echo "Done! Log in at: https://lucascodev.com.br/login"
+else
+  echo "Done! Log in at: http://localhost:3000/login"
+fi
