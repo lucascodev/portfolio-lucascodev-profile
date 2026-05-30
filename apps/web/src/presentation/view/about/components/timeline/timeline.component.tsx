@@ -40,7 +40,10 @@ export function Timeline({ experiences }: Readonly<TimelineProps>) {
             </div>
             <h3 className="text-base font-semibold text-white">{exp.role}</h3>
             <p className="text-sm font-medium text-[#6EE7B7]">{exp.company}</p>
-            <p className="mt-1 text-sm text-[#A3A3A3]">{exp.description}</p>
+            <div
+              className="rich-content mt-1 text-sm text-[#A3A3A3]"
+              dangerouslySetInnerHTML={{ __html: exp.description }}
+            />
             <div className="mt-2 flex flex-wrap gap-1.5">
               {exp.techStack.map((tech) => (
                 <span
