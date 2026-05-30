@@ -8,7 +8,7 @@ import { EditHeroModal } from '@/presentation/view/home/components/edit-hero-mod
 import { EditButton } from '@/presentation/view/shared/edit-button/edit-button.component';
 import { fadeUp, heroStagger } from '@/shared/utils/motion/motion.variants';
 import { Text } from '@portfolio/design-system';
-import { motion } from 'framer-motion';
+import { AnimatePresence, motion } from 'framer-motion';
 import Image from 'next/image';
 import { useMemo, useState } from 'react';
 
@@ -133,49 +133,57 @@ export function HeroSection({ initialData }: HeroSectionProps) {
         ))}
       </motion.div>
 
-      {certifications.length > 0 && (
-        <motion.div variants={fadeUp} className="mt-10 flex flex-col items-center gap-3">
-          <p className="font-mono text-[10px] font-semibold uppercase tracking-widest text-[#3D3D3D]">
-            Certificações
-          </p>
-          <div className="flex flex-wrap justify-center gap-5">
-            {certifications.map((cert) => {
-              const badge = cert.badgeUrl ? (
-                <div className="relative h-8 w-8 opacity-50 transition-opacity duration-200 group-hover:opacity-100">
-                  <Image
-                    src={cert.badgeUrl}
-                    alt={cert.name}
-                    fill
-                    className="object-contain"
-                    unoptimized
-                  />
-                </div>
-              ) : (
-                <span className="font-mono text-xs text-[#525252] opacity-50 transition-opacity duration-200 group-hover:opacity-100">
-                  {cert.name}
-                </span>
-              );
+      <AnimatePresence>
+        {certifications.length > 0 && (
+          <motion.div
+            key="certifications"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, ease: 'easeOut', delay: 0.9 }}
+            className="mt-10 flex flex-col items-center gap-3"
+          >
+            <p className="font-mono text-[10px] font-semibold uppercase tracking-widest text-[#3D3D3D]">
+              Certificações
+            </p>
+            <div className="flex flex-wrap justify-center gap-5">
+              {certifications.map((cert) => {
+                const badge = cert.badgeUrl ? (
+                  <div className="relative h-8 w-8 opacity-50 transition-opacity duration-200 group-hover:opacity-100">
+                    <Image
+                      src={cert.badgeUrl}
+                      alt={cert.name}
+                      fill
+                      className="object-contain"
+                      unoptimized
+                    />
+                  </div>
+                ) : (
+                  <span className="font-mono text-xs text-[#525252] opacity-50 transition-opacity duration-200 group-hover:opacity-100">
+                    {cert.name}
+                  </span>
+                );
 
-              return cert.url ? (
-                <a
-                  key={cert.id}
-                  href={cert.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  title={`${cert.name} — ${cert.issuer}`}
-                  className="group"
-                >
-                  {badge}
-                </a>
-              ) : (
-                <div key={cert.id} title={`${cert.name} — ${cert.issuer}`} className="group">
-                  {badge}
-                </div>
-              );
-            })}
-          </div>
-        </motion.div>
-      )}
+                return cert.url ? (
+                  <a
+                    key={cert.id}
+                    href={cert.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    title={`${cert.name} — ${cert.issuer}`}
+                    className="group"
+                  >
+                    {badge}
+                  </a>
+                ) : (
+                  <div key={cert.id} title={`${cert.name} — ${cert.issuer}`} className="group">
+                    {badge}
+                  </div>
+                );
+              })}
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
 
       {data && (
         <EditHeroModal
