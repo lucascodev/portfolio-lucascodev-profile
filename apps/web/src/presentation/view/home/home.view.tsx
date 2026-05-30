@@ -1,5 +1,6 @@
 import type { SiteConfig } from '@/domain/entities/site-config/site-config.entity';
 import { HeroSection } from './components/hero-section/hero-section.component';
+import { CertificationsStrip } from './components/certifications-strip/certifications-strip.component';
 import { FeaturedProjects } from './components/featured-projects/featured-projects.component';
 import { Text } from '@portfolio/design-system';
 
@@ -11,6 +12,7 @@ export function HomeView({ siteConfig }: HomeViewProps) {
   return (
     <main>
       <HeroSection initialData={siteConfig} />
+      <CertificationsStrip />
       <section className="mx-auto max-w-6xl px-6 py-24">
         <Text variant="h2" className="mb-2">
           Projetos em Destaque
