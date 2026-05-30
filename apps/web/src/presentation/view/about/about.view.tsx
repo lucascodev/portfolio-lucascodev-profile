@@ -57,6 +57,7 @@ export function AboutView() {
   const { data: siteConfig } = useSiteConfigQuery();
   const isEditMode = useAdminStore((s) => s.isEditMode);
   const [failedAvatarUrl, setFailedAvatarUrl] = useState<string | null>(null);
+  const [lightboxBadge, setLightboxBadge] = useState<{ url: string; name: string } | null>(null);
   const [isCreateSkillModalOpen, setIsCreateSkillModalOpen] = useState(false);
   const [isCreateExperienceModalOpen, setIsCreateExperienceModalOpen] = useState(false);
   const [isCreateCertificationModalOpen, setIsCreateCertificationModalOpen] = useState(false);
@@ -315,7 +316,12 @@ export function AboutView() {
                   </button>
                 )}
                 {cert.badgeUrl ? (
-                  <div className="relative h-10 w-10 shrink-0 bg-[#0A0A0A]">
+                  <button
+                    type="button"
+                    onClick={() => setLightboxBadge({ url: cert.badgeUrl!, name: cert.name })}
+                    className="relative h-10 w-10 shrink-0 cursor-zoom-in bg-[#0A0A0A] transition-opacity hover:opacity-75"
+                    title="Ver badge maior"
+                  >
                     <Image
                       src={cert.badgeUrl}
                       alt={cert.name}
@@ -323,7 +329,7 @@ export function AboutView() {
                       className="object-contain"
                       unoptimized
                     />
-                  </div>
+                  </button>
                 ) : (
                   <span className="mt-0.5 text-[#6EE7B7]">▸</span>
                 )}
@@ -448,6 +454,40 @@ export function AboutView() {
           isOpen={true}
           onClose={() => setEditingLanguage(null)}
         />
+      )}
+
+      {lightboxBadge && (
+        <div
+          role="dialog"
+          aria-modal="true"
+          aria-label={`Badge ${lightboxBadge.name}`}
+          className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-sm"
+          onClick={() => setLightboxBadge(null)}
+        >
+          <div
+            className="relative flex flex-col items-center gap-4 rounded-2xl border border-[#2A2A2A] bg-[#0A0A0A] p-8"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <button
+              type="button"
+              onClick={() => setLightboxBadge(null)}
+              className="absolute right-3 top-3 text-[#525252] transition-colors hover:text-white"
+              aria-label="Fechar"
+            >
+              ✕
+            </button>
+            <div className="relative h-40 w-40">
+              <Image
+                src={lightboxBadge.url}
+                alt={lightboxBadge.name}
+                fill
+                className="object-contain"
+                unoptimized
+              />
+            </div>
+            <p className="text-sm font-medium text-[#A3A3A3]">{lightboxBadge.name}</p>
+          </div>
+        </div>
       )}
     </main>
   );
