@@ -1,6 +1,7 @@
 'use client';
 
 import type { SiteConfig } from '@/domain/entities/site-config/site-config.entity';
+import { useCertificationsQuery } from '@/presentation/hooks/use-certifications-query/use-certifications-query.hook';
 import { useSiteConfigQuery } from '@/presentation/hooks/use-site-config-query/use-site-config-query.hook';
 import { useAdminStore } from '@/presentation/store/admin/admin.store';
 import { EditHeroModal } from '@/presentation/view/home/components/edit-hero-modal/edit-hero-modal.component';
@@ -20,6 +21,7 @@ export function HeroSection({ initialData }: HeroSectionProps) {
   const [failedAvatarUrl, setFailedAvatarUrl] = useState<string | null>(null);
   const isEditMode = useAdminStore((state) => state.isEditMode);
   const { data } = useSiteConfigQuery(initialData);
+  const { data: certifications = [] } = useCertificationsQuery();
 
   const config = useMemo(
     () => ({
@@ -130,6 +132,50 @@ export function HeroSection({ initialData }: HeroSectionProps) {
           </span>
         ))}
       </motion.div>
+
+      {certifications.length > 0 && (
+        <motion.div variants={fadeUp} className="mt-10 flex flex-col items-center gap-3">
+          <p className="font-mono text-[10px] font-semibold uppercase tracking-widest text-[#3D3D3D]">
+            Certificações
+          </p>
+          <div className="flex flex-wrap justify-center gap-5">
+            {certifications.map((cert) => {
+              const badge = cert.badgeUrl ? (
+                <div className="relative h-8 w-8 opacity-50 transition-opacity duration-200 group-hover:opacity-100">
+                  <Image
+                    src={cert.badgeUrl}
+                    alt={cert.name}
+                    fill
+                    className="object-contain"
+                    unoptimized
+                  />
+                </div>
+              ) : (
+                <span className="font-mono text-xs text-[#525252] opacity-50 transition-opacity duration-200 group-hover:opacity-100">
+                  {cert.name}
+                </span>
+              );
+
+              return cert.url ? (
+                <a
+                  key={cert.id}
+                  href={cert.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  title={`${cert.name} — ${cert.issuer}`}
+                  className="group"
+                >
+                  {badge}
+                </a>
+              ) : (
+                <div key={cert.id} title={`${cert.name} — ${cert.issuer}`} className="group">
+                  {badge}
+                </div>
+              );
+            })}
+          </div>
+        </motion.div>
+      )}
 
       {data && (
         <EditHeroModal
