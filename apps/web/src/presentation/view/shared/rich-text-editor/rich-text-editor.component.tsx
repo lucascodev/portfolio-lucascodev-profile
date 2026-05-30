@@ -54,14 +54,15 @@ export function RichTextEditor({ label, value, onChange }: RichTextEditorProps) 
 
   useEffect(() => {
     if (!editor) return;
-    const dom = editor.view.dom as HTMLElement;
-    function onKeyDown(e: KeyboardEvent) {
-      if (e.key !== 'Tab') return;
-      e.preventDefault();
-      if (e.shiftKey) {
-        editor.chain().focus().liftListItem('listItem').run();
+    const e = editor;
+    const dom = e.view.dom as HTMLElement;
+    function onKeyDown(ev: KeyboardEvent) {
+      if (ev.key !== 'Tab') return;
+      ev.preventDefault();
+      if (ev.shiftKey) {
+        e.chain().focus().liftListItem('listItem').run();
       } else {
-        editor.chain().focus().sinkListItem('listItem').run();
+        e.chain().focus().sinkListItem('listItem').run();
       }
     }
     dom.addEventListener('keydown', onKeyDown);
