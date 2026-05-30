@@ -3,7 +3,7 @@
 import type { ProjectCategory, ProjectStatus } from '@/domain/entities/project/project.entity';
 import { useCreateProject } from '@/presentation/hooks/use-project-mutations/use-project-mutations.hook';
 import { EditModal } from '@/presentation/view/shared/edit-modal/edit-modal.component';
-import { Button, Input } from '@portfolio/design-system';
+import { Badge, Button, Input } from '@portfolio/design-system';
 import { useState } from 'react';
 
 interface CreateProjectModalProps {
@@ -96,11 +96,24 @@ export function CreateProjectModal({ isOpen, onClose }: Readonly<CreateProjectMo
           value={form.coverImage}
           onChange={(e) => setForm((p) => ({ ...p, coverImage: e.target.value }))}
         />
-        <Input
-          label="Tech Stack (separado por vírgula)"
-          value={form.techStack}
-          onChange={(e) => setForm((p) => ({ ...p, techStack: e.target.value }))}
-        />
+        <div className="flex flex-col gap-1.5">
+          <Input
+            label="Tech Stack (separado por vírgula)"
+            value={form.techStack}
+            onChange={(e) => setForm((p) => ({ ...p, techStack: e.target.value }))}
+          />
+          {form.techStack.trim() && (
+            <div className="flex flex-wrap gap-1.5 rounded-lg border border-[#2A2A2A] bg-[#0A0A0A] px-3 py-2">
+              {form.techStack
+                .split(',')
+                .map((t) => t.trim())
+                .filter(Boolean)
+                .map((tech) => (
+                  <Badge key={tech}>{tech}</Badge>
+                ))}
+            </div>
+          )}
+        </div>
         <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
           <div className="flex flex-col gap-1.5">
             <label className="text-sm text-[#A3A3A3]">Categoria</label>
