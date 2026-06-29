@@ -1,6 +1,7 @@
 'use client';
 
 import { Button, Input } from '@portfolio/design-system';
+import { useQueryClient } from '@tanstack/react-query';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { z } from 'zod';
@@ -15,6 +16,7 @@ type FormErrors = Partial<Record<keyof LoginForm, string>>;
 
 export function LoginForm() {
   const router = useRouter();
+  const queryClient = useQueryClient();
   const [form, setForm] = useState<LoginForm>({ email: '', password: '' });
   const [errors, setErrors] = useState<FormErrors>({});
   const [serverError, setServerError] = useState<string | null>(null);
@@ -49,8 +51,8 @@ export function LoginForm() {
       });
 
       if (res.ok) {
+        queryClient.setQueryData(['auth', 'me'], { isAdmin: true });
         router.push('/');
-        router.refresh();
         return;
       }
 

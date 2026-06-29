@@ -4,9 +4,17 @@ import { NextRequest, NextResponse } from 'next/server';
 
 const PROTECTED_METHODS = new Set(['POST', 'PATCH', 'DELETE', 'PUT']);
 
-const PROTECTED_PATHS = ['/api/projects', '/api/skills', '/api/experiences', '/api/site-config'];
+const PROTECTED_PATHS = [
+  '/api/projects',
+  '/api/skills',
+  '/api/experiences',
+  '/api/site-config',
+  '/api/certifications',
+  '/api/education',
+  '/api/languages',
+];
 
-export async function middleware(request: NextRequest) {
+export async function proxy(request: NextRequest) {
   const { pathname, method } = { pathname: request.nextUrl.pathname, method: request.method };
 
   const isProtectedPath = PROTECTED_PATHS.some((p) => pathname.startsWith(p));
@@ -31,5 +39,8 @@ export const config = {
     '/api/skills/:path*',
     '/api/experiences/:path*',
     '/api/site-config/:path*',
+    '/api/certifications/:path*',
+    '/api/education/:path*',
+    '/api/languages/:path*',
   ],
 };

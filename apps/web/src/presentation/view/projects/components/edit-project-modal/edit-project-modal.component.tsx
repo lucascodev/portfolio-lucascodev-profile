@@ -6,6 +6,7 @@ import {
   useUpdateProject,
 } from '@/presentation/hooks/use-project-mutations/use-project-mutations.hook';
 import { EditModal } from '@/presentation/view/shared/edit-modal/edit-modal.component';
+import { RichTextEditor } from '@/presentation/view/shared/rich-text-editor/rich-text-editor.component';
 import { Button, Input } from '@portfolio/design-system';
 import { useState } from 'react';
 
@@ -15,15 +16,7 @@ interface EditProjectModalProps {
   onClose: () => void;
 }
 
-const CATEGORIES = [
-  'mobile',
-  'web',
-  'frontend',
-  'backend',
-  'ai',
-  'fullstack',
-  'game',
-] as const;
+const CATEGORIES = ['mobile', 'web', 'frontend', 'backend', 'ai', 'fullstack', 'game'] as const;
 
 const STATUSES = ['in_progress', 'completed', 'archived'] as const;
 
@@ -99,23 +92,17 @@ export function EditProjectModal({ project, isOpen, onClose }: EditProjectModalP
           value={form.shortDescription}
           onChange={(e) => handleChange('shortDescription', e.target.value)}
         />
-        <div className="flex flex-col gap-1.5">
-          <label className="text-sm text-[#A3A3A3]">Descrição completa</label>
-          <textarea
-            value={form.fullDescription}
-            onChange={(e) => handleChange('fullDescription', e.target.value)}
-            rows={4}
-            className="rounded-lg border border-[#2A2A2A] bg-[#0A0A0A] px-3 py-2 text-sm text-white focus:border-[#6EE7B7] focus:outline-none"
-          />
-        </div>
+        <RichTextEditor
+          label="Descrição completa"
+          value={form.fullDescription}
+          onChange={(html) => handleChange('fullDescription', html)}
+        />
         <div className="grid grid-cols-2 gap-3">
           <div className="flex flex-col gap-1.5">
             <label className="text-sm text-[#A3A3A3]">Categoria</label>
             <select
               value={form.category}
-              onChange={(e) =>
-                handleChange('category', e.target.value as Project['category'])
-              }
+              onChange={(e) => handleChange('category', e.target.value as Project['category'])}
               className={selectClass}
             >
               {CATEGORIES.map((c) => (
@@ -129,9 +116,7 @@ export function EditProjectModal({ project, isOpen, onClose }: EditProjectModalP
             <label className="text-sm text-[#A3A3A3]">Status</label>
             <select
               value={form.status}
-              onChange={(e) =>
-                handleChange('status', e.target.value as Project['status'])
-              }
+              onChange={(e) => handleChange('status', e.target.value as Project['status'])}
               className={selectClass}
             >
               {STATUSES.map((s) => (

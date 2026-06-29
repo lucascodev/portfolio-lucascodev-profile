@@ -9,6 +9,9 @@ async function main() {
   await prisma.project.deleteMany();
   await prisma.skill.deleteMany();
   await prisma.experience.deleteMany();
+  await prisma.certification.deleteMany();
+  await prisma.education.deleteMany();
+  await prisma.language.deleteMany();
   await prisma.siteConfig.deleteMany();
 
   await prisma.project.createMany({
@@ -162,6 +165,30 @@ async function main() {
         current: false,
         order: 3,
       },
+    ],
+  });
+
+  await prisma.certification.createMany({
+    data: [
+      { name: 'GitHub Copilot', issuer: 'GitHub', year: null, url: null, order: 1 },
+      { name: 'Web Development for Beginners', issuer: 'Microsoft', year: null, url: null, order: 2 },
+      { name: 'Introduction to Node.js', issuer: 'OpenJS Foundation', year: null, url: null, order: 3 },
+      { name: 'Interactively Debug Node.js Apps', issuer: 'Microsoft', year: null, url: null, order: 4 },
+      { name: 'Lógica Orientada a Objetos Completo', issuer: 'TreinaWeb', year: null, url: null, order: 5 },
+    ],
+  });
+
+  await prisma.education.createMany({
+    data: [
+      { institution: 'UNIASSELVI', degree: 'Bacharelado', field: 'Engenharia de Software', startYear: 2025, endYear: null, current: true, order: 1 },
+      { institution: 'TreinaWeb', degree: 'Ensino Técnico', field: 'Desenvolvimento Web', startYear: 2018, endYear: 2021, current: false, order: 2 },
+    ],
+  });
+
+  await prisma.language.createMany({
+    data: [
+      { name: 'Português', level: 'native', order: 1 },
+      { name: 'Inglês', level: 'elementary', order: 2 },
     ],
   });
 

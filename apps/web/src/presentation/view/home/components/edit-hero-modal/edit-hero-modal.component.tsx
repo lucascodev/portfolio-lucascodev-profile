@@ -3,6 +3,7 @@
 import type { SiteConfig } from '@/domain/entities/site-config/site-config.entity';
 import { useUpdateSiteConfig } from '@/presentation/hooks/use-site-config-mutations/use-site-config-mutations.hook';
 import { EditModal } from '@/presentation/view/shared/edit-modal/edit-modal.component';
+import { ImageUpload } from '@/presentation/view/shared/image-upload/image-upload.component';
 import { Button, Input } from '@portfolio/design-system';
 import { useMemo, useState } from 'react';
 
@@ -85,10 +86,13 @@ export function EditHeroModal({ isOpen, onClose, config }: Readonly<EditHeroModa
           value={form.heroRole}
           onChange={(e) => setForm((prev) => ({ ...prev, heroRole: e.target.value }))}
         />
-        <Input
-          label="Imagem (URL)"
+        <ImageUpload
+          label="Foto de perfil"
           value={form.profileImageUrl}
-          onChange={(e) => setForm((prev) => ({ ...prev, profileImageUrl: e.target.value }))}
+          onChange={(url) => setForm((prev) => ({ ...prev, profileImageUrl: url }))}
+          folder="avatar"
+          aspect={1}
+          circular={true}
         />
         <div className="flex flex-col gap-1.5">
           <label className="text-sm text-[#A3A3A3]">Descrição</label>

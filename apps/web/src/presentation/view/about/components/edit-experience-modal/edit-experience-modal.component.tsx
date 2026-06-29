@@ -6,6 +6,7 @@ import {
   useUpdateExperience,
 } from '@/presentation/hooks/use-experience-mutations/use-experience-mutations.hook';
 import { EditModal } from '@/presentation/view/shared/edit-modal/edit-modal.component';
+import { RichTextEditor } from '@/presentation/view/shared/rich-text-editor/rich-text-editor.component';
 import { Button, Input } from '@portfolio/design-system';
 import { useState } from 'react';
 
@@ -81,10 +82,10 @@ export function EditExperienceModal({ experience, isOpen, onClose }: EditExperie
           value={form.role}
           onChange={(e) => setForm((p) => ({ ...p, role: e.target.value }))}
         />
-        <Input
+        <RichTextEditor
           label="Descrição"
           value={form.description}
-          onChange={(e) => setForm((p) => ({ ...p, description: e.target.value }))}
+          onChange={(html) => setForm((p) => ({ ...p, description: html }))}
         />
         <Input
           label="Tech Stack (separado por vírgula)"

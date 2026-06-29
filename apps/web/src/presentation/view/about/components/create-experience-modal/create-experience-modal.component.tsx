@@ -2,6 +2,7 @@
 
 import { useCreateExperience } from '@/presentation/hooks/use-experience-mutations/use-experience-mutations.hook';
 import { EditModal } from '@/presentation/view/shared/edit-modal/edit-modal.component';
+import { RichTextEditor } from '@/presentation/view/shared/rich-text-editor/rich-text-editor.component';
 import { Button, Input } from '@portfolio/design-system';
 import { useState } from 'react';
 
@@ -63,14 +64,11 @@ export function CreateExperienceModal({ isOpen, onClose }: Readonly<CreateExperi
           value={form.role}
           onChange={(e) => setForm((p) => ({ ...p, role: e.target.value }))}
         />
-        <div className="flex flex-col gap-1.5">
-          <label className="text-sm text-[#A3A3A3]">Descrição</label>
-          <textarea
-            value={form.description}
-            onChange={(e) => setForm((p) => ({ ...p, description: e.target.value }))}
-            className="min-h-24 rounded-lg border border-[#2A2A2A] bg-[#0A0A0A] px-3 py-2 text-sm text-white focus:border-[#6EE7B7] focus:outline-none"
-          />
-        </div>
+        <RichTextEditor
+          label="Descrição"
+          value={form.description}
+          onChange={(html) => setForm((p) => ({ ...p, description: html }))}
+        />
         <Input
           label="Tech Stack (separado por vírgula)"
           value={form.techStack}

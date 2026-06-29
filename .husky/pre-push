@@ -1,0 +1,2 @@
+pnpm --filter web exec prisma generate --no-hints
+pnpm typecheck

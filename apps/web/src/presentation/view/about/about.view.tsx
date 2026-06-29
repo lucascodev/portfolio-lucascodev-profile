@@ -1,7 +1,13 @@
 'use client';
 
+import type { Certification } from '@/domain/entities/certification/certification.entity';
+import type { Education } from '@/domain/entities/education/education.entity';
+import type { Language } from '@/domain/entities/language/language.entity';
 import type { SkillCategory } from '@/domain/entities/skill/skill.entity';
+import { useCertificationsQuery } from '@/presentation/hooks/use-certifications-query/use-certifications-query.hook';
+import { useEducationQuery } from '@/presentation/hooks/use-education-query/use-education-query.hook';
 import { useExperiencesQuery } from '@/presentation/hooks/use-experiences-query/use-experiences-query.hook';
+import { useLanguagesQuery } from '@/presentation/hooks/use-languages-query/use-languages-query.hook';
 import { useSiteConfigQuery } from '@/presentation/hooks/use-site-config-query/use-site-config-query.hook';
 import { useSkillsQuery } from '@/presentation/hooks/use-skills-query/use-skills-query.hook';
 import { useAdminStore } from '@/presentation/store/admin/admin.store';
@@ -11,9 +17,15 @@ import { Button, Text } from '@portfolio/design-system';
 import { motion } from 'framer-motion';
 import Image from 'next/image';
 import { useMemo, useState } from 'react';
+import { CreateCertificationModal } from './components/create-certification-modal/create-certification-modal.component';
+import { CreateEducationModal } from './components/create-education-modal/create-education-modal.component';
 import { CreateExperienceModal } from './components/create-experience-modal/create-experience-modal.component';
+import { CreateLanguageModal } from './components/create-language-modal/create-language-modal.component';
 import { CreateSkillModal } from './components/create-skill-modal/create-skill-modal.component';
 import { EditAboutBioModal } from './components/edit-about-bio-modal/edit-about-bio-modal.component';
+import { EditCertificationModal } from './components/edit-certification-modal/edit-certification-modal.component';
+import { EditEducationModal } from './components/edit-education-modal/edit-education-modal.component';
+import { EditLanguageModal } from './components/edit-language-modal/edit-language-modal.component';
 import { SkillLevel } from './components/skill-level/skill-level.component';
 import { Timeline } from './components/timeline/timeline.component';
 
@@ -27,14 +39,34 @@ const SKILL_CATEGORY_LABELS: Record<SkillCategory, string> = {
   other: 'Outros',
 };
 
+const LANGUAGE_LEVEL_LABELS: Record<Language['level'], string> = {
+  basic: 'Básico',
+  elementary: 'Elementar',
+  intermediate: 'Intermediário',
+  advanced: 'Avançado',
+  fluent: 'Fluente',
+  native: 'Nativo',
+};
+
 export function AboutView() {
   const { data: skills = [] } = useSkillsQuery();
   const { data: experiences = [] } = useExperiencesQuery();
+  const { data: certifications = [] } = useCertificationsQuery();
+  const { data: education = [] } = useEducationQuery();
+  const { data: languages = [] } = useLanguagesQuery();
   const { data: siteConfig } = useSiteConfigQuery();
   const isEditMode = useAdminStore((s) => s.isEditMode);
+  const [failedAvatarUrl, setFailedAvatarUrl] = useState<string | null>(null);
+  const [lightboxBadge, setLightboxBadge] = useState<{ url: string; name: string } | null>(null);
   const [isCreateSkillModalOpen, setIsCreateSkillModalOpen] = useState(false);
   const [isCreateExperienceModalOpen, setIsCreateExperienceModalOpen] = useState(false);
+  const [isCreateCertificationModalOpen, setIsCreateCertificationModalOpen] = useState(false);
+  const [isCreateEducationModalOpen, setIsCreateEducationModalOpen] = useState(false);
+  const [isCreateLanguageModalOpen, setIsCreateLanguageModalOpen] = useState(false);
   const [isEditBioModalOpen, setIsEditBioModalOpen] = useState(false);
+  const [editingCertification, setEditingCertification] = useState<Certification | null>(null);
+  const [editingEducation, setEditingEducation] = useState<Education | null>(null);
+  const [editingLanguage, setEditingLanguage] = useState<Language | null>(null);
 
   const skillsByCategory = skills.reduce<Partial<Record<SkillCategory, typeof skills>>>(
     (acc, skill) => {
@@ -62,7 +94,7 @@ export function AboutView() {
         'DDD',
         'Minimalismo',
       ],
-      imageUrl: siteConfig?.profileImageUrl ?? '/avatar.jpg',
+      imageUrl: siteConfig?.profileImageUrl ?? '',
       imageAlt: siteConfig?.heroName ?? 'Lucas Codev',
     }),
     [siteConfig],
@@ -105,22 +137,20 @@ export function AboutView() {
 
         <motion.div variants={fadeUp} className="flex justify-center">
           <div className="relative h-64 w-64 overflow-hidden rounded-2xl border border-[#2A2A2A]">
-            <Image
-              src={aboutConfig.imageUrl}
-              alt={aboutConfig.imageAlt}
-              unoptimized
-              fill
-              className="object-cover"
-              onError={(e) => {
-                const target = e.target as HTMLImageElement;
-                target.style.display = 'none';
-                const parent = target.parentElement;
-                if (parent) {
-                  parent.innerHTML =
-                    '<div class="flex h-full w-full items-center justify-center bg-[#111111] font-mono text-5xl font-bold text-[#6EE7B7]">LC</div>';
-                }
-              }}
-            />
+            {!aboutConfig.imageUrl || failedAvatarUrl === aboutConfig.imageUrl ? (
+              <div className="flex h-full w-full items-center justify-center bg-[#111111] font-mono text-5xl font-bold text-[#6EE7B7]">
+                LC
+              </div>
+            ) : (
+              <Image
+                src={aboutConfig.imageUrl}
+                alt={aboutConfig.imageAlt}
+                unoptimized
+                fill
+                className="object-cover"
+                onError={() => setFailedAvatarUrl(aboutConfig.imageUrl)}
+              />
+            )}
           </div>
         </motion.div>
       </motion.section>
@@ -199,12 +229,265 @@ export function AboutView() {
         />
       )}
 
+      {/* Education */}
+      <motion.section
+        className="mb-24"
+        variants={fadeUp}
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, margin: '-80px' }}
+      >
+        <div className="mb-8 flex items-center justify-between gap-4">
+          <Text variant="h3">Formação Acadêmica</Text>
+          {isEditMode && (
+            <Button
+              variant="secondary"
+              size="sm"
+              onClick={() => setIsCreateEducationModalOpen(true)}
+            >
+              Nova formação
+            </Button>
+          )}
+        </div>
+        {education.length > 0 ? (
+          <div className="flex flex-col gap-4">
+            {education.map((edu) => (
+              <div
+                key={edu.id}
+                className="relative rounded-xl border border-[#1A1A1A] bg-[#0A0A0A] p-5"
+              >
+                {isEditMode && (
+                  <button
+                    onClick={() => setEditingEducation(edu)}
+                    className="absolute right-4 top-4 rounded-md border border-[#2A2A2A] px-2 py-1 font-mono text-xs text-[#525252] transition-colors hover:border-[#6EE7B7] hover:text-[#6EE7B7]"
+                  >
+                    editar
+                  </button>
+                )}
+                <p className="font-semibold text-white">{edu.institution}</p>
+                <p className="text-sm text-[#A3A3A3]">
+                  {edu.degree}
+                  {edu.field ? ` — ${edu.field}` : ''}
+                </p>
+                <p className="mt-1 font-mono text-xs text-[#525252]">
+                  {edu.startYear} — {edu.current ? 'presente' : (edu.endYear ?? '?')}
+                </p>
+              </div>
+            ))}
+          </div>
+        ) : (
+          <p className="text-sm text-[#737373]">Em breve...</p>
+        )}
+      </motion.section>
+
+      {/* Certifications */}
+      <motion.section
+        className="mb-24"
+        variants={fadeUp}
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, margin: '-80px' }}
+      >
+        <div className="mb-8 flex items-center justify-between gap-4">
+          <Text variant="h3">Certificações</Text>
+          {isEditMode && (
+            <Button
+              variant="secondary"
+              size="sm"
+              onClick={() => setIsCreateCertificationModalOpen(true)}
+            >
+              Nova certificação
+            </Button>
+          )}
+        </div>
+        {certifications.length > 0 ? (
+          <div className="grid grid-cols-1 gap-3 md:grid-cols-2">
+            {certifications.map((cert) => (
+              <div
+                key={cert.id}
+                className="relative flex items-start gap-3 rounded-xl border border-[#1A1A1A] bg-[#0A0A0A] p-4"
+              >
+                {isEditMode && (
+                  <button
+                    onClick={() => setEditingCertification(cert)}
+                    className="absolute right-3 top-3 rounded-md border border-[#2A2A2A] px-2 py-0.5 font-mono text-xs text-[#525252] transition-colors hover:border-[#6EE7B7] hover:text-[#6EE7B7]"
+                  >
+                    editar
+                  </button>
+                )}
+                {cert.badgeUrl ? (
+                  <button
+                    type="button"
+                    onClick={() => setLightboxBadge({ url: cert.badgeUrl!, name: cert.name })}
+                    className="relative h-10 w-10 shrink-0 cursor-zoom-in bg-[#0A0A0A] transition-opacity hover:opacity-75"
+                    title="Ver badge maior"
+                  >
+                    <Image
+                      src={cert.badgeUrl}
+                      alt={cert.name}
+                      fill
+                      className="object-contain"
+                      unoptimized
+                    />
+                  </button>
+                ) : (
+                  <span className="mt-0.5 text-[#6EE7B7]">▸</span>
+                )}
+                <div className="min-w-0 flex-1 pr-10">
+                  {cert.url ? (
+                    <a
+                      href={cert.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="font-medium text-white transition-colors hover:text-[#6EE7B7]"
+                    >
+                      {cert.name}
+                    </a>
+                  ) : (
+                    <p className="font-medium text-white">{cert.name}</p>
+                  )}
+                  <p className="text-sm text-[#525252]">
+                    {cert.issuer}
+                    {cert.year ? ` · ${cert.year}` : ''}
+                  </p>
+                </div>
+              </div>
+            ))}
+          </div>
+        ) : (
+          <p className="text-sm text-[#737373]">Em breve...</p>
+        )}
+      </motion.section>
+
+      {/* Languages */}
+      <motion.section
+        className="mb-24"
+        variants={fadeUp}
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, margin: '-80px' }}
+      >
+        <div className="mb-8 flex items-center justify-between gap-4">
+          <Text variant="h3">Idiomas</Text>
+          {isEditMode && (
+            <Button
+              variant="secondary"
+              size="sm"
+              onClick={() => setIsCreateLanguageModalOpen(true)}
+            >
+              Novo idioma
+            </Button>
+          )}
+        </div>
+        {languages.length > 0 ? (
+          <div className="flex flex-wrap gap-3">
+            {languages.map((lang) => (
+              <div
+                key={lang.id}
+                className="relative flex items-center gap-3 rounded-xl border border-[#1A1A1A] bg-[#0A0A0A] px-5 py-3"
+              >
+                {isEditMode && (
+                  <button
+                    onClick={() => setEditingLanguage(lang)}
+                    className="absolute -right-1 -top-1 rounded-full border border-[#2A2A2A] bg-[#0A0A0A] px-1.5 py-0.5 font-mono text-xs text-[#525252] transition-colors hover:border-[#6EE7B7] hover:text-[#6EE7B7]"
+                  >
+                    ✎
+                  </button>
+                )}
+                <span className="font-medium text-white">{lang.name}</span>
+                <span className="rounded-full bg-[#6EE7B7]/10 px-2 py-0.5 font-mono text-xs text-[#6EE7B7]">
+                  {LANGUAGE_LEVEL_LABELS[lang.level]}
+                </span>
+              </div>
+            ))}
+          </div>
+        ) : (
+          <p className="text-sm text-[#737373]">Em breve...</p>
+        )}
+      </motion.section>
+
       {siteConfig && (
         <EditAboutBioModal
           isOpen={isEditBioModalOpen}
           onClose={() => setIsEditBioModalOpen(false)}
           config={siteConfig}
         />
+      )}
+
+      {isCreateCertificationModalOpen && (
+        <CreateCertificationModal
+          isOpen={isCreateCertificationModalOpen}
+          onClose={() => setIsCreateCertificationModalOpen(false)}
+        />
+      )}
+      {editingCertification && (
+        <EditCertificationModal
+          certification={editingCertification}
+          isOpen={true}
+          onClose={() => setEditingCertification(null)}
+        />
+      )}
+
+      {isCreateEducationModalOpen && (
+        <CreateEducationModal
+          isOpen={isCreateEducationModalOpen}
+          onClose={() => setIsCreateEducationModalOpen(false)}
+        />
+      )}
+      {editingEducation && (
+        <EditEducationModal
+          education={editingEducation}
+          isOpen={true}
+          onClose={() => setEditingEducation(null)}
+        />
+      )}
+
+      {isCreateLanguageModalOpen && (
+        <CreateLanguageModal
+          isOpen={isCreateLanguageModalOpen}
+          onClose={() => setIsCreateLanguageModalOpen(false)}
+        />
+      )}
+      {editingLanguage && (
+        <EditLanguageModal
+          language={editingLanguage}
+          isOpen={true}
+          onClose={() => setEditingLanguage(null)}
+        />
+      )}
+
+      {lightboxBadge && (
+        <div
+          role="dialog"
+          aria-modal="true"
+          aria-label={`Badge ${lightboxBadge.name}`}
+          className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-sm"
+          onClick={() => setLightboxBadge(null)}
+        >
+          <div
+            className="relative flex flex-col items-center gap-4 rounded-2xl border border-[#2A2A2A] bg-[#0A0A0A] p-8"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <button
+              type="button"
+              onClick={() => setLightboxBadge(null)}
+              className="absolute right-3 top-3 text-[#525252] transition-colors hover:text-white"
+              aria-label="Fechar"
+            >
+              ✕
+            </button>
+            <div className="relative h-40 w-40">
+              <Image
+                src={lightboxBadge.url}
+                alt={lightboxBadge.name}
+                fill
+                className="object-contain"
+                unoptimized
+              />
+            </div>
+            <p className="text-sm font-medium text-[#A3A3A3]">{lightboxBadge.name}</p>
+          </div>
+        </div>
       )}
     </main>
   );

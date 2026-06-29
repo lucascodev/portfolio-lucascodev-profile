@@ -1,8 +1,13 @@
 name: Deploy
 
 on:
-  push:
+  workflow_run:
+    workflows: ["CI"]
+    types: [completed]
     branches: [main]
+
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
 
 concurrency:
   group: deploy
@@ -11,6 +16,7 @@ concurrency:
 jobs:
   build-and-push:
     runs-on: ubuntu-latest
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
     permissions:
       contents: read
       packages: write
@@ -49,6 +55,9 @@ jobs:
           labels: ${{ steps.meta.outputs.labels }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
+          build-args: |
+            NEXT_PUBLIC_SUPABASE_URL=${{ secrets.NEXT_PUBLIC_SUPABASE_URL }}
+            NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY=${{ secrets.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY }}
 
   deploy:
     runs-on: ubuntu-latest
@@ -63,14 +72,20 @@ jobs:
           key: ${{ secrets.VPS_SSH_KEY }}
           script: |
             set -e
-            cd /opt/portfolio
+            cd /opt/portfolio-lucascodev-profile
 
-            # pull latest image
+            # sync repo files (nginx configs, compose files, scripts)
+            git pull
+
+            # pull latest app image
             echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
             docker compose -f docker-compose.prod.yml pull app
 
-            # restart with zero-downtime swap
+            # restart app (zero-downtime swap)
             docker compose -f docker-compose.prod.yml up -d --no-deps app
+
+            # restart nginx to apply any config changes
+            docker compose -f docker-compose.prod.yml restart nginx
 
             # remove dangling images
             docker image prune -f
