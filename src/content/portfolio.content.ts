@@ -95,7 +95,12 @@ export const portfolioContent: PortfolioContent = {
     },
     {
       title: 'mobile',
-      skills: [skill('React Native', 'advanced'), skill('Expo', 'advanced'), skill('Flutter', 'beginner'), skill('Tauri', 'intermediate')],
+      skills: [
+        skill('React Native', 'advanced'),
+        skill('Expo', 'advanced'),
+        skill('Flutter', 'intermediate'),
+        skill('Tauri', 'intermediate'),
+      ],
     },
     {
       title: 'dados',
@@ -131,7 +136,7 @@ export const portfolioContent: PortfolioContent = {
         skill('Unity', 'intermediate'),
         skill('C#', 'intermediate'),
         skill('Unreal Engine', 'beginner'),
-        skill('C++', 'beginner'),
+        skill('C++', 'intermediate'),
         skill('Lua', 'intermediate'),
       ],
     },
