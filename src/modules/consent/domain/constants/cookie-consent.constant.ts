@@ -1,0 +1,7 @@
+export const COOKIE_CONSENT_NAME = 'cookie_consent';
+export const COOKIE_CONSENT_ACCEPTED_VALUE = 'accepted';
+
+const SECONDS_PER_DAY = 60 * 60 * 24;
+const CONSENT_VALIDITY_DAYS = 180;
+
+export const COOKIE_CONSENT_MAX_AGE_SECONDS = CONSENT_VALIDITY_DAYS * SECONDS_PER_DAY;

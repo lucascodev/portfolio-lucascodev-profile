@@ -1,0 +1,15 @@
+.container {
+  position: absolute;
+  inset: 0;
+  touch-action: pan-y;
+}
+
+.fallback {
+  display: grid;
+  place-items: center;
+  height: 100%;
+  margin: 0;
+  padding: 24px;
+  color: var(--color-text-muted);
+  text-align: center;
+}

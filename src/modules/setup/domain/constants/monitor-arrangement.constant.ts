@@ -1,0 +1,3 @@
+export const MONITOR_INWARD_ANGLE_RADIANS = (22 * Math.PI) / 180;
+export const MONITOR_GAP_METERS = 0.025;
+export const MONITOR_DISTANCE_FROM_DESK_BACK_METERS = 0.17;

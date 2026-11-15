@@ -1,0 +1,74 @@
+.intro {
+  position: absolute;
+  left: max(16px, 5vw);
+  bottom: max(40px, 9vh);
+  z-index: 2;
+  max-width: min(540px, calc(100% - 32px));
+  pointer-events: none;
+  transition: opacity 0.5s ease, transform 0.5s ease;
+}
+
+.intro[data-visible='false'] {
+  opacity: 0;
+  transform: translateY(12px);
+}
+
+.prompt {
+  margin: 0 0 8px;
+  color: var(--color-text-muted);
+  font-family: var(--font-mono);
+  font-size: 0.9rem;
+}
+
+.promptSymbol {
+  color: var(--color-accent);
+}
+
+.title {
+  margin: 0;
+  font-size: clamp(2.6rem, 7vw, 5rem);
+  line-height: 1;
+  letter-spacing: -0.04em;
+}
+
+.role {
+  margin: 8px 0 0;
+  color: var(--color-blueprint);
+  font-family: var(--font-mono);
+  font-size: clamp(1rem, 2vw, 1.2rem);
+}
+
+.headline {
+  margin: 16px 0 0;
+  color: var(--color-text-muted);
+  font-size: 1.05rem;
+  line-height: 1.6;
+}
+
+.highlight {
+  color: var(--color-text);
+  font-weight: 600;
+}
+
+.shortcut {
+  margin: 14px 0 0;
+  color: var(--color-text-muted);
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+}
+
+.key {
+  margin-left: 4px;
+  padding: 2px 8px;
+  border: 1px solid rgb(255 255 255 / 0.2);
+  border-radius: 6px;
+  background: rgb(255 255 255 / 0.08);
+  color: var(--color-text);
+  font: 600 0.8rem var(--font-mono);
+}
+
+@media (hover: none) {
+  .shortcut {
+    display: none;
+  }
+}

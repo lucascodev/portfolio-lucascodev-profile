@@ -1,0 +1,1 @@
+export const CABLE_SURFACE_HEIGHT_METERS = 0.004;

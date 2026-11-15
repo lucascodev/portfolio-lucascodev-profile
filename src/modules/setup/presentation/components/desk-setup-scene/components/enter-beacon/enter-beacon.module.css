@@ -1,0 +1,74 @@
+.beacon {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 9px 16px 9px 12px;
+  border: 1px solid rgb(192 132 252 / 0.6);
+  border-radius: 999px;
+  background: rgb(12 10 22 / 0.88);
+  color: #f3e8ff;
+  font: 600 13px var(--font-sans);
+  white-space: nowrap;
+  cursor: pointer;
+  box-shadow: 0 0 28px rgb(192 132 252 / 0.45);
+  backdrop-filter: blur(6px);
+  transition: box-shadow 0.2s ease;
+  animation:
+    appear 0.6s cubic-bezier(0.22, 1, 0.36, 1) both,
+    float 2.6s 0.6s ease-in-out infinite;
+}
+
+@keyframes appear {
+  from {
+    opacity: 0;
+    transform: translateY(10px) scale(0.92);
+  }
+}
+
+.beacon[data-emphasized='true'],
+.beacon:hover,
+.beacon:focus-visible {
+  box-shadow: 0 0 40px rgb(192 132 252 / 0.8);
+  outline: none;
+}
+
+.icon {
+  width: 16px;
+  height: 16px;
+  color: #c084fc;
+}
+
+.pulse {
+  position: absolute;
+  inset: -1px;
+  border: 2px solid rgb(192 132 252 / 0.7);
+  border-radius: inherit;
+  animation: pulse 2s ease-out infinite;
+  pointer-events: none;
+}
+
+@keyframes pulse {
+  from {
+    opacity: 0.9;
+    transform: scale(1);
+  }
+
+  to {
+    opacity: 0;
+    transform: scale(1.35, 1.8);
+  }
+}
+
+@keyframes float {
+  50% {
+    translate: 0 -4px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .beacon,
+  .pulse {
+    animation: none;
+  }
+}
