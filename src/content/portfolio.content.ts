@@ -21,7 +21,7 @@ export const portfolioContent: PortfolioContent = {
           'Sou **Especialista em Desenvolvimento de Software** na **FITec**, onde estou desde 2023.',
           '**CLAMPER Mobi Smart**: trabalho na plataforma IoT de recarga de veículos elétricos, do portal em Next.js com Clean Architecture às APIs NestJS com MQTT e JWT e ao app React Native com push e geolocalização.',
           '**Acer Conecta**: levei o front-end de React JS para TypeScript, Vite e Ant Design, com CI/CD na AWS.',
-          '**SAVE**: desenvolvi o app desktop em Flutter e um BFF em C++ do sistema de autenticação veicular com IA, que foi apresentado no **Campinas Innovation Week 2026**!',
+          '**SAVE**: como front-end, desenvolvi o app desktop em Flutter e adicionei uma camada de BFF em C++ ao sistema de autenticação veicular com IA, que foi apresentado no **Campinas Innovation Week 2026**!',
         ],
       },
       {
@@ -145,7 +145,7 @@ export const portfolioContent: PortfolioContent = {
     {
       title: 'SAVE — FITec Labs',
       description:
-        'O sistema que lê placas por câmera com IA para ajudar a localizar veículos roubados ou clonados! Desenvolvi o app desktop em Flutter e um BFF em C++, e o projeto foi apresentado no Campinas Innovation Week 2026.',
+        'O sistema que lê placas por câmera com IA para ajudar a localizar veículos roubados ou clonados! Como front-end, desenvolvi o app desktop em Flutter e adicionei uma camada de BFF em C++, e o projeto foi apresentado no Campinas Innovation Week 2026.',
       tags: ['Flutter', 'C++', 'ONNX', 'OCR'],
     },
     {
