@@ -1,7 +1,8 @@
+import { TERMINAL_APP_ALIASES } from '@/modules/portfolio/domain/constants/terminal-app-aliases.constant';
+import { TERMINAL_FILES } from '@/modules/portfolio/domain/constants/terminal-files.constant';
 import { buildAboutDocument } from '@/modules/portfolio/domain/rules/about/build-about-document.rule';
 import { toMarkdownSource } from '@/modules/portfolio/domain/rules/markdown/to-markdown-source.rule';
 import { getShellUserHost } from '@/modules/portfolio/domain/rules/profile/get-shell-user-host.rule';
-import type { DesktopAppId } from '@/modules/portfolio/domain/types/desktop/desktop-app-id.type';
 import type { Skill } from '@/modules/portfolio/domain/types/skill.type';
 import type { TerminalCommandResult } from '@/modules/portfolio/domain/types/terminal/terminal-command-result.type';
 import type { TerminalContext } from '@/modules/portfolio/domain/types/terminal/terminal-context.type';
@@ -15,23 +16,6 @@ const skillNames = (skills: readonly Skill[]) => skills.map((skill) => skill.nam
 
 const findOwnEntry = <Value>(table: Readonly<Record<string, Value>>, key: string): Value | undefined =>
   Object.hasOwn(table, key) ? table[key] : undefined;
-
-const APP_ALIASES: Readonly<Record<string, DesktopAppId>> = {
-  terminal: 'terminal',
-  sobre: 'about',
-  about: 'about',
-  projetos: 'projects',
-  projects: 'projects',
-  stack: 'stack',
-  contato: 'contact',
-  contact: 'contact',
-};
-
-const FILES: Readonly<Record<string, string>> = {
-  'sobre.md': 'sobre',
-  'stack.txt': 'stack',
-  'contato.txt': 'contato',
-};
 
 const NEOFETCH_ART = ['   ___   ', '  / _ \\  ', ' | |_| | ', ' |  _  | ', ' |_| |_| '];
 
@@ -47,6 +31,8 @@ const showHelp: CommandHandler = () =>
     line('  ls / cat <arq>    arquivos da home'),
     line('  open <app>        abre um app (sobre, projetos, stack, contato)'),
     line('  clear             limpa a tela'),
+    line('  Tab               completa comandos, arquivos e apps'),
+    line('  → ou End          aceita a sugestão em cinza'),
     line('  exit              desliga e volta para o setup'),
   );
 
@@ -112,12 +98,12 @@ const COMMANDS: Readonly<Record<string, CommandHandler>> = {
   neofetch: showNeofetch,
   ls: listFiles,
   cat: (args, context) => {
-    const command = findOwnEntry(FILES, args[0] ?? '');
+    const command = findOwnEntry(TERMINAL_FILES, args[0] ?? '');
     if (!command) return output(line(`cat: ${args[0] ?? ''}: arquivo não encontrado`, 'error'));
     return COMMANDS[command](args, context);
   },
   open: (args) => {
-    const appId = findOwnEntry(APP_ALIASES, args[0] ?? '');
+    const appId = findOwnEntry(TERMINAL_APP_ALIASES, args[0] ?? '');
     if (!appId) return output(line(`open: app desconhecido "${args[0] ?? ''}"`, 'error'));
     return { lines: [line(`abrindo ${args[0]}...`, 'muted')], effect: { kind: 'open-app', appId } };
   },
@@ -136,3 +122,5 @@ export function runTerminalCommand(input: string, context: TerminalContext): Ter
   if (!handler) return output(line(`${command}: comando não encontrado. Digite "help" para ver os comandos.`, 'error'));
   return handler(args, context);
 }
+
+export const TERMINAL_COMMAND_NAMES: readonly string[] = Object.keys(COMMANDS);

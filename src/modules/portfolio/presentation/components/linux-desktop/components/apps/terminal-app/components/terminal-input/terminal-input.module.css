@@ -1,0 +1,30 @@
+.field {
+  position: relative;
+  flex: 1;
+  min-width: 0;
+}
+
+.highlight {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  white-space: pre;
+  pointer-events: none;
+}
+
+.suggestion {
+  color: #585b70;
+}
+
+.input {
+  position: relative;
+  display: block;
+  width: 100%;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: transparent;
+  font: inherit;
+  caret-color: #cba6f7;
+  outline: none;
+}
