@@ -105,7 +105,6 @@ function resolveAccessoryAnchor(accessory: AccessorySpec): CableAnchors {
   }
 }
 
-/** The side port sits on the deck edge; on a tray the whole laptop is tilted, so the port is tilted too. */
 function resolveLaptopAnchor(laptop: ArrangedLaptop | undefined): CableAnchor | undefined {
   if (!laptop) return undefined;
   const isOnTray = laptop.spec.mount === 'arm-tray';

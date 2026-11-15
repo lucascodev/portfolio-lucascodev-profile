@@ -8,7 +8,6 @@ export function measurePolyline(points: readonly ScenePosition[]): number {
   return points.reduce((total, point, index) => (index === 0 ? 0 : total + distance(points[index - 1], point)), 0);
 }
 
-/** Returns `segmentCount + 1` points evenly spaced along the polyline, keeping both ends exact. */
 export function resamplePolyline(points: readonly ScenePosition[], segmentCount: number): ScenePosition[] {
   const totalLength = measurePolyline(points);
   if (points.length < 2 || totalLength === 0) return Array.from({ length: segmentCount + 1 }, () => points[0]);

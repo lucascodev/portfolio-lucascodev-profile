@@ -44,7 +44,6 @@ const ARM_CLAMP_INSET_FROM_DESK_BACK = 0.06;
 const MAT_THICKNESS = 0.003;
 const CABLES_LABEL = 'Cabos';
 const BEACON_ABOVE_SCREEN_METERS = 0.11;
-// Waits for the monitor's blueprint drawing (about 1.8s) before inviting the visitor in.
 const BEACON_DELAY_AFTER_REVEAL_SECONDS = 2.2;
 
 const degreesToRadians = (degrees: number): number => (degrees * Math.PI) / 180;

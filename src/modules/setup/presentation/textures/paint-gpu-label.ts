@@ -1,7 +1,6 @@
 import type { Dimensions } from '@/modules/setup/domain/types/geometry/dimensions.type';
 
 const BRAND_TEXT = 'GEFORCE RTX';
-// Spaced by hand: the slogan on the card is set in wide tracking, and canvas letter spacing is not available everywhere.
 const SLOGAN_TEXT = "W H A T ' S   Y O U R   G A M E ?";
 const FONT_FAMILY = '"Space Grotesk", "Arial Black", sans-serif';
 const HEATSINK_BAND = { top: 0.08, bottom: 0.52 };
@@ -40,7 +39,6 @@ function paintNameBand(context: CanvasRenderingContext2D, size: Dimensions): voi
   context.textAlign = 'left';
 }
 
-/** The edge of the card that faces the glass: heatsink fins and copper heat pipes over the name and the slogan. */
 export function paintGpuLabel(context: CanvasRenderingContext2D, size: Dimensions): void {
   context.fillStyle = '#141418';
   context.fillRect(0, 0, size.width, size.height);

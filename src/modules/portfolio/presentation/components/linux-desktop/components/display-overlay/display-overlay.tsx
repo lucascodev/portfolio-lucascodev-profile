@@ -6,7 +6,6 @@ interface DisplayOverlayProps {
   readonly isNightLightEnabled: boolean;
 }
 
-/** Covers the whole desktop, top bar included, the way a real screen setting would. */
 export function DisplayOverlay({ brightness, isNightLightEnabled }: DisplayOverlayProps) {
   return (
     <>

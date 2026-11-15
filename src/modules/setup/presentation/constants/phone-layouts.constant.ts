@@ -16,6 +16,5 @@ export const PHONE_LAYOUTS: Readonly<Record<PhoneModel, PhoneLayout>> = {
     screen: { width: PHONE_SIZE.width - EDGE_TO_EDGE_INSET * 2, height: PHONE_SIZE.height - EDGE_TO_EDGE_INSET * 2 },
     hasHomeButton: false,
   },
-  // A 4.7-inch 16:9 panel between the thick top and bottom bezels of the home-button generation.
   'home-button': { body: HOME_BUTTON_PHONE_SIZE, screen: { width: 0.0585, height: 0.104 }, hasHomeButton: true },
 };

@@ -9,14 +9,12 @@ import { type KeycapLegendPalette, paintKeycapLegends } from '@/modules/setup/pr
 
 interface KeycapLegends {
   readonly material: MeshStandardMaterial;
-  /** One entry per key, in the keyboard geometry order; keys without a legend have none. */
   readonly topGeometries: readonly (PlaneGeometry | undefined)[];
 }
 
 const ATLAS_PIXELS_PER_KEY_UNIT = 64;
 const KEYCAP_ROUGHNESS = 0.6;
 
-/** `palette` must be stable (memoized), otherwise the atlas is repainted on every render. */
 export function useKeycapLegends(geometry: KeyboardGeometry, keycapGap: number, palette: KeycapLegendPalette): KeycapLegends {
   const atlasSize = useMemo<Dimensions>(
     () => ({

@@ -14,7 +14,6 @@ const HOME_BUTTON_RADIUS = 0.0052;
 const BEZEL_DETAIL_COLOR = '#b9bcc4';
 const SPEAKER_COLOR = '#2a2b31';
 
-/** An upright phone centered on its own middle, with the screen facing +Z. */
 export function Phone({ phone }: PhoneProps) {
   const { body, screen, hasHomeButton } = PHONE_LAYOUTS[phone.model ?? 'full-screen'];
   const texture = useScreenTexture(phone.screen, screen);

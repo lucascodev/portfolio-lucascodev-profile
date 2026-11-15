@@ -35,10 +35,6 @@ function removeStrokes(strokes: readonly BlueprintStroke[]): void {
   });
 }
 
-/**
- * Draws every mesh of the group as glowing edges first, then reveals the real materials,
- * so the setup looks like it is being sketched before it becomes solid.
- */
 export function useBlueprintReveal(groupRef: RefObject<Group | null>, { delaySeconds, isEnabled }: BlueprintRevealOptions): void {
   const strokesRef = useRef<BlueprintStroke[]>([]);
   const lineMaterialRef = useRef<LineBasicMaterial | null>(null);

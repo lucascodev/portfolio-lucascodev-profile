@@ -2,7 +2,6 @@
   display: grid;
   grid-template-columns: 150px 1fr;
   min-height: 100%;
-  /* The sidebar column is painted here so the sidebar itself can stay sticky while the packages scroll. */
   background: linear-gradient(to right, #181825 150px, #1e1e2e 150px);
   color: #cdd6f4;
   font-family: var(--font-sans);

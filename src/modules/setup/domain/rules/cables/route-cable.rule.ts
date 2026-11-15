@@ -17,11 +17,6 @@ function removeClosePoints(points: readonly ScenePosition[]): ScenePosition[] {
   return points.filter((point, index) => index === 0 || distance(point, points[index - 1]) >= MIN_POINT_DISTANCE_METERS);
 }
 
-/**
- * Routes a cable like people do on a real desk: down to the surface behind the device,
- * straight back to a channel along the back edge, sideways along it, then into the target.
- * Heights are relative to the desk top.
- */
 export function routeCable(start: ScenePosition, end: ScenePosition, channelZ: number): ScenePosition[] {
   const surface = CABLE_SURFACE_HEIGHT_METERS;
   const points: ScenePosition[] = [start];

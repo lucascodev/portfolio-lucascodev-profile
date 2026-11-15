@@ -24,7 +24,6 @@ interface QuickSettingsProps {
 
 const POPOVER_ID = 'quick-settings-popover';
 const WIFI_NETWORK_NAME = 'portfolio-5G';
-/** Shown when the browser does not share the real battery. */
 const FALLBACK_BATTERY = { levelPercent: 100, isCharging: false } as const;
 
 export function QuickSettings({ settings, onChange, onPowerOff }: QuickSettingsProps) {

@@ -34,7 +34,6 @@ jobs:
       - id: pages
         uses: actions/configure-pages@v5
 
-      # A project site lives under /<repository>/; a user site or a custom domain lives at the root.
       - run: pnpm build
         env:
           BASE_PATH: ${{ steps.pages.outputs.base_path }}/

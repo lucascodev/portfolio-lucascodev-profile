@@ -22,7 +22,6 @@ export function EnterBeacon({ position, appearAfterSeconds, isHidden, isEmphasiz
     return () => window.clearTimeout(timeout);
   }, [appearAfterSeconds]);
 
-  // Mounted only once it should show: drei's Html loses its content when mounted together with the canvas.
   if (!hasAppeared || isHidden) return null;
 
   return (

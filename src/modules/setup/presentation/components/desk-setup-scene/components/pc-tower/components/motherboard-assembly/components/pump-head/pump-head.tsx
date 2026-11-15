@@ -12,7 +12,6 @@ const DEPTH = 0.026;
 const FACE_Z = DEPTH / 2;
 const BODY_COLOR = '#131317';
 const LOGO_COLOR = '#f4f4ff';
-// Concentric rings shrinking toward the logo read as the infinity mirror of the real pump cap.
 const MIRROR_RING_RADII = [0.025, 0.019, 0.013];
 
 export function PumpHead({ position, glowMaterial }: PumpHeadProps) {

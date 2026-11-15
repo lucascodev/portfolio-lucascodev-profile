@@ -3,7 +3,6 @@ interface WeekdayHeader {
   readonly name: string;
 }
 
-/** Sunday first, matching the order of buildCalendarWeeks. */
 export const WEEKDAY_HEADERS: readonly WeekdayHeader[] = [
   { initial: 'D', name: 'domingo' },
   { initial: 'S', name: 'segunda-feira' },

@@ -45,12 +45,6 @@ interface PushOut {
   readonly distance: number;
 }
 
-/**
- * Pushes the point out through the closest face. Objects resting on the desk (bottom at or below the
- * desk top, which is y = 0) never push cables downward, otherwise the cable would get trapped between
- * the object and the desk; low ones always push upward, so cables drape over them instead of being
- * shoved sideways off the desk edge. Returns true when the point was pushed up onto a top face.
- */
 function resolveObstacle(obstacle: CableObstacle, point: MutablePoint): boolean {
   const local = toLocal(obstacle, point);
   const reach = {
@@ -121,11 +115,6 @@ function satisfyDistance(a: MutablePoint, b: MutablePoint, restLength: number, i
   b.z -= dz * correction * shareB;
 }
 
-/**
- * Settles a cable as a Verlet rope pinned at both ends: it falls under gravity, keeps a fixed length
- * with a little slack, rests on surfaces with friction and is pushed out of every obstacle it does not
- * plug into. Runs once and returns the settled shape.
- */
 export function simulateCable(
   initialPath: readonly ScenePosition[],
   world: CablePhysicsWorld,

@@ -21,7 +21,6 @@ const CAP_HEIGHT = 0.012;
 const LIGHT_RING_Y = 0.022;
 const RING_INTENSITY = 3.5;
 const GRILLE_HOLE_COLOR = '#050507';
-// Both sides are multiples of the perforation spacing, so the pattern closes around the body without a seam.
 const GRILLE_TEXTURE_SIZE = { width: 504, height: 432 };
 
 function DeskStand({ color, ringColor }: Omit<MicrophoneProps, 'boomClamp'>) {

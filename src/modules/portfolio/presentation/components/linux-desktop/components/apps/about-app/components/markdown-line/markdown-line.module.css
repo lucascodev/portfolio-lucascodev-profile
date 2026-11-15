@@ -28,7 +28,6 @@
   color: #f9e2af;
 }
 
-/* Wrapped lines of a list item align with its text, not with the dash, like a soft-wrapping editor. */
 .bullet {
   display: grid;
   grid-template-columns: 2ch 1fr;

@@ -7,15 +7,12 @@ import { paintRainbowGradient } from '@/modules/setup/presentation/textures/pain
 type Vector3Tuple = [number, number, number];
 
 interface RamBankProps {
-  /** Center of the first slot, on the board surface. */
   readonly position: Vector3Tuple;
-  /** +1 lays the following slots toward +X, -1 toward -X. */
   readonly direction: 1 | -1;
 }
 
 const SLOT_COUNT = 4;
 const SLOT_SPACING = 0.012;
-// Dual channel on a four-slot board goes in the second and fourth slots.
 const POPULATED_SLOTS: readonly number[] = [1, 3];
 const SLOT_LENGTH = 0.126;
 const STICK_LENGTH = 0.12;
@@ -27,7 +24,6 @@ const RAINBOW_TEXTURE_SIZE = { width: 8, height: 256 };
 const LIGHT_INTENSITY = 2.4;
 const RAINBOW_FLOW_PER_SECOND = 0.12;
 
-/** A rainbow that keeps sliding along the sticks, like the addressable LEDs of the real modules. */
 function useFlowingRainbowMaterial(): MeshStandardMaterial {
   const rainbow = usePaintedTexture(RAINBOW_TEXTURE_SIZE, paintRainbowGradient);
   const flowingRainbow = useMemo(() => {

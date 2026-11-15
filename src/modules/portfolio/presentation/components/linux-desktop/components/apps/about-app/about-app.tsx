@@ -14,7 +14,6 @@ export function AboutApp({ profile }: AboutAppProps) {
     <div className={styles.editor}>
       <article className={styles.document}>
         {lines.map((line, index) => (
-          // The document is static, so the line number is a stable key.
           <div key={index} className={styles.line}>
             <span className={styles.lineNumber} aria-hidden="true">
               {index + 1}

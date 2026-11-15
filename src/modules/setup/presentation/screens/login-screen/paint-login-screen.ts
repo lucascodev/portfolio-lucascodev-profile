@@ -11,7 +11,6 @@ const ACCENT = '#cba6f7';
 const PULSES_PER_SECOND = 0.6;
 const CARET_BLINKS_PER_SECOND = 1.6;
 
-// Same glows as the desktop wallpaper, so unlocking feels like the same screen waking up.
 const WALLPAPER_GLOWS = [
   { x: 0.18, y: 0.22, radius: 0.42, color: 'rgba(168, 85, 247, 0.55)' },
   { x: 0.82, y: 0.78, radius: 0.45, color: 'rgba(14, 165, 233, 0.45)' },

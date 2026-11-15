@@ -8,10 +8,6 @@ import type { ArrangedLaptop } from '@/modules/setup/domain/types/laptop/arrange
 import type { LaptopSpec } from '@/modules/setup/domain/types/laptop/laptop.type';
 import type { ArrangedMonitor } from '@/modules/setup/domain/types/monitor/arranged-monitor.type';
 
-/**
- * Places the laptop beside the outermost monitor on its side. The returned placement is the deck center,
- * pushed forward so the hinge (where the screen stands) lines up with the monitor row.
- */
 export function arrangeLaptop(laptop: LaptopSpec, monitors: readonly ArrangedMonitor[]): ArrangedLaptop {
   const screenSize = calculateScreenSize({ ...laptop, orientation: 'landscape' });
   const bodyWidth = screenSize.width + LAPTOP_SIDE_BEZEL_METERS * 2;

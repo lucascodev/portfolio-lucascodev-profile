@@ -37,7 +37,6 @@
   flex: none;
   height: 40px;
   padding: 0 12px;
-  /* The window does not clip its children, so the resize handles can reach past its edges; each part rounds its own corners. */
   border-radius: 11px 11px 0 0;
   background: #2a2a3b;
   cursor: grab;
@@ -110,7 +109,6 @@
   min-height: 0;
   overflow: auto;
   border-radius: 0 0 11px 11px;
-  /* Apps adapt to the window width, not the screen width, since windows can be resized. */
   container-type: inline-size;
 }
 

@@ -1,9 +1,7 @@
 import { useCallback, useEffect, useState } from 'react';
 import type { ExperienceMode } from './experience-mode.type';
 
-// Safety net for when the camera never reports arriving (no WebGL, tab in background).
 const CAMERA_TIMEOUT_MS = 4500;
-// Mirrors the desktop power-on / power-off CSS animations.
 const DESKTOP_POWER_ON_MS = 700;
 const DESKTOP_POWER_OFF_MS = 450;
 

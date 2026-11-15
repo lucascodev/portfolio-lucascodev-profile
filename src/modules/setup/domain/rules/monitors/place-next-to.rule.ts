@@ -3,7 +3,6 @@ import type { DisplayPlacement } from '@/modules/setup/domain/types/geometry/dis
 
 export type PlacementDirection = 1 | -1;
 
-/** Hinges the next display on the outer edge of the previous one, angled inward toward the viewer. */
 export function placeNextTo(
   previous: DisplayPlacement,
   previousWidth: number,

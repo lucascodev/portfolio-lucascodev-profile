@@ -9,7 +9,6 @@ function toIsoDate(date: Date): string {
   return `${date.getFullYear()}-${month}-${day}`;
 }
 
-/** Weeks start on Sunday, as in Brazilian calendars, and only as many weeks as the month needs are built. */
 export function buildCalendarWeeks(month: CalendarMonth, today: Date): readonly (readonly CalendarDay[])[] {
   const leadingDays = new Date(month.year, month.monthIndex, 1).getDay();
   const daysInMonth = new Date(month.year, month.monthIndex + 1, 0).getDate();

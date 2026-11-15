@@ -15,7 +15,6 @@ const buildSitemap = (siteUrl: string, lastModified: string): string =>
     '',
   ].join('\n');
 
-/** Writes robots.txt and sitemap.xml with the address the build is published at, so it is declared in one place only. */
 export function siteIndexFiles(): Plugin {
   let siteUrl = '';
 
