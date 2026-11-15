@@ -1,0 +1,19 @@
+.tooltip {
+  display: inline-block;
+  padding: 6px 12px;
+  border: 1px solid rgb(125 211 252 / 0.45);
+  border-radius: 999px;
+  background: rgb(10 10 20 / 0.85);
+  backdrop-filter: blur(6px);
+  color: #e0f2fe;
+  font: 500 12px/1.2 var(--font-mono);
+  white-space: nowrap;
+  box-shadow: 0 0 24px rgb(125 211 252 / 0.25);
+}
+
+.actionHint {
+  margin-left: 8px;
+  padding-left: 8px;
+  border-left: 1px solid rgb(125 211 252 / 0.35);
+  color: #c084fc;
+}

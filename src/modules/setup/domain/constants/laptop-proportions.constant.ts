@@ -1,0 +1,2 @@
+export const LAPTOP_SIDE_BEZEL_METERS = 0.006;
+export const LAPTOP_DECK_DEPTH_TO_WIDTH_RATIO = 0.7;

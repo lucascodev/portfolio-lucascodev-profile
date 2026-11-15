@@ -1,110 +1,75 @@
-# Portfolio — lucascodev
+# dev-portfolio
 
-Portfólio profissional de Lucas Pereira dos Reis. Monorepo Turborepo + pnpm com Next.js 16 App Router, Clean Architecture e sistema de edição inline via painel admin.
+Portfólio de desenvolvedor que é o próprio setup de trabalho em 3D (React 19 + Vite 8 + Three.js via React Three Fiber). Não há páginas por fora: o conteúdo vive dentro do monitor.
 
-## Stack
+1. Ao abrir, cada item do setup é "desenhado" em linhas de blueprint e depois ganha cor. As telas são animadas, o teclado digita sozinho, as fans do PC giram e os fios caem com física (corda com gravidade e colisão com os objetos). Passar o mouse num item mostra o nome dele.
+2. O monitor principal mostra uma tela de login Linux bloqueada (que acende ao passar o mouse) e o botão "Entrar no sistema" pulsa acima dele. Clicar no monitor, no botão ou apertar **Enter** leva a câmera até a tela.
+3. Lá dentro há um desktop Linux com uma notificação de boas-vindas, janelas arrastáveis, dock e os apps **Terminal**, **Sobre** (editor), **Projetos** (gerenciador de arquivos), **Stack** (pacotes) e **Contato** (correio).
+4. **Esc**, o botão de desligar ou o comando `exit` no terminal voltam para o setup.
 
-- **Frontend:** Next.js 16.2.4 (App Router), React, Tailwind CSS v4
-- **Design System:** `@portfolio/design-system` (componentes base + tokens)
-- **Banco de dados:** PostgreSQL via Prisma 7 + `@prisma/adapter-pg`
-- **Auth:** iron-session v8 (cookie HTTP-only criptografado)
-- **Estado:** React Query v5 (server state) + Zustand v5 (UI state)
-- **Infra:** Turborepo, pnpm workspaces
+O terminal aceita `help`, `whoami`, `sobre`, `projetos`, `stack`, `contato`, `neofetch`, `ls`, `cat <arquivo>`, `open <app>`, `date`, `echo`, `clear` e `exit`.
 
-## Requisitos
-
-- Node.js 20+
-- pnpm 9+
-- PostgreSQL (local via Docker ou Neon/Supabase)
-
-## Setup
-
-**1. Instalar dependências**
+## Rodando
 
 ```bash
+cp .env.example .env
 pnpm install
+pnpm dev           # http://localhost:5173
+pnpm test          # testes das regras (Vitest)
+pnpm lint          # oxlint
+pnpm build         # typecheck + build de produção
 ```
 
-**2. Subir o banco de dados localmente (opcional — usa Docker)**
+## Branches e publicação
 
-```bash
-docker-compose up -d
-```
+- `develop` recebe o trabalho do dia a dia; cada push e cada pull request passam por lint, testes e build no CI.
+- `main` é o que está no ar: todo push nela publica o site no GitHub Pages.
 
-Isso inicia um PostgreSQL na porta `5432` com usuário/senha/db `portfolio`.
+O endereço público entra no build pela variável `VITE_SITE_URL` (link canônico, prévia social, `robots.txt` e `sitemap.xml`). O `.env` fica só na sua máquina (copie do `.env.example`); o workflow de deploy informa o endereço real.
 
-**3. Configurar variáveis de ambiente**
+## Como desenhar o seu setup
 
-```bash
-cp apps/web/.env.example apps/web/.env
-```
+Tudo o que aparece na cena vem de `src/content/desk-setup.content.ts`. Não é preciso mexer nos componentes:
 
-Edite `apps/web/.env` e preencha os valores (veja a tabela abaixo).
-
-**4. Gerar o Prisma Client, executar migrações e seed**
-
-```bash
-pnpm --filter web exec prisma generate
-pnpm --filter web exec prisma migrate dev
-pnpm --filter web exec prisma db seed
-```
-
-**5. Iniciar o servidor de desenvolvimento**
-
-```bash
-pnpm dev
-```
-
-## Variáveis de ambiente (`apps/web/.env`)
-
-| Variável | Descrição |
+| Campo | O que controla |
 |---|---|
-| `DATABASE_URL` | PostgreSQL connection string (`postgresql://user:pass@host:5432/db`) |
-| `SESSION_SECRET` | Senha do cookie iron-session (mín. 32 chars, qualquer string aleatória) |
-| `ADMIN_EMAIL` | E-mail do usuário admin criado pelo seed |
-| `ADMIN_PASSWORD` | Senha do usuário admin criado pelo seed |
+| `desk` | largura, profundidade e altura da mesa (em metros) e cores |
+| `monitors` | tamanho em polegadas, proporção (`16:9`, `16:10`, `21:9`, `32:9`), `landscape` ou `portrait`, qual é o principal e o que aparece na tela |
+| `monitors[].mount` | `stand` (pé de mesa) ou `arm` (preso no suporte articulado, sem pé) |
+| `monitors[].curvatureRadiusMillimeters` | curvatura da tela (ex.: `1900` para 1900R); omita para tela plana |
+| `monitors[].screen` | `login-screen` (tela de login Linux com relógio, avatar e dica para entrar), `mac-lock-screen` (bloqueio estilo macOS, usado no MacBook), `code-editor`, `terminal`, `dashboard` ou `split` (duas telas lado a lado) |
+| `monitorArm` | suporte articulado: posição da coluna (`clampX`) e cor; liga os monitores `arm` e a bandeja do notebook |
+| `laptop` | notebook ao lado dos monitores: tamanho, lado (`left`/`right`), `desk` ou `arm-tray` (na bandeja do suporte) e o que aparece na tela |
+| `monitors[].hasWebcam` | webcam em cima do monitor |
+| `monitors[].distanceFromDeskBackMeters` | quão para frente fica o monitor principal (útil quando há algo atrás dele) |
+| `keyboard` | layout (`60`, `65`, `75`, `tkl`), cores das teclas, cor do RGB (opcional) e posição |
+| `mouse` | posição, cor e `lightColor` (RGB, opcional) |
+| `deskMat` | tamanho, cor e `pattern` (ex.: `{ kind: 'cracks', color: '#3ddc5a' }`) |
+| `pcTower` | gabinete aquário: `desk-back-left`, `desk-back-right`, `desk-left`, `desk-right`, `floor-left` ou `floor-right`, `position` opcional para ajuste fino na mesa, e as cores das fans |
+| `accessories` | `drawing-tablet`, `microphone`, `power-strip`, `tumbler`, `phone-stand`, `photo-frame`, `mug`, `lamp`, `plant`, `headphones`, `speaker`, cada um com posição e `rotationDegrees` opcional |
+| `accessories[microphone].mount` | `{ kind: 'desk-stand' }` ou `{ kind: 'boom-arm', clamp, heightMeters }` (braço preso na borda da mesa) |
+| `accessories[phone-stand].phone` | celular no suporte, com cor e tela (`lock-screen` mostra o relógio de verdade) |
+| `cables` | fios entre aparelhos (`keyboard`, `mouse`, `microphone`, `webcam`, `monitor`, `laptop`, `drawing-tablet`, `phone`, `pc-tower`, `power-strip`) ou caindo atrás da mesa (`desk-back`); cada ponta sai reta pelo plugue na direção da porta e o resto é simulado com física |
+| `room` | cores da parede e do chão e cor da fita de LED |
 
-O Docker Compose local já usa `postgresql://portfolio:portfolio@localhost:5432/portfolio`.
+As posições são em metros a partir do centro da mesa: `x` positivo vai para a direita e `z` positivo vem para a frente. Os monitores se posicionam sozinhos: o principal fica no centro e os outros se encaixam nas laterais, angulados para dentro.
 
-## Comandos
+Os textos do desktop (nome, sobre, stack, projetos e contato) ficam em `src/content/portfolio.content.ts`.
 
-```bash
-pnpm dev                                    # Todos os apps em paralelo
-pnpm build                                  # Build de produção (Turborepo)
-pnpm typecheck                              # TypeScript em todos os packages
-pnpm lint                                   # ESLint em todos os packages
-
-pnpm --filter web dev                       # Apenas o Next.js
-pnpm --filter web exec prisma studio        # Abrir Prisma Studio
-pnpm --filter web exec prisma migrate dev   # Nova migração
-pnpm --filter web exec prisma db seed       # Re-executar seed
-```
-
-## Estrutura do Monorepo
-
-```
-portfolio-lucascodev-profile/
-├── apps/
-│   └── web/                  # Next.js 16 App Router
-├── packages/
-│   ├── design-system/        # Tokens + componentes base
-│   ├── tsconfig/             # tsconfig base compartilhado
-│   └── eslint-config/        # ESLint config compartilhado
-├── docker-compose.yml        # PostgreSQL local
-```
-
-## Arquitetura (Clean Architecture)
+## Estrutura
 
 ```
-domain → use-cases → infrastructure → presentation → app
+src/
+  app/           bootstrap (main, App, estilos globais)
+  content/       dados editáveis do setup e do portfólio, injetados em App
+  modules/
+    setup/       cena 3D
+      domain/        tipos e regras puras (telas, monitores, teclado, roteamento e física dos fios)
+      presentation/  componentes R3F, câmera, hooks (texturas, revelação em blueprint) e pintores de canvas
+    portfolio/   experiência do portfólio
+      domain/        gerenciador de janelas (reducer) e interpretador do terminal
+      presentation/  página, intro do setup e o desktop Linux com seus apps
+  shared/        componentes, hooks e utilitários genéricos
 ```
 
-- **domain:** Entidades e interfaces de repositório (sem dependências externas)
-- **use-cases:** Lógica de negócio (depende só do domain)
-- **infrastructure:** Implementações Prisma dos repositórios
-- **presentation:** React components, hooks React Query, Zustand stores
-- **app:** Next.js App Router (pages, API routes, layout)
-
-## Painel Admin
-
-Acesse `/login` com as credenciais definidas em `ADMIN_EMAIL` e `ADMIN_PASSWORD` no `.env`. Após o login, a `AdminToolbar` aparece na parte inferior da tela — ative o modo de edição para ver os botões de lápis em cada seção e editar os dados do portfólio diretamente na página.
+A cena 3D é carregada com `lazy`, então o texto da intro aparece antes do Three.js terminar de baixar. O render 3D pausa enquanto o desktop está aberto, e as animações de câmera e de revelação respeitam `prefers-reduced-motion`. Se a cena falhar, uma mensagem ocupa o lugar dela e o botão "Ligar o computador" continua levando ao desktop.
