@@ -10,7 +10,12 @@ const PASSWORD_HINT = 'Digite a senha';
 const WAVE_COUNT = 3;
 const WAVE_DRIFT_PER_SECOND = 0.05;
 
-function paintWallpaper(context: CanvasRenderingContext2D, size: Dimensions, colors: MacLockScreen['wallpaperColors'], elapsedSeconds: number): void {
+function paintWallpaper(
+  context: CanvasRenderingContext2D,
+  size: Dimensions,
+  colors: MacLockScreen['wallpaperColors'],
+  elapsedSeconds: number,
+): void {
   const [top, middle, bottom] = colors;
   const background = context.createLinearGradient(0, 0, size.width * 0.3, size.height);
   background.addColorStop(0, top);
@@ -25,7 +30,7 @@ function paintWallpaper(context: CanvasRenderingContext2D, size: Dimensions, col
     context.beginPath();
     context.moveTo(0, size.height);
     for (let x = 0; x <= size.width; x += size.width / 24) {
-      const y = baseY + Math.sin(x / size.width * Math.PI * 2 + phase) * size.height * 0.06;
+      const y = baseY + Math.sin((x / size.width) * Math.PI * 2 + phase) * size.height * 0.06;
       context.lineTo(x, y);
     }
     context.lineTo(size.width, size.height);

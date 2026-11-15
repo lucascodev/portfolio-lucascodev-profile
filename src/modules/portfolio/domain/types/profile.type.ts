@@ -6,7 +6,6 @@ export interface Profile {
   readonly role: string;
   readonly headline: string;
   readonly location: string;
-  /** Short first-person introduction, one paragraph per item; inline markdown allowed. */
   readonly summary: readonly string[];
   readonly about: readonly AboutSection[];
   readonly email: string;

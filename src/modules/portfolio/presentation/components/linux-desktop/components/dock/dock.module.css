@@ -32,8 +32,8 @@
   outline: none;
 }
 
-.item[data-open='true']::before {
-  content: '';
+.item[data-open="true"]::before {
+  content: "";
   position: absolute;
   top: 50%;
   left: -8px;
@@ -79,7 +79,7 @@
     height: 42px;
   }
 
-  .item[data-open='true']::before {
+  .item[data-open="true"]::before {
     top: auto;
     bottom: -7px;
     left: 50%;

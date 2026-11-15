@@ -17,8 +17,8 @@ export function SetupIntro({ profile, isVisible }: SetupIntroProps) {
       </h1>
       <p className={styles.role}>{profile.role}</p>
       <p className={styles.headline}>
-        Esse é o meu setup de verdade. <strong className={styles.highlight}>Clique no monitor</strong> para entrar no meu
-        sistema e conhecer meus projetos.
+        Esse é o meu setup de verdade. <strong className={styles.highlight}>Clique no monitor</strong> para entrar no meu sistema e conhecer
+        meus projetos.
       </p>
       <p className={styles.shortcut}>
         ou aperte <kbd className={styles.key}>Enter</kbd>

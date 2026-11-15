@@ -6,10 +6,6 @@ interface DismissOptions {
   readonly onDismiss: () => void;
 }
 
-/**
- * Closes a popover on Escape or on a pointer press outside the container.
- * Listens in the capture phase so this Escape is consumed before page-wide Escape shortcuts see it.
- */
 export function useDismiss({ isEnabled, containerRef, onDismiss }: DismissOptions): void {
   useEffect(() => {
     if (!isEnabled) return;

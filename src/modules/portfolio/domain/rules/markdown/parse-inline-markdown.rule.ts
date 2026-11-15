@@ -1,6 +1,5 @@
 import type { InlineSegment } from '@/modules/portfolio/domain/types/markdown/inline-segment.type';
 
-/** Matches **bold** (group 1) or [label](url) (groups 2 and 3); everything else is plain text. */
 const INLINE_TOKEN = /\*\*(.+?)\*\*|\[([^\]]+)\]\(([^)\s]+)\)/g;
 
 export function parseInlineMarkdown(source: string): readonly InlineSegment[] {

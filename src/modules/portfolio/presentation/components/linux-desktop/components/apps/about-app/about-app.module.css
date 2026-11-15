@@ -4,7 +4,7 @@
   min-height: 100%;
   background: #1e1e2e;
   color: #cdd6f4;
-  font: 14px/1.75 var(--font-mono);
+  font: 14px / 1.75 var(--font-mono);
 }
 
 .document {
@@ -36,7 +36,7 @@
   border-top: 1px solid rgb(255 255 255 / 0.06);
   background: #181825;
   color: #a6adc8;
-  font: 12px/1.6 var(--font-mono);
+  font: 12px / 1.6 var(--font-mono);
 }
 
 @container (max-width: 480px) {

@@ -10,7 +10,14 @@ const PATH_BY_DIRECTION: Readonly<Record<ChevronIconProps['direction'], string>>
 export function ChevronIcon({ direction }: ChevronIconProps) {
   return (
     <svg viewBox="0 0 24 24" aria-hidden="true">
-      <path d={PATH_BY_DIRECTION[direction]} fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+      <path
+        d={PATH_BY_DIRECTION[direction]}
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
     </svg>
   );
 }

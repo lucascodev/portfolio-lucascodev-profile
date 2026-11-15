@@ -14,7 +14,6 @@ interface Span {
 
 const MIN_TOP_PX = 0;
 
-/** Grows or shrinks the span from its start edge, keeping the end edge where it was. */
 function resizeFromStart(span: Span, delta: number, minimumSize: number, minimumStart: number): Span {
   const end = span.start + span.size;
   const start = Math.max(minimumStart, Math.min(span.start + delta, end - minimumSize));

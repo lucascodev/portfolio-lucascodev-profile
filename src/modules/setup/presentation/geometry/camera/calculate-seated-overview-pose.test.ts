@@ -6,7 +6,6 @@ const FOV = 50;
 const DESK_HEIGHT = 0.75;
 const DESK_DEPTH = 0.9;
 
-/** Where a point lands vertically on screen: 0 is the bottom edge, 1 the top (ignores horizontal offset). */
 function verticalScreenFraction(pose: CameraPose, point: { y: number; z: number }): number {
   const pitch = Math.atan2(pose.position.y - pose.target.y, pose.position.z - pose.target.z);
   const pointAngle = Math.atan2(pose.position.y - point.y, pose.position.z - point.z);

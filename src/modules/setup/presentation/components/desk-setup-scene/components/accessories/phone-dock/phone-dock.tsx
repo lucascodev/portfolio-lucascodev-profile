@@ -23,7 +23,6 @@ const HINGE_LENGTH = 0.034;
 const ARM_THICKNESS = 0.022;
 const PAD_COLOR = '#15151a';
 
-/** Where a point of the tilted cradle ends up in the dock's own space. */
 function cradlePoint(y: number, z: number): ScenePosition {
   return {
     x: 0,
@@ -32,7 +31,6 @@ function cradlePoint(y: number, z: number): ScenePosition {
   };
 }
 
-/** A folding desk stand: a weighted base, a hinged arm and a tilted cradle that holds the phone on two hooks. */
 export function PhoneDock({ color, phone }: PhoneDockProps) {
   const { body } = PHONE_LAYOUTS[phone.model ?? 'full-screen'];
   const metal = <meshStandardMaterial color={color} metalness={0.75} roughness={0.35} />;

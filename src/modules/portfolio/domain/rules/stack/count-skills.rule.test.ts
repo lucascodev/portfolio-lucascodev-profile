@@ -5,7 +5,13 @@ import { countSkills } from './count-skills.rule';
 describe('countSkills', () => {
   it('sums the skills of every group', () => {
     const skillGroups: SkillGroup[] = [
-      { title: 'front-end', skills: [{ name: 'React', level: 'expert' }, { name: 'Vite', level: 'advanced' }] },
+      {
+        title: 'front-end',
+        skills: [
+          { name: 'React', level: 'expert' },
+          { name: 'Vite', level: 'advanced' },
+        ],
+      },
       { title: 'mobile', skills: [{ name: 'Expo', level: 'advanced' }] },
     ];
 

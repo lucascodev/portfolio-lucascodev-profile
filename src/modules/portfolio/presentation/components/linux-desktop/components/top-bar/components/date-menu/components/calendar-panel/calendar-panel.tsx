@@ -29,13 +29,23 @@ export function CalendarPanel({ today }: CalendarPanelProps) {
 
       <div className={styles.calendar}>
         <div className={styles.monthBar}>
-          <button type="button" className={styles.navButton} onClick={() => setMonth(shiftCalendarMonth(month, -1))} aria-label="Mês anterior">
+          <button
+            type="button"
+            className={styles.navButton}
+            onClick={() => setMonth(shiftCalendarMonth(month, -1))}
+            aria-label="Mês anterior"
+          >
             <ChevronIcon direction="left" />
           </button>
           <h2 className={styles.monthTitle} aria-live="polite">
             {MONTH_FORMATTER.format(firstDayOfMonth)}
           </h2>
-          <button type="button" className={styles.navButton} onClick={() => setMonth(shiftCalendarMonth(month, 1))} aria-label="Próximo mês">
+          <button
+            type="button"
+            className={styles.navButton}
+            onClick={() => setMonth(shiftCalendarMonth(month, 1))}
+            aria-label="Próximo mês"
+          >
             <ChevronIcon direction="right" />
           </button>
         </div>

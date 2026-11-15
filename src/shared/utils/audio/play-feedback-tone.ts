@@ -4,10 +4,8 @@ const MAX_GAIN = 0.25;
 const SILENT_GAIN = 0.0001;
 const MAX_VOLUME_PERCENT = 100;
 
-/** Browsers cap how many audio contexts a page may open, so one is created lazily and reused. */
 let audioContext: AudioContext | null = null;
 
-/** A short blip at the given volume, like the sound desktops play after a volume change. */
 export function playFeedbackTone(volumePercent: number): void {
   if (volumePercent <= 0) return;
 

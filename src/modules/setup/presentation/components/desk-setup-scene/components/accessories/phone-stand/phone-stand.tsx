@@ -1,9 +1,6 @@
 import type { PhoneSpec } from '@/modules/setup/domain/types/desk-items/phone.type';
 import { Phone } from '@/modules/setup/presentation/components/desk-setup-scene/components/accessories/phone/phone';
-import {
-  PHONE_SIZE,
-  PHONE_STAND_POLE_HEIGHT_METERS,
-} from '@/modules/setup/presentation/constants/accessory-dimensions.constant';
+import { PHONE_SIZE, PHONE_STAND_POLE_HEIGHT_METERS } from '@/modules/setup/presentation/constants/accessory-dimensions.constant';
 
 interface PhoneStandProps {
   readonly color: string;

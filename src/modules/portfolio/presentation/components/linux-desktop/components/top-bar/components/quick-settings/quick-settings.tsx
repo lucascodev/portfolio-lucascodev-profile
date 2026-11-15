@@ -24,7 +24,6 @@ interface QuickSettingsProps {
 
 const POPOVER_ID = 'quick-settings-popover';
 const WIFI_NETWORK_NAME = 'portfolio-5G';
-/** Shown when the browser does not share the real battery. */
 const FALLBACK_BATTERY = { levelPercent: 100, isCharging: false } as const;
 
 export function QuickSettings({ settings, onChange, onPowerOff }: QuickSettingsProps) {
@@ -73,7 +72,13 @@ export function QuickSettings({ settings, onChange, onPowerOff }: QuickSettingsP
                 </span>
                 {batteryText}
               </span>
-              <button type="button" className={styles.powerButton} onClick={onPowerOff} aria-label="Desligar e voltar ao setup" title="Desligar e voltar ao setup">
+              <button
+                type="button"
+                className={styles.powerButton}
+                onClick={onPowerOff}
+                aria-label="Desligar e voltar ao setup"
+                title="Desligar e voltar ao setup"
+              >
                 <PowerIcon />
               </button>
             </div>

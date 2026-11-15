@@ -1,9 +1,31 @@
 import type { CodeToken, CodeTokenKind } from './code-token.type';
 
 const KEYWORDS = new Set([
-  'as', 'async', 'await', 'class', 'const', 'else', 'export', 'extends', 'false', 'for', 'from', 'function',
-  'if', 'implements', 'import', 'interface', 'let', 'new', 'null', 'readonly', 'return', 'true', 'type',
-  'undefined', 'while',
+  'as',
+  'async',
+  'await',
+  'class',
+  'const',
+  'else',
+  'export',
+  'extends',
+  'false',
+  'for',
+  'from',
+  'function',
+  'if',
+  'implements',
+  'import',
+  'interface',
+  'let',
+  'new',
+  'null',
+  'readonly',
+  'return',
+  'true',
+  'type',
+  'undefined',
+  'while',
 ]);
 
 const TOKEN_PATTERN =

@@ -3,12 +3,7 @@ import { SCREEN_THEME } from '@/modules/setup/presentation/screens/screen-theme.
 
 const TRAFFIC_LIGHT_COLORS = ['#f38ba8', '#f9e2af', '#a6e3a1'] as const;
 
-export function drawWindowChrome(
-  context: CanvasRenderingContext2D,
-  size: Dimensions,
-  title: string,
-  fontSize: number,
-): number {
+export function drawWindowChrome(context: CanvasRenderingContext2D, size: Dimensions, title: string, fontSize: number): number {
   const barHeight = Math.round(fontSize * 2);
   const dotRadius = fontSize * 0.32;
 

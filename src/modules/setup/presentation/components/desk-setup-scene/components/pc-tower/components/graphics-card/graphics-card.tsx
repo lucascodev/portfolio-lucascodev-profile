@@ -9,7 +9,6 @@ type Vector3Tuple = [number, number, number];
 interface GraphicsCardProps {
   readonly position: Vector3Tuple;
   readonly outerSide: 1 | -1;
-  /** Height of the PSU shroud top, relative to the card center, where the support bracket stands. */
   readonly shroudTopY: number;
 }
 
@@ -83,7 +82,6 @@ export function GraphicsCard({ position, outerSide, shroudTopY }: GraphicsCardPr
       </mesh>
       {[-1, 1].map((side) => {
         const startX = plugX + (side * POWER_CABLE_SPACING) / 2;
-        // Plugs into the edge that faces the glass, droops in front of the card and goes back over the backplate.
         const points: ScenePosition[] = [
           { x: startX, y: 0.004, z: FRONT_Z + POWER_PLUG_SIZE.depth },
           { x: startX + outerSide * 0.004, y: -0.014, z: FRONT_Z + 0.04 },

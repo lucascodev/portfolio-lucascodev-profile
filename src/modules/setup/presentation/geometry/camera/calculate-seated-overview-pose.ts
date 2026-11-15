@@ -23,11 +23,6 @@ const VIEW_SHIFT_FULL_ASPECT = 1.6;
 
 const clamp01 = (value: number): number => Math.min(1, Math.max(0, value));
 
-/**
- * Seated point of view: eyes a little above the desk, as close as the aspect ratio allows while
- * the whole desk still fits, tilted so the desk's front edge sits right at the bottom of the frame
- * (higher on portrait screens, leaving room for the intro text). Extra vertical room goes above the setup.
- */
 export function calculateSeatedOverviewPose(input: SeatedOverviewInput): CameraPose {
   const { aspectRatio, verticalFovDegrees, deskHeight, deskDepth, parallaxX, parallaxY } = input;
   const distanceScale = Math.max(1, COMFORTABLE_ASPECT_RATIO / aspectRatio);

@@ -22,7 +22,7 @@
   font-size: 13px;
 }
 
-.place[data-active='true'] {
+.place[data-active="true"] {
   background: rgb(203 166 247 / 0.16);
   color: #e8e8f0;
 }
@@ -73,7 +73,7 @@
   outline: none;
 }
 
-.folder[data-selected='true'] {
+.folder[data-selected="true"] {
   border-color: rgb(203 166 247 / 0.5);
   background: rgb(203 166 247 / 0.12);
 }

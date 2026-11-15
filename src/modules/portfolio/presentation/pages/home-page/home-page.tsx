@@ -38,11 +38,7 @@ export function HomePage({ content, deskSetup }: HomePageProps) {
 
       <SetupIntro profile={content.profile} isVisible={experience.mode === 'setup'} />
       {experience.isDesktopVisible && (
-        <LinuxDesktop
-          content={content}
-          isShuttingDown={experience.mode === 'shutting-down'}
-          onPowerOff={experience.powerOff}
-        />
+        <LinuxDesktop content={content} isShuttingDown={experience.mode === 'shutting-down'} onPowerOff={experience.powerOff} />
       )}
     </main>
   );

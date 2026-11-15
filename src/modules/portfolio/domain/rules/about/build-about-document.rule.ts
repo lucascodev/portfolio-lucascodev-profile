@@ -20,7 +20,6 @@ function linksSection(profile: Profile): AboutSection {
   };
 }
 
-/** The lines of sobre.md: who, the headline, the introduction, the about sections and the links, separated by blank lines like a real file. */
 export function buildAboutDocument(profile: Profile): readonly MarkdownLine[] {
   return [
     { kind: 'heading', level: 1, text: profile.name },

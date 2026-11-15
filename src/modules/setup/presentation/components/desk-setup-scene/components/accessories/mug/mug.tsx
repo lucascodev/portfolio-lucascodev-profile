@@ -14,7 +14,6 @@ const WALL_THICKNESS = 0.003;
 const FLOOR_THICKNESS = 0.008;
 const DRINK_LEVEL = 0.08;
 const DRINK_COLOR = '#3a2116';
-// Outer wall going up, over the rounded lip and back down the inside, so the mug is really hollow.
 const MUG_PROFILE = [
   [0, 0],
   [BASE_RADIUS - 0.002, 0],

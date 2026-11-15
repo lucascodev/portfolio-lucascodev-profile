@@ -86,7 +86,12 @@ function resolveAccessoryAnchor(accessory: AccessorySpec): CableAnchors {
   switch (accessory.kind) {
     case 'microphone':
       if (accessory.mount?.kind === 'boom-arm') {
-        return { microphone: { position: { x: accessory.position.x, y: accessory.mount.heightMeters - 0.02, z: accessory.position.z }, exit: DOWN } };
+        return {
+          microphone: {
+            position: { x: accessory.position.x, y: accessory.mount.heightMeters - 0.02, z: accessory.position.z },
+            exit: DOWN,
+          },
+        };
       }
       return { microphone: anchorOn(placement, { x: 0, y: DEVICE_PORT_HEIGHT, z: -0.05 }, BACK) };
     case 'drawing-tablet':
@@ -105,7 +110,6 @@ function resolveAccessoryAnchor(accessory: AccessorySpec): CableAnchors {
   }
 }
 
-/** The side port sits on the deck edge; on a tray the whole laptop is tilted, so the port is tilted too. */
 function resolveLaptopAnchor(laptop: ArrangedLaptop | undefined): CableAnchor | undefined {
   if (!laptop) return undefined;
   const isOnTray = laptop.spec.mount === 'arm-tray';

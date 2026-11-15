@@ -73,11 +73,7 @@ export function LinuxDesktop({ content, isShuttingDown, onPowerOff }: LinuxDeskt
             </DesktopWindow>
           ))}
         </div>
-        <Dock
-          apps={DESKTOP_APP_CATALOG}
-          openAppIds={state.windows.map((window) => window.appId)}
-          onAppClick={toggleFromDock}
-        />
+        <Dock apps={DESKTOP_APP_CATALOG} openAppIds={state.windows.map((window) => window.appId)} onAppClick={toggleFromDock} />
       </div>
       <DisplayOverlay brightness={settings.brightness} isNightLightEnabled={settings.isNightLightEnabled} />
     </div>

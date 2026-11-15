@@ -19,8 +19,7 @@ const EDGE_THRESHOLD_DEGREES = 25;
 const DRAW_SECONDS = 1.2;
 const FILL_SECONDS = 0.6;
 
-const easeInOutCubic = (progress: number): number =>
-  progress < 0.5 ? 4 * progress ** 3 : 1 - (-2 * progress + 2) ** 3 / 2;
+const easeInOutCubic = (progress: number): number => (progress < 0.5 ? 4 * progress ** 3 : 1 - (-2 * progress + 2) ** 3 / 2);
 
 function setMeshVisible(mesh: Mesh, isVisible: boolean): void {
   if (Array.isArray(mesh.material)) return;
@@ -35,10 +34,6 @@ function removeStrokes(strokes: readonly BlueprintStroke[]): void {
   });
 }
 
-/**
- * Draws every mesh of the group as glowing edges first, then reveals the real materials,
- * so the setup looks like it is being sketched before it becomes solid.
- */
 export function useBlueprintReveal(groupRef: RefObject<Group | null>, { delaySeconds, isEnabled }: BlueprintRevealOptions): void {
   const strokesRef = useRef<BlueprintStroke[]>([]);
   const lineMaterialRef = useRef<LineBasicMaterial | null>(null);

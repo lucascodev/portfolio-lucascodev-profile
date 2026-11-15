@@ -3,7 +3,6 @@ import type { Dimensions } from '@/modules/setup/domain/types/geometry/dimension
 import type { KeyboardGeometry } from '@/modules/setup/domain/types/keyboard/keyboard-geometry.type';
 import type { KeyboardKey } from '@/modules/setup/domain/types/keyboard/keyboard-key.type';
 
-/** A flat keycap top whose UVs cut this key's own area out of an atlas laid out like the whole keyboard. */
 export function createKeycapTopGeometry(key: KeyboardKey, keyboard: KeyboardGeometry, top: Dimensions): PlaneGeometry {
   const plane = new PlaneGeometry(top.width, top.height).rotateX(-Math.PI / 2);
   const left = (key.x - top.width / 2 + keyboard.width / 2) / keyboard.width;

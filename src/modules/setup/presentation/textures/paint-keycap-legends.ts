@@ -12,7 +12,6 @@ const MAX_FONT_HEIGHT_RATIO = 0.46;
 const KEY_PADDING_RATIO = 0.16;
 const AVERAGE_GLYPH_WIDTH_RATIO = 0.62;
 
-/** Paints the top of every keycap, legend included, on one atlas laid out like the keyboard seen from above. */
 export function paintKeycapLegends(
   context: CanvasRenderingContext2D,
   size: Dimensions,

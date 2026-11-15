@@ -12,7 +12,6 @@ const FONT_HEIGHT_RATIO = 0.5;
 const SIDE_PADDING_RATIO = 0.06;
 const ACCENT_SLASH_COUNT = 3;
 
-/** A flat plate with one line of text and, optionally, slanted accent slashes before it. */
 export function paintEngravedLabel(context: CanvasRenderingContext2D, size: Dimensions, style: EngravedLabelStyle): void {
   context.fillStyle = style.background;
   context.fillRect(0, 0, size.width, size.height);

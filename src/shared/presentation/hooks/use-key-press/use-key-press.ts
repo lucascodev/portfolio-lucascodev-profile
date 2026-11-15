@@ -7,7 +7,6 @@ interface KeyPressOptions {
 
 const TEXT_INPUT_SELECTOR = 'input, textarea, select, [contenteditable="true"]';
 
-/** Runs the handler for a key on the whole page; by default it stays out of the way while the visitor types. */
 export function useKeyPress(key: string, handler: () => void, { isEnabled, worksWhileTyping = false }: KeyPressOptions): void {
   useEffect(() => {
     if (!isEnabled) return;

@@ -69,9 +69,7 @@ function MonitorStand({ panelCenterY }: { readonly panelCenterY: number }) {
 export function Monitor({ monitor, isHighlighted = false }: MonitorProps) {
   const { spec, screenSize } = monitor;
   const isOnArm = spec.mount === 'arm';
-  const curvatureRadius = spec.curvatureRadiusMillimeters
-    ? spec.curvatureRadiusMillimeters / MILLIMETERS_PER_METER
-    : undefined;
+  const curvatureRadius = spec.curvatureRadiusMillimeters ? spec.curvatureRadiusMillimeters / MILLIMETERS_PER_METER : undefined;
   const texture = useScreenTexture(spec.screen, screenSize);
   const { shell, screen } = usePanelGeometries(screenSize.width, screenSize.height, curvatureRadius);
   const clearance = isOnArm ? ARM_SCREEN_CLEARANCE_METERS : STAND_SCREEN_CLEARANCE_METERS;

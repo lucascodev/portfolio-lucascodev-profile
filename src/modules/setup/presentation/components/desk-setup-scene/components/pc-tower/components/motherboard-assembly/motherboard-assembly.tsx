@@ -115,7 +115,6 @@ export function MotherboardAssembly({ origin, outerSide, radiatorInlet, glowMate
 
       {[0, 1].map((tube) => {
         const tubeZ = pump.z + 0.02 + tube * TUBE_DEPTH_SPACING;
-        // Leaves the pump on the rear side, hangs below it and climbs to the far end of the radiator.
         const points: ScenePosition[] = [
           { x: pump.x + toward(-0.024), y: pump.y - 0.012, z: tubeZ - 0.012 },
           { x: pump.x + toward(-0.036), y: pump.y - 0.05, z: tubeZ },

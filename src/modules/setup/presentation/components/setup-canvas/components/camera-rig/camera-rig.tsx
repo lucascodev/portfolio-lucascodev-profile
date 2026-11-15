@@ -30,7 +30,6 @@ const ENTER_FLIGHT_SECONDS = 2;
 const LEAVE_FLIGHT_SECONDS = 1.6;
 const ENTER_ARC_LIFT_METERS = 0.1;
 const LEAVE_ARC_LIFT_METERS = 0.1;
-// The desktop starts fading in before the camera stops, so the hand-off feels continuous.
 const ENTER_HANDOFF_PROGRESS = 0.8;
 const VIEW_SHIFT_EPSILON_PX = 0.5;
 const FOG_START_BEHIND_TARGET = 1.2;
@@ -38,7 +37,6 @@ const FOG_END_BEHIND_TARGET = 6;
 
 const toVector = (position: { x: number; y: number; z: number }) => new Vector3(position.x, position.y, position.z);
 
-/** Puts the camera where the screen covers the whole viewport, so the desktop UI can take over seamlessly. */
 function screenPose(frame: ScreenFrame, camera: PerspectiveCamera, aspectRatio: number): CameraPose {
   const halfFovTangent = Math.tan((camera.fov * Math.PI) / 360);
   const fitHeight = frame.height / 2 / halfFovTangent;
@@ -92,10 +90,7 @@ export function CameraRig({ deskHeight, deskDepth, focusFrame, isFocused, onSett
     const flight = flightRef.current;
     const parallaxX = isMotionReduced || flight ? 0 : pointer.x * PARALLAX_HORIZONTAL_METERS;
     const parallaxY = isMotionReduced || flight ? 0 : pointer.y * PARALLAX_VERTICAL_METERS;
-    const destination =
-      isFocusActive && focusFrame
-        ? screenPose(focusFrame, camera, aspectRatio)
-        : overviewPose(parallaxX, parallaxY);
+    const destination = isFocusActive && focusFrame ? screenPose(focusFrame, camera, aspectRatio) : overviewPose(parallaxX, parallaxY);
 
     if (flight) {
       const duration = flight.isTowardScreen ? ENTER_FLIGHT_SECONDS : LEAVE_FLIGHT_SECONDS;

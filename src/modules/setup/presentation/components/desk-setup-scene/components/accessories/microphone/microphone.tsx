@@ -21,7 +21,6 @@ const CAP_HEIGHT = 0.012;
 const LIGHT_RING_Y = 0.022;
 const RING_INTENSITY = 3.5;
 const GRILLE_HOLE_COLOR = '#050507';
-// Both sides are multiples of the perforation spacing, so the pattern closes around the body without a seam.
 const GRILLE_TEXTURE_SIZE = { width: 504, height: 432 };
 
 function DeskStand({ color, ringColor }: Omit<MicrophoneProps, 'boomClamp'>) {
@@ -45,7 +44,8 @@ function DeskStand({ color, ringColor }: Omit<MicrophoneProps, 'boomClamp'>) {
 
 function MicrophoneBody({ color, ringColor, bottom }: Omit<MicrophoneProps, 'boomClamp'> & { readonly bottom: number }) {
   const paintGrille = useCallback(
-    (context: CanvasRenderingContext2D, size: Dimensions) => paintPerforation(context, size, { background: color, hole: GRILLE_HOLE_COLOR }),
+    (context: CanvasRenderingContext2D, size: Dimensions) =>
+      paintPerforation(context, size, { background: color, hole: GRILLE_HOLE_COLOR }),
     [color],
   );
   const grille = usePaintedTexture(GRILLE_TEXTURE_SIZE, paintGrille);

@@ -4,8 +4,8 @@
   --color-text-muted: #9b99b3;
   --color-accent: #c084fc;
   --color-blueprint: #7dd3fc;
-  --font-sans: 'Space Grotesk', system-ui, sans-serif;
-  --font-mono: 'JetBrains Mono', ui-monospace, Consolas, monospace;
+  --font-sans: "Space Grotesk", system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, Consolas, monospace;
 
   color-scheme: dark;
 }

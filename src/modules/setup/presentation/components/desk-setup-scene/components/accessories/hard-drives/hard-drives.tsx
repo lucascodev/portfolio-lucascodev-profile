@@ -11,7 +11,6 @@ const CIRCUIT_BOARD_COLOR = '#1f6b3a';
 const STACK_TWIST_RADIANS = 0.34;
 const STACK_SLIDE_METERS = 0.011;
 
-/** Alternates the twist and the slide so the pile looks dropped on the desk, not machined. */
 const stackOffset = (index: number) => ({
   rotationY: (index % 2 === 0 ? 1 : -1) * STACK_TWIST_RADIANS * Math.ceil(index / 2),
   x: (index % 2 === 0 ? -1 : 1) * STACK_SLIDE_METERS * Math.ceil(index / 2),

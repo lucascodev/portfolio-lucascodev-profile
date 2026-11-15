@@ -5,7 +5,6 @@ export interface BatteryStatus {
   readonly isCharging: boolean;
 }
 
-/** The Battery Status API is not in the DOM typings and only Chromium browsers expose it. */
 interface BatteryManager extends EventTarget {
   readonly level: number;
   readonly charging: boolean;
@@ -15,7 +14,6 @@ type NavigatorWithBattery = Navigator & { readonly getBattery?: () => Promise<Ba
 
 const BATTERY_EVENTS = ['levelchange', 'chargingchange'] as const;
 
-/** The visitor's real battery, or null when the browser does not share it. */
 export function useBatteryStatus(): BatteryStatus | null {
   const [status, setStatus] = useState<BatteryStatus | null>(null);
 

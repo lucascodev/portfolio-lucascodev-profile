@@ -1,4 +1,3 @@
-/** Mulberry32: tiny deterministic PRNG, so generated patterns look the same on every load. */
 export function createSeededRandom(seed: number): () => number {
   let state = seed >>> 0;
   return () => {

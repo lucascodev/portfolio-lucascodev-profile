@@ -31,26 +31,26 @@ O endereço público entra no build pela variável `VITE_SITE_URL` (link canôni
 
 Tudo o que aparece na cena vem de `src/content/desk-setup.content.ts`. Não é preciso mexer nos componentes:
 
-| Campo | O que controla |
-|---|---|
-| `desk` | largura, profundidade e altura da mesa (em metros) e cores |
-| `monitors` | tamanho em polegadas, proporção (`16:9`, `16:10`, `21:9`, `32:9`), `landscape` ou `portrait`, qual é o principal e o que aparece na tela |
-| `monitors[].mount` | `stand` (pé de mesa) ou `arm` (preso no suporte articulado, sem pé) |
-| `monitors[].curvatureRadiusMillimeters` | curvatura da tela (ex.: `1900` para 1900R); omita para tela plana |
-| `monitors[].screen` | `login-screen` (tela de login Linux com relógio, avatar e dica para entrar), `mac-lock-screen` (bloqueio estilo macOS, usado no MacBook), `code-editor`, `terminal`, `dashboard` ou `split` (duas telas lado a lado) |
-| `monitorArm` | suporte articulado: posição da coluna (`clampX`) e cor; liga os monitores `arm` e a bandeja do notebook |
-| `laptop` | notebook ao lado dos monitores: tamanho, lado (`left`/`right`), `desk` ou `arm-tray` (na bandeja do suporte) e o que aparece na tela |
-| `monitors[].hasWebcam` | webcam em cima do monitor |
-| `monitors[].distanceFromDeskBackMeters` | quão para frente fica o monitor principal (útil quando há algo atrás dele) |
-| `keyboard` | layout (`60`, `65`, `75`, `tkl`), cores das teclas, cor do RGB (opcional) e posição |
-| `mouse` | posição, cor e `lightColor` (RGB, opcional) |
-| `deskMat` | tamanho, cor e `pattern` (ex.: `{ kind: 'cracks', color: '#3ddc5a' }`) |
-| `pcTower` | gabinete aquário: `desk-back-left`, `desk-back-right`, `desk-left`, `desk-right`, `floor-left` ou `floor-right`, `position` opcional para ajuste fino na mesa, e as cores das fans |
-| `accessories` | `drawing-tablet`, `microphone`, `power-strip`, `tumbler`, `phone-stand`, `photo-frame`, `mug`, `lamp`, `plant`, `headphones`, `speaker`, cada um com posição e `rotationDegrees` opcional |
-| `accessories[microphone].mount` | `{ kind: 'desk-stand' }` ou `{ kind: 'boom-arm', clamp, heightMeters }` (braço preso na borda da mesa) |
-| `accessories[phone-stand].phone` | celular no suporte, com cor e tela (`lock-screen` mostra o relógio de verdade) |
-| `cables` | fios entre aparelhos (`keyboard`, `mouse`, `microphone`, `webcam`, `monitor`, `laptop`, `drawing-tablet`, `phone`, `pc-tower`, `power-strip`) ou caindo atrás da mesa (`desk-back`); cada ponta sai reta pelo plugue na direção da porta e o resto é simulado com física |
-| `room` | cores da parede e do chão e cor da fita de LED |
+| Campo                                   | O que controla                                                                                                                                                                                                                                                           |
+| --------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `desk`                                  | largura, profundidade e altura da mesa (em metros) e cores                                                                                                                                                                                                               |
+| `monitors`                              | tamanho em polegadas, proporção (`16:9`, `16:10`, `21:9`, `32:9`), `landscape` ou `portrait`, qual é o principal e o que aparece na tela                                                                                                                                 |
+| `monitors[].mount`                      | `stand` (pé de mesa) ou `arm` (preso no suporte articulado, sem pé)                                                                                                                                                                                                      |
+| `monitors[].curvatureRadiusMillimeters` | curvatura da tela (ex.: `1900` para 1900R); omita para tela plana                                                                                                                                                                                                        |
+| `monitors[].screen`                     | `login-screen` (tela de login Linux com relógio, avatar e dica para entrar), `mac-lock-screen` (bloqueio estilo macOS, usado no MacBook), `code-editor`, `terminal`, `dashboard` ou `split` (duas telas lado a lado)                                                     |
+| `monitorArm`                            | suporte articulado: posição da coluna (`clampX`) e cor; liga os monitores `arm` e a bandeja do notebook                                                                                                                                                                  |
+| `laptop`                                | notebook ao lado dos monitores: tamanho, lado (`left`/`right`), `desk` ou `arm-tray` (na bandeja do suporte) e o que aparece na tela                                                                                                                                     |
+| `monitors[].hasWebcam`                  | webcam em cima do monitor                                                                                                                                                                                                                                                |
+| `monitors[].distanceFromDeskBackMeters` | quão para frente fica o monitor principal (útil quando há algo atrás dele)                                                                                                                                                                                               |
+| `keyboard`                              | layout (`60`, `65`, `75`, `tkl`), cores das teclas, cor do RGB (opcional) e posição                                                                                                                                                                                      |
+| `mouse`                                 | posição, cor e `lightColor` (RGB, opcional)                                                                                                                                                                                                                              |
+| `deskMat`                               | tamanho, cor e `pattern` (ex.: `{ kind: 'cracks', color: '#3ddc5a' }`)                                                                                                                                                                                                   |
+| `pcTower`                               | gabinete aquário: `desk-back-left`, `desk-back-right`, `desk-left`, `desk-right`, `floor-left` ou `floor-right`, `position` opcional para ajuste fino na mesa, e as cores das fans                                                                                       |
+| `accessories`                           | `drawing-tablet`, `microphone`, `power-strip`, `tumbler`, `phone-stand`, `photo-frame`, `mug`, `lamp`, `plant`, `headphones`, `speaker`, cada um com posição e `rotationDegrees` opcional                                                                                |
+| `accessories[microphone].mount`         | `{ kind: 'desk-stand' }` ou `{ kind: 'boom-arm', clamp, heightMeters }` (braço preso na borda da mesa)                                                                                                                                                                   |
+| `accessories[phone-stand].phone`        | celular no suporte, com cor e tela (`lock-screen` mostra o relógio de verdade)                                                                                                                                                                                           |
+| `cables`                                | fios entre aparelhos (`keyboard`, `mouse`, `microphone`, `webcam`, `monitor`, `laptop`, `drawing-tablet`, `phone`, `pc-tower`, `power-strip`) ou caindo atrás da mesa (`desk-back`); cada ponta sai reta pelo plugue na direção da porta e o resto é simulado com física |
+| `room`                                  | cores da parede e do chão e cor da fita de LED                                                                                                                                                                                                                           |
 
 As posições são em metros a partir do centro da mesa: `x` positivo vai para a direita e `z` positivo vem para a frente. Os monitores se posicionam sozinhos: o principal fica no centro e os outros se encaixam nas laterais, angulados para dentro.
 

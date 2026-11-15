@@ -79,12 +79,7 @@ export function SetupItem({
 
   return (
     <group position={position} rotation-y={rotationY}>
-      <group
-        ref={liftRef}
-        onPointerOver={handlePointerOver}
-        onPointerOut={handlePointerOut}
-        onClick={handleClick}
-      >
+      <group ref={liftRef} onPointerOver={handlePointerOver} onPointerOut={handlePointerOut} onClick={handleClick}>
         <group ref={contentRef}>{children}</group>
       </group>
       {isHovered && hasTooltip && (
