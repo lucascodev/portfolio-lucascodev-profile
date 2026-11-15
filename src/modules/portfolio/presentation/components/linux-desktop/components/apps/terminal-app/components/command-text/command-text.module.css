@@ -1,0 +1,16 @@
+.token[data-kind="command"] {
+  color: #a6e3a1;
+}
+
+.token[data-kind="unknown-command"] {
+  color: #f38ba8;
+}
+
+.token[data-kind="string"] {
+  color: #f9e2af;
+}
+
+.token[data-kind="known-argument"] {
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}

@@ -38,15 +38,3 @@
   display: flex;
   gap: 8px;
 }
-
-.input {
-  flex: 1;
-  min-width: 0;
-  padding: 0;
-  border: 0;
-  background: transparent;
-  color: #cdd6f4;
-  font: inherit;
-  caret-color: #cba6f7;
-  outline: none;
-}
