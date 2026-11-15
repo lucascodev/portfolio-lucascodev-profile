@@ -1,0 +1,26 @@
+.markup {
+  color: #6c7086;
+}
+
+.strong {
+  color: #fab387;
+  font-weight: 700;
+}
+
+.link {
+  color: #89dceb;
+  text-decoration: underline;
+  text-decoration-color: rgb(137 220 235 / 0.4);
+  text-underline-offset: 3px;
+}
+
+.link:hover,
+.link:focus-visible {
+  text-decoration-color: currentColor;
+  outline: none;
+}
+
+.url {
+  color: #9399b2;
+  word-break: break-all;
+}

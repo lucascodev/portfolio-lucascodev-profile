@@ -1,0 +1,152 @@
+.panel {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 280px;
+}
+
+.today {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: 8px 10px;
+  border: 0;
+  border-radius: 12px;
+  background: none;
+  color: inherit;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+.today:hover,
+.today:focus-visible {
+  background: rgb(255 255 255 / 0.06);
+  outline: none;
+}
+
+.weekday {
+  color: #a6adc8;
+  font-size: 13px;
+}
+
+.weekday::first-letter {
+  text-transform: uppercase;
+}
+
+.fullDate {
+  color: #e8e8f0;
+  font-size: 17px;
+  font-weight: 700;
+}
+
+.calendar {
+  padding: 8px;
+  border-radius: 14px;
+  background: #181825;
+}
+
+.monthBar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 6px;
+}
+
+.monthTitle {
+  margin: 0;
+  color: #e8e8f0;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.monthTitle::first-letter {
+  text-transform: uppercase;
+}
+
+.navButton {
+  display: grid;
+  place-items: center;
+  width: 30px;
+  height: 30px;
+  padding: 6px;
+  border: 0;
+  border-radius: 50%;
+  background: none;
+  color: #cdd6f4;
+  cursor: pointer;
+}
+
+.navButton:hover,
+.navButton:focus-visible {
+  background: rgb(255 255 255 / 0.08);
+  outline: none;
+}
+
+.navButton svg {
+  width: 100%;
+  height: 100%;
+}
+
+.grid {
+  width: 100%;
+  border-collapse: collapse;
+  table-layout: fixed;
+  text-align: center;
+}
+
+.grid th {
+  padding: 4px 0 6px;
+  color: #a6adc8;
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.grid abbr {
+  text-decoration: none;
+}
+
+.grid td {
+  padding: 1px 0;
+}
+
+.day {
+  display: inline-grid;
+  place-items: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  color: #cdd6f4;
+  font-size: 13px;
+  font-variant-numeric: tabular-nums;
+}
+
+.day[data-in-month='false'] {
+  color: #9399b2;
+  opacity: 0.6;
+}
+
+.day[data-today='true'] {
+  background: #cba6f7;
+  color: #11111b;
+  font-weight: 700;
+}
+
+.events {
+  padding: 10px 12px;
+  border-radius: 14px;
+  background: #181825;
+}
+
+.eventsTitle {
+  margin: 0 0 4px;
+  color: #e8e8f0;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.emptyEvents {
+  margin: 0;
+  color: #a6adc8;
+  font-size: 13px;
+}

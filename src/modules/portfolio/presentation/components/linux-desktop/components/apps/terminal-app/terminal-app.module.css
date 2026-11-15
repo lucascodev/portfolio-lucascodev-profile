@@ -1,0 +1,52 @@
+.terminal {
+  min-height: 100%;
+  padding: 12px 14px;
+  background: #11111b;
+  color: #cdd6f4;
+  font: 13px/1.55 var(--font-mono);
+  cursor: text;
+}
+
+.line {
+  margin: 0;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+.line[data-tone='accent'] {
+  color: #cba6f7;
+}
+
+.line[data-tone='muted'] {
+  color: #7f849c;
+}
+
+.line[data-tone='error'] {
+  color: #f38ba8;
+}
+
+.line[data-tone='success'] {
+  color: #a6e3a1;
+}
+
+.prompt {
+  color: #89b4fa;
+  font-weight: 700;
+}
+
+.inputLine {
+  display: flex;
+  gap: 8px;
+}
+
+.input {
+  flex: 1;
+  min-width: 0;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: #cdd6f4;
+  font: inherit;
+  caret-color: #cba6f7;
+  outline: none;
+}
