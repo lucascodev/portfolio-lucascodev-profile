@@ -21,7 +21,7 @@
   outline: none;
 }
 
-.tray[data-open='true'] {
+.tray[data-open="true"] {
   background: rgb(255 255 255 / 0.14);
 }
 
@@ -36,7 +36,7 @@
   height: 100%;
 }
 
-.trayIcon[data-variant='power'] {
+.trayIcon[data-variant="power"] {
   color: #f38ba8;
 }
 
@@ -110,7 +110,7 @@
 }
 
 @media (max-width: 560px) {
-  .trayIcon[data-optional='true'] {
+  .trayIcon[data-optional="true"] {
     display: none;
   }
 

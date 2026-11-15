@@ -54,13 +54,19 @@ export function DesktopWindow({
         <span className={styles.title}>{title}</span>
         <div className={styles.controls}>
           <button type="button" className={styles.control} onClick={onMinimize} aria-label="Minimizar">
-            <svg viewBox="0 0 12 12" aria-hidden="true"><path d="M2.5 6h7" /></svg>
+            <svg viewBox="0 0 12 12" aria-hidden="true">
+              <path d="M2.5 6h7" />
+            </svg>
           </button>
           <button type="button" className={styles.control} onClick={onToggleMaximize} aria-label="Maximizar">
-            <svg viewBox="0 0 12 12" aria-hidden="true"><rect x="2.5" y="2.5" width="7" height="7" rx="1" /></svg>
+            <svg viewBox="0 0 12 12" aria-hidden="true">
+              <rect x="2.5" y="2.5" width="7" height="7" rx="1" />
+            </svg>
           </button>
           <button type="button" className={styles.control} data-variant="close" onClick={onClose} aria-label="Fechar">
-            <svg viewBox="0 0 12 12" aria-hidden="true"><path d="M3 3l6 6M9 3l-6 6" /></svg>
+            <svg viewBox="0 0 12 12" aria-hidden="true">
+              <path d="M3 3l6 6M9 3l-6 6" />
+            </svg>
           </button>
         </div>
       </header>

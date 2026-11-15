@@ -72,7 +72,13 @@ export function QuickSettings({ settings, onChange, onPowerOff }: QuickSettingsP
                 </span>
                 {batteryText}
               </span>
-              <button type="button" className={styles.powerButton} onClick={onPowerOff} aria-label="Desligar e voltar ao setup" title="Desligar e voltar ao setup">
+              <button
+                type="button"
+                className={styles.powerButton}
+                onClick={onPowerOff}
+                aria-label="Desligar e voltar ao setup"
+                title="Desligar e voltar ao setup"
+              >
                 <PowerIcon />
               </button>
             </div>

@@ -71,9 +71,7 @@ function resolveObstacle(obstacle: CableObstacle, point: MutablePoint): boolean 
     { axis: 'y', distance: reach.y - local.y },
     ...(isResting ? [] : [{ axis: 'y' as const, distance: -reach.y - local.y }]),
   ];
-  const shortest = candidates.reduce((best, candidate) =>
-    Math.abs(candidate.distance) < Math.abs(best.distance) ? candidate : best,
-  );
+  const shortest = candidates.reduce((best, candidate) => (Math.abs(candidate.distance) < Math.abs(best.distance) ? candidate : best));
 
   local[shortest.axis] += shortest.distance;
   writeFromLocal(obstacle, local, point);
@@ -124,8 +122,7 @@ export function simulateCable(
   const segmentCount = Math.min(MAX_SEGMENTS, Math.max(MIN_SEGMENTS, Math.round(pathLength / TARGET_SEGMENT_LENGTH_METERS)));
   const restLength = (pathLength * CABLE_SLACK) / segmentCount;
   const obstacles = world.obstacles.filter(
-    (obstacle) =>
-      !obstacle.owners?.some((owner) => connectedEndpoints.includes(owner)) && isNearPath(obstacle, initialPath),
+    (obstacle) => !obstacle.owners?.some((owner) => connectedEndpoints.includes(owner)) && isNearPath(obstacle, initialPath),
   );
 
   const points: MutablePoint[] = resamplePolyline(initialPath, segmentCount).map((point) => ({ ...point }));

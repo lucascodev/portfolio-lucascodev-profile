@@ -47,12 +47,7 @@ function initialsOf(name: string): string {
     .toUpperCase();
 }
 
-export function paintLoginScreen(
-  context: CanvasRenderingContext2D,
-  size: Dimensions,
-  elapsedSeconds: number,
-  screen: LoginScreen,
-): void {
+export function paintLoginScreen(context: CanvasRenderingContext2D, size: Dimensions, elapsedSeconds: number, screen: LoginScreen): void {
   const now = new Date();
   const unit = size.height / 100;
   const centerX = size.width / 2;

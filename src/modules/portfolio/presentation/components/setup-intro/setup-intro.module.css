@@ -5,10 +5,12 @@
   z-index: 2;
   max-width: min(540px, calc(100% - 32px));
   pointer-events: none;
-  transition: opacity 0.5s ease, transform 0.5s ease;
+  transition:
+    opacity 0.5s ease,
+    transform 0.5s ease;
 }
 
-.intro[data-visible='false'] {
+.intro[data-visible="false"] {
   opacity: 0;
   transform: translateY(12px);
 }

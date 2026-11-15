@@ -39,7 +39,7 @@
   outline: none;
 }
 
-.category[aria-pressed='true'] {
+.category[aria-pressed="true"] {
   background: rgb(203 166 247 / 0.16);
   color: #e8e8f0;
 }

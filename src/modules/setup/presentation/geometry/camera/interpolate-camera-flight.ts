@@ -1,8 +1,7 @@
 import type { ScenePosition } from '@/modules/setup/domain/types/geometry/scene-position.type';
 import type { CameraPose } from './camera-pose.type';
 
-const easeInOutCubic = (progress: number): number =>
-  progress < 0.5 ? 4 * progress ** 3 : 1 - (-2 * progress + 2) ** 3 / 2;
+const easeInOutCubic = (progress: number): number => (progress < 0.5 ? 4 * progress ** 3 : 1 - (-2 * progress + 2) ** 3 / 2);
 
 const lerp = (from: number, to: number, amount: number): number => from + (to - from) * amount;
 

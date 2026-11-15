@@ -121,12 +121,12 @@
   font-variant-numeric: tabular-nums;
 }
 
-.day[data-in-month='false'] {
+.day[data-in-month="false"] {
   color: #9399b2;
   opacity: 0.6;
 }
 
-.day[data-today='true'] {
+.day[data-today="true"] {
   background: #cba6f7;
   color: #11111b;
   font-weight: 700;

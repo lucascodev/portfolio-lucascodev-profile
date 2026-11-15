@@ -67,12 +67,7 @@ function drawPipeline(
   });
 }
 
-export function paintDashboard(
-  context: CanvasRenderingContext2D,
-  size: Dimensions,
-  elapsedSeconds: number,
-  title: string,
-): void {
+export function paintDashboard(context: CanvasRenderingContext2D, size: Dimensions, elapsedSeconds: number, title: string): void {
   const fontSize = calculateScreenFontSize(size);
   const top = drawWindowChrome(context, size, title, fontSize);
   const padding = fontSize * 1.4;

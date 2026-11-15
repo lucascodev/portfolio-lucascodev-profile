@@ -4,7 +4,13 @@ import { selectSkillGroups } from './select-skill-groups.rule';
 
 const skillGroups: SkillGroup[] = [
   { title: 'front-end', skills: [{ name: 'React', level: 'expert' }] },
-  { title: 'back-end', skills: [{ name: 'NestJS', level: 'advanced' }, { name: 'Django', level: 'intermediate' }] },
+  {
+    title: 'back-end',
+    skills: [
+      { name: 'NestJS', level: 'advanced' },
+      { name: 'Django', level: 'intermediate' },
+    ],
+  },
 ];
 
 describe('selectSkillGroups', () => {

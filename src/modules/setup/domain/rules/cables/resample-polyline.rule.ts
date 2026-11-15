@@ -18,10 +18,7 @@ export function resamplePolyline(points: readonly ScenePosition[], segmentCount:
 
   for (let sample = 0; sample <= segmentCount; sample++) {
     const target = (sample / segmentCount) * totalLength;
-    while (
-      segmentIndex < points.length - 2 &&
-      lengthBeforeSegment + distance(points[segmentIndex], points[segmentIndex + 1]) < target
-    ) {
+    while (segmentIndex < points.length - 2 && lengthBeforeSegment + distance(points[segmentIndex], points[segmentIndex + 1]) < target) {
       lengthBeforeSegment += distance(points[segmentIndex], points[segmentIndex + 1]);
       segmentIndex++;
     }

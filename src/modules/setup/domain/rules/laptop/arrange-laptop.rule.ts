@@ -1,7 +1,4 @@
-import {
-  LAPTOP_DECK_DEPTH_TO_WIDTH_RATIO,
-  LAPTOP_SIDE_BEZEL_METERS,
-} from '@/modules/setup/domain/constants/laptop-proportions.constant';
+import { LAPTOP_DECK_DEPTH_TO_WIDTH_RATIO, LAPTOP_SIDE_BEZEL_METERS } from '@/modules/setup/domain/constants/laptop-proportions.constant';
 import { calculateScreenSize } from '@/modules/setup/domain/rules/monitors/calculate-screen-size.rule';
 import { placeNextTo } from '@/modules/setup/domain/rules/monitors/place-next-to.rule';
 import type { ArrangedLaptop } from '@/modules/setup/domain/types/laptop/arranged-laptop.type';

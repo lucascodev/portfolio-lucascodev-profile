@@ -90,10 +90,7 @@ export function CameraRig({ deskHeight, deskDepth, focusFrame, isFocused, onSett
     const flight = flightRef.current;
     const parallaxX = isMotionReduced || flight ? 0 : pointer.x * PARALLAX_HORIZONTAL_METERS;
     const parallaxY = isMotionReduced || flight ? 0 : pointer.y * PARALLAX_VERTICAL_METERS;
-    const destination =
-      isFocusActive && focusFrame
-        ? screenPose(focusFrame, camera, aspectRatio)
-        : overviewPose(parallaxX, parallaxY);
+    const destination = isFocusActive && focusFrame ? screenPose(focusFrame, camera, aspectRatio) : overviewPose(parallaxX, parallaxY);
 
     if (flight) {
       const duration = flight.isTowardScreen ? ENTER_FLIGHT_SECONDS : LEAVE_FLIGHT_SECONDS;

@@ -46,12 +46,12 @@ const CURVED_SCREEN_DEPTH_ALLOWANCE = 0.035;
 const LAPTOP_TRAY_MARGIN = 0.025;
 const ARM_POLE_HEIGHT = 0.42;
 
-const box = (
-  center: ScenePosition,
-  halfSize: ScenePosition,
-  rotationY = 0,
-  owners?: readonly CableEndpoint[],
-): CableObstacle => ({ center, halfSize, rotationY, owners });
+const box = (center: ScenePosition, halfSize: ScenePosition, rotationY = 0, owners?: readonly CableEndpoint[]): CableObstacle => ({
+  center,
+  halfSize,
+  rotationY,
+  owners,
+});
 
 const toRadians = (degrees = 0): number => (degrees * Math.PI) / 180;
 

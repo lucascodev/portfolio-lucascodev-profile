@@ -41,11 +41,7 @@ export function ShockMount({ color, microphoneRadius }: ShockMountProps) {
         const angle = (index / BAND_COUNT) * FULL_TURN;
         const bandY = index % 2 === 0 ? UPPER_RING_Y : LOWER_RING_Y;
         return (
-          <mesh
-            key={`band-${index}`}
-            position={[Math.cos(angle) * bandRadius, bandY, Math.sin(angle) * bandRadius]}
-            rotation-y={-angle}
-          >
+          <mesh key={`band-${index}`} position={[Math.cos(angle) * bandRadius, bandY, Math.sin(angle) * bandRadius]} rotation-y={-angle}>
             <boxGeometry args={[bandLength, 0.002, 0.003]} />
             <meshStandardMaterial color={BAND_COLOR} roughness={0.9} />
           </mesh>

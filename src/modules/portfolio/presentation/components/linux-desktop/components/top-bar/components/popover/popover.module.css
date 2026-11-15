@@ -14,12 +14,12 @@
   animation: popover-in 0.15s ease-out;
 }
 
-.popover[data-align='center'] {
+.popover[data-align="center"] {
   left: 50%;
   transform: translateX(-50%);
 }
 
-.popover[data-align='end'] {
+.popover[data-align="end"] {
   right: 8px;
 }
 

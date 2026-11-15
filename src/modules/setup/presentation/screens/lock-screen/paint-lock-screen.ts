@@ -5,11 +5,7 @@ const TIME_FORMATTER = new Intl.DateTimeFormat('pt-BR', { hour: '2-digit', minut
 const DATE_FORMATTER = new Intl.DateTimeFormat('pt-BR', { weekday: 'long', day: 'numeric', month: 'long' });
 const NOTIFICATION_TEXT = '✓ Deploy concluído';
 
-export function paintLockScreen(
-  context: CanvasRenderingContext2D,
-  size: Dimensions,
-  wallpaperColors: readonly [string, string],
-): void {
+export function paintLockScreen(context: CanvasRenderingContext2D, size: Dimensions, wallpaperColors: readonly [string, string]): void {
   const now = new Date();
   const gradient = context.createLinearGradient(0, 0, size.width, size.height);
   gradient.addColorStop(0, wallpaperColors[0]);

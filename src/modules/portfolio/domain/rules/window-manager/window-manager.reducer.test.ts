@@ -11,8 +11,7 @@ const openApps = (...appIds: ('terminal' | 'about' | 'projects')[]): WindowManag
     INITIAL_WINDOW_MANAGER_STATE,
   );
 
-const zIndexOf = (state: WindowManagerState, appId: string) =>
-  state.windows.find((window) => window.appId === appId)?.zIndex ?? -1;
+const zIndexOf = (state: WindowManagerState, appId: string) => state.windows.find((window) => window.appId === appId)?.zIndex ?? -1;
 
 describe('windowManagerReducer', () => {
   it('opens each app once, on top of the others', () => {

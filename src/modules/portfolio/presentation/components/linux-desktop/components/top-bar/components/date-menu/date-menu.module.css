@@ -21,7 +21,7 @@
   outline: none;
 }
 
-.clock[data-open='true'] {
+.clock[data-open="true"] {
   background: rgb(255 255 255 / 0.14);
 }
 

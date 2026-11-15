@@ -11,11 +11,7 @@ const AREA_MARGIN_PX = 24;
 const LEFT_BIAS_PX = 140;
 const UP_BIAS_PX = 50;
 
-export function calculateInitialWindowBounds(
-  preferredSize: AreaSize,
-  area: AreaSize,
-  openWindowCount: number,
-): WindowBounds {
+export function calculateInitialWindowBounds(preferredSize: AreaSize, area: AreaSize, openWindowCount: number): WindowBounds {
   const width = Math.min(preferredSize.width, area.width - AREA_MARGIN_PX * 2);
   const height = Math.min(preferredSize.height, area.height - AREA_MARGIN_PX * 2);
   const centeredX = (area.width - width) / 2 - LEFT_BIAS_PX + openWindowCount * CASCADE_STEP_X_PX;

@@ -44,7 +44,8 @@ function DeskStand({ color, ringColor }: Omit<MicrophoneProps, 'boomClamp'>) {
 
 function MicrophoneBody({ color, ringColor, bottom }: Omit<MicrophoneProps, 'boomClamp'> & { readonly bottom: number }) {
   const paintGrille = useCallback(
-    (context: CanvasRenderingContext2D, size: Dimensions) => paintPerforation(context, size, { background: color, hole: GRILLE_HOLE_COLOR }),
+    (context: CanvasRenderingContext2D, size: Dimensions) =>
+      paintPerforation(context, size, { background: color, hole: GRILLE_HOLE_COLOR }),
     [color],
   );
   const grille = usePaintedTexture(GRILLE_TEXTURE_SIZE, paintGrille);
