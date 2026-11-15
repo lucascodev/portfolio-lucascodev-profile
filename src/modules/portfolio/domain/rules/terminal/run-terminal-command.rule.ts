@@ -13,6 +13,9 @@ const line = (text: string, tone: TerminalOutputLine['tone'] = 'default'): Termi
 const output = (...lines: TerminalOutputLine[]): TerminalCommandResult => ({ lines });
 const skillNames = (skills: readonly Skill[]) => skills.map((skill) => skill.name);
 
+const findOwnEntry =<Value>(table: Readonly<Record<string, Value>>, key: string): Value | undefined =>
+  Object.hasOwn(table, key) ? table[key] : undefined;
+
 const APP_ALIASES: Readonly<Record<string, DesktopAppId>> = {
   terminal: 'terminal',
   sobre: 'about',
@@ -106,12 +109,12 @@ const COMMANDS: Readonly<Record<string, CommandHandler>> = {
   neofetch: showNeofetch,
   ls: listFiles,
   cat: (args, context) => {
-    const command = FILES[args[0] ?? ''];
+    const command = findOwnEntry(FILES, args[0] ?? '');
     if (!command) return output(line(`cat: ${args[0] ?? ''}: arquivo não encontrado`, 'error'));
     return COMMANDS[command](args, context);
   },
   open: (args) => {
-    const appId = APP_ALIASES[args[0] ?? ''];
+    const appId = findOwnEntry(APP_ALIASES, args[0] ?? '');
     if (!appId) return output(line(`open: app desconhecido "${args[0] ?? ''}"`, 'error'));
     return { lines: [line(`abrindo ${args[0]}...`, 'muted')], effect: { kind: 'open-app', appId } };
   },
@@ -126,7 +129,7 @@ export function runTerminalCommand(input: string, context: TerminalContext): Ter
   const [command = '', ...args] = input.trim().split(/\s+/);
   if (command === '') return output();
 
-  const handler = COMMANDS[command.toLowerCase()];
+  const handler = findOwnEntry(COMMANDS, command.toLowerCase());
   if (!handler) return output(line(`${command}: comando não encontrado. Digite "help" para ver os comandos.`, 'error'));
   return handler(args, context);
 }
