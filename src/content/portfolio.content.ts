@@ -35,7 +35,7 @@ export const portfolioContent: PortfolioContent = {
       {
         title: 'Freelas, desde 2022',
         items: [
-          'Criei um jogo 2D em Unity para o stand da **Seven Boys** na **Campus Party Brasil**.',
+          'Criei um jogo 2D em Unity para o stand da **Seven Boys**, marca do grupo **Wickbold**, na **Campus Party Brasil**.',
           'Desenvolvi para a **DTCOM** um globo 3D interativo em Three.js e Laravel, que mostra as confederações de futebol pelo mundo.',
           'Construí um sistema para médicos em React, com cadastro de pacientes, prontuários e monitoramento de Covid.',
         ],
