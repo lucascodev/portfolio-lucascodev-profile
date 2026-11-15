@@ -4,7 +4,6 @@ import { ACCESSORY_COLLISION_HALF_SIZES } from '@/modules/setup/presentation/con
 import type { ScreenFrame } from '@/modules/setup/presentation/types/screen-frame.type';
 import { transformToPlacement } from './transform-to-placement';
 
-/** True when the accessory stands between a viewer facing the screen and the lower part of the screen. */
 export function isBlockingScreenView(accessory: AccessorySpec, screen: ScreenFrame, deskHeight: number): boolean {
   const halfSize = ACCESSORY_COLLISION_HALF_SIZES[accessory.kind];
   const local = transformToPlacement(

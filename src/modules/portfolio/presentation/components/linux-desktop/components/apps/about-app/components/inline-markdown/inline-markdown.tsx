@@ -42,7 +42,6 @@ function renderSegment(segment: InlineSegment, index: number) {
   }
 }
 
-/** Shows the markdown source the way an editor highlights it: markers stay visible, dimmed. */
 export function InlineMarkdown({ source }: InlineMarkdownProps) {
   return <>{parseInlineMarkdown(source).map(renderSegment)}</>;
 }

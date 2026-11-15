@@ -5,7 +5,11 @@ describe('tokenizeCodeLine', () => {
   it('keeps the original text when joining tokens', () => {
     const line = "export const name = 'Lucas'; // hi";
 
-    expect(tokenizeCodeLine(line).map((token) => token.text).join('')).toBe(line);
+    expect(
+      tokenizeCodeLine(line)
+        .map((token) => token.text)
+        .join(''),
+    ).toBe(line);
   });
 
   it('classifies keywords, strings, numbers and comments', () => {

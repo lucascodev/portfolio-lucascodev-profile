@@ -12,10 +12,7 @@ import { transformFromPlacement } from './transform-from-placement';
 const VESA_PLATE_OFFSET = 0.024;
 const TRAY_JOINT_BELOW = 0.02;
 
-export function calculateArmMountPoints(
-  monitors: readonly ArrangedMonitor[],
-  laptop: ArrangedLaptop | undefined,
-): ScenePosition[] {
+export function calculateArmMountPoints(monitors: readonly ArrangedMonitor[], laptop: ArrangedLaptop | undefined): ScenePosition[] {
   const monitorMounts = monitors
     .filter((monitor) => monitor.spec.mount === 'arm')
     .map((monitor) =>

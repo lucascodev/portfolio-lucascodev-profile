@@ -26,7 +26,7 @@
   }
 }
 
-.beacon[data-emphasized='true'],
+.beacon[data-emphasized="true"],
 .beacon:hover,
 .beacon:focus-visible {
   box-shadow: 0 0 40px rgb(192 132 252 / 0.8);

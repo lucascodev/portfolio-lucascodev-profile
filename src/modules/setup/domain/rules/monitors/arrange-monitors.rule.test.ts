@@ -39,10 +39,7 @@ describe('arrangeMonitors', () => {
   });
 
   it('angles side monitors inward and brings them closer to the viewer', () => {
-    const [left, primary, right] = arrangeMonitors(
-      [createMonitor(), createMonitor({ isPrimary: true }), createMonitor()],
-      DESK_DEPTH,
-    );
+    const [left, primary, right] = arrangeMonitors([createMonitor(), createMonitor({ isPrimary: true }), createMonitor()], DESK_DEPTH);
 
     expect(left.placement.x).toBeLessThan(0);
     expect(left.placement.rotationY).toBeGreaterThan(0);

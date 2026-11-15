@@ -55,7 +55,9 @@ export const portfolioContent: PortfolioContent = {
       },
       {
         title: 'Este portfólio',
-        items: ['O setup lá fora é o meu de verdade, desenhado peça por peça em Three.js. Desligue o desktop e passe o mouse nos itens para conhecer cada um!'],
+        items: [
+          'O setup lá fora é o meu de verdade, desenhado peça por peça em Three.js. Desligue o desktop e passe o mouse nos itens para conhecer cada um!',
+        ],
       },
     ],
     email: 'lucas.codev@hotmail.com',
@@ -93,12 +95,7 @@ export const portfolioContent: PortfolioContent = {
     },
     {
       title: 'mobile',
-      skills: [
-        skill('React Native', 'advanced'),
-        skill('Expo', 'advanced'),
-        skill('Flutter', 'beginner'),
-        skill('Tauri', 'intermediate'),
-      ],
+      skills: [skill('React Native', 'advanced'), skill('Expo', 'advanced'), skill('Flutter', 'beginner'), skill('Tauri', 'intermediate')],
     },
     {
       title: 'dados',

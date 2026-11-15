@@ -110,9 +110,7 @@ export function Keyboard({ keyboard }: KeyboardProps) {
             <mesh material={keycapMaterials[key.tone]} castShadow>
               <boxGeometry args={[key.width - KEYCAP_GAP, KEYCAP_HEIGHT, METERS_PER_KEY_UNIT - KEYCAP_GAP]} />
             </mesh>
-            {legendTop && (
-              <mesh geometry={legendTop} material={legends.material} position-y={KEYCAP_HEIGHT / 2 + LEGEND_ABOVE_KEYCAP} />
-            )}
+            {legendTop && <mesh geometry={legendTop} material={legends.material} position-y={KEYCAP_HEIGHT / 2 + LEGEND_ABOVE_KEYCAP} />}
           </group>
         );
       })}

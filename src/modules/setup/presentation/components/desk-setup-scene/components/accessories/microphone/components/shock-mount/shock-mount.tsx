@@ -12,7 +12,6 @@ const BAND_COUNT = 6;
 const BAND_COLOR = '#3b1418';
 const FULL_TURN = Math.PI * 2;
 
-/** The basket that hangs the microphone on elastic bands, so desk bumps do not reach the capsule. */
 export function ShockMount({ color, microphoneRadius }: ShockMountProps) {
   const frame = <meshStandardMaterial color={color} metalness={0.5} roughness={0.45} />;
   const bandLength = RING_RADIUS - microphoneRadius;
@@ -42,11 +41,7 @@ export function ShockMount({ color, microphoneRadius }: ShockMountProps) {
         const angle = (index / BAND_COUNT) * FULL_TURN;
         const bandY = index % 2 === 0 ? UPPER_RING_Y : LOWER_RING_Y;
         return (
-          <mesh
-            key={`band-${index}`}
-            position={[Math.cos(angle) * bandRadius, bandY, Math.sin(angle) * bandRadius]}
-            rotation-y={-angle}
-          >
+          <mesh key={`band-${index}`} position={[Math.cos(angle) * bandRadius, bandY, Math.sin(angle) * bandRadius]} rotation-y={-angle}>
             <boxGeometry args={[bandLength, 0.002, 0.003]} />
             <meshStandardMaterial color={BAND_COLOR} roughness={0.9} />
           </mesh>

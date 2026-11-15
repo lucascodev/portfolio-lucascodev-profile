@@ -1,6 +1,5 @@
 import type { Dimensions } from '@/modules/setup/domain/types/geometry/dimensions.type';
 
-// The first colour is repeated at the end, so the gradient tiles vertically without a seam.
 const RAINBOW_STOPS = ['#ff3fd0', '#8b5cf6', '#22d3ee', '#4ade80', '#fbbf24', '#fb7185', '#ff3fd0'];
 
 export function paintRainbowGradient(context: CanvasRenderingContext2D, size: Dimensions): void {

@@ -27,9 +27,9 @@ jobs:
           cache: pnpm
 
       - run: pnpm install --frozen-lockfile
+      - run: pnpm format:check
       - run: pnpm lint
       - run: pnpm test
       - run: pnpm build
         env:
-          # Any valid address works here: this build only proves the project compiles.
           VITE_SITE_URL: http://localhost:5173/

@@ -40,11 +40,7 @@ export const KEYBOARD_LAYOUTS: Readonly<Record<KeyboardLayout, readonly KeyRow[]
       FUNCTION_GROUP_GAP,
       knob(),
     ],
-    [
-      ...legendKeys('~', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '-', '='),
-      modifierKey(2, 'Backspace'),
-      modifierKey(1, 'Del'),
-    ],
+    [...legendKeys('~', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '-', '='), modifierKey(2, 'Backspace'), modifierKey(1, 'Del')],
     [
       modifierKey(1.5, 'Tab'),
       ...legendKeys('Q', 'W', 'E', 'R', 'T', 'Y', 'U', 'I', 'O', 'P', '[', ']'),

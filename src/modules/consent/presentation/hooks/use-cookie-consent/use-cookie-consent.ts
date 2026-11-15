@@ -9,7 +9,6 @@ interface CookieConsent {
   readonly decline: () => void;
 }
 
-/** A refusal is kept only in memory: nothing is stored for a visitor who said no, so the question comes back next visit. */
 export function useCookieConsent(storage: ConsentStorage): CookieConsent {
   const [status, setStatus] = useState<ConsentStatus>(() => (storage.hasAccepted() ? 'accepted' : 'pending'));
 

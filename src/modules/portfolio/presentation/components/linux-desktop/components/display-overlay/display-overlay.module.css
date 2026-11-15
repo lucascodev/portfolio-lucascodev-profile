@@ -13,7 +13,7 @@
   transition: opacity 0.4s ease;
 }
 
-.nightLight[data-enabled='true'] {
+.nightLight[data-enabled="true"] {
   opacity: 1;
 }
 

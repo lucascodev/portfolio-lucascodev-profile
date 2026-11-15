@@ -10,11 +10,7 @@ export function Cables({ routes, fadedEndpoints }: CablesProps) {
   return (
     <group>
       {routes.map((route) => (
-        <CableRouteMesh
-          key={route.key}
-          route={route}
-          isFadedOut={route.connects.some((endpoint) => fadedEndpoints.includes(endpoint))}
-        />
+        <CableRouteMesh key={route.key} route={route} isFadedOut={route.connects.some((endpoint) => fadedEndpoints.includes(endpoint))} />
       ))}
     </group>
   );

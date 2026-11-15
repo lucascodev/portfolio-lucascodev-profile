@@ -3,7 +3,7 @@
   padding: 12px 14px;
   background: #11111b;
   color: #cdd6f4;
-  font: 13px/1.55 var(--font-mono);
+  font: 13px / 1.55 var(--font-mono);
   cursor: text;
 }
 
@@ -13,19 +13,19 @@
   word-break: break-word;
 }
 
-.line[data-tone='accent'] {
+.line[data-tone="accent"] {
   color: #cba6f7;
 }
 
-.line[data-tone='muted'] {
+.line[data-tone="muted"] {
   color: #7f849c;
 }
 
-.line[data-tone='error'] {
+.line[data-tone="error"] {
   color: #f38ba8;
 }
 
-.line[data-tone='success'] {
+.line[data-tone="success"] {
   color: #a6e3a1;
 }
 

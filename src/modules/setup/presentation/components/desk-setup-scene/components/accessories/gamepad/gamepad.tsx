@@ -6,7 +6,6 @@ interface GamepadProps {
 
 type Vector3Tuple = [number, number, number];
 
-// Proportions of the Xbox 360 pad (about 154 x 105 mm): offset sticks, a round D-pad and a chrome guide button.
 const HUB_SIZE = { width: 0.1, height: 0.032, depth: 0.058 };
 const HUB_CENTER: Vector3Tuple = [0, 0.022, -0.008];
 const FACE_Y = HUB_CENTER[1] + HUB_SIZE.height / 2;

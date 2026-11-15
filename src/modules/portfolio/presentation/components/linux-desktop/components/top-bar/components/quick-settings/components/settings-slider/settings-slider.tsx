@@ -6,7 +6,6 @@ interface SettingsSliderProps {
   readonly icon: ReactNode;
   readonly value: number;
   readonly onChange: (value: number) => void;
-  /** Called once the visitor lets go of the slider, with the final value. */
   readonly onCommit?: (value: number) => void;
 }
 

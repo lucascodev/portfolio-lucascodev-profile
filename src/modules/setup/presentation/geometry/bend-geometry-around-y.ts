@@ -1,9 +1,5 @@
 import type { BufferGeometry } from 'three';
 
-/**
- * Wraps a flat geometry around a vertical cylinder whose center sits in front of it (+z),
- * like a curved monitor rated "1900R". Arc length is preserved, so textures are not stretched.
- */
 export function bendGeometryAroundY<TGeometry extends BufferGeometry>(geometry: TGeometry, radius: number): TGeometry {
   const positions = geometry.getAttribute('position');
 

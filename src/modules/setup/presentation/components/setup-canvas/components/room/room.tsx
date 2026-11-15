@@ -29,12 +29,7 @@ export function Room({ room, desk }: RoomProps) {
         <group position={[0, desk.heightMeters - 0.015, -desk.depthMeters / 2 + 0.01]}>
           <mesh>
             <boxGeometry args={[desk.widthMeters * 0.94, 0.006, 0.006]} />
-            <meshStandardMaterial
-              color={room.ledStripColor}
-              emissive={room.ledStripColor}
-              emissiveIntensity={4}
-              toneMapped={false}
-            />
+            <meshStandardMaterial color={room.ledStripColor} emissive={room.ledStripColor} emissiveIntensity={4} toneMapped={false} />
           </mesh>
           {LED_LIGHT_OFFSETS.map((offset) => (
             <pointLight

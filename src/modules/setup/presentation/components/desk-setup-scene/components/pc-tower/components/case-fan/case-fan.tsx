@@ -9,7 +9,6 @@ interface CaseFanProps {
   readonly rotation: Vector3Tuple;
   readonly radius: number;
   readonly glowMaterial: Material;
-  /** Frosted blades that carry the ring light; they share the ring colour at a lower intensity. */
   readonly bladeMaterial: Material;
 }
 

@@ -19,7 +19,6 @@ function collectMaterials(group: Group): Material[] {
   return materials;
 }
 
-/** Fades every material inside the group in or out, restoring the original material settings when fully visible. */
 export function useFadeVisibility(groupRef: RefObject<Group | null>, isVisible: boolean): void {
   const opacityRef = useRef(1);
   const originalsRef = useRef(new Map<Material, OriginalMaterialState>());

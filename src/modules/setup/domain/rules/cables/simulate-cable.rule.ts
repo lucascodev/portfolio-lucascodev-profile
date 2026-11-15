@@ -45,12 +45,6 @@ interface PushOut {
   readonly distance: number;
 }
 
-/**
- * Pushes the point out through the closest face. Objects resting on the desk (bottom at or below the
- * desk top, which is y = 0) never push cables downward, otherwise the cable would get trapped between
- * the object and the desk; low ones always push upward, so cables drape over them instead of being
- * shoved sideways off the desk edge. Returns true when the point was pushed up onto a top face.
- */
 function resolveObstacle(obstacle: CableObstacle, point: MutablePoint): boolean {
   const local = toLocal(obstacle, point);
   const reach = {
@@ -77,9 +71,7 @@ function resolveObstacle(obstacle: CableObstacle, point: MutablePoint): boolean 
     { axis: 'y', distance: reach.y - local.y },
     ...(isResting ? [] : [{ axis: 'y' as const, distance: -reach.y - local.y }]),
   ];
-  const shortest = candidates.reduce((best, candidate) =>
-    Math.abs(candidate.distance) < Math.abs(best.distance) ? candidate : best,
-  );
+  const shortest = candidates.reduce((best, candidate) => (Math.abs(candidate.distance) < Math.abs(best.distance) ? candidate : best));
 
   local[shortest.axis] += shortest.distance;
   writeFromLocal(obstacle, local, point);
@@ -121,11 +113,6 @@ function satisfyDistance(a: MutablePoint, b: MutablePoint, restLength: number, i
   b.z -= dz * correction * shareB;
 }
 
-/**
- * Settles a cable as a Verlet rope pinned at both ends: it falls under gravity, keeps a fixed length
- * with a little slack, rests on surfaces with friction and is pushed out of every obstacle it does not
- * plug into. Runs once and returns the settled shape.
- */
 export function simulateCable(
   initialPath: readonly ScenePosition[],
   world: CablePhysicsWorld,
@@ -135,8 +122,7 @@ export function simulateCable(
   const segmentCount = Math.min(MAX_SEGMENTS, Math.max(MIN_SEGMENTS, Math.round(pathLength / TARGET_SEGMENT_LENGTH_METERS)));
   const restLength = (pathLength * CABLE_SLACK) / segmentCount;
   const obstacles = world.obstacles.filter(
-    (obstacle) =>
-      !obstacle.owners?.some((owner) => connectedEndpoints.includes(owner)) && isNearPath(obstacle, initialPath),
+    (obstacle) => !obstacle.owners?.some((owner) => connectedEndpoints.includes(owner)) && isNearPath(obstacle, initialPath),
   );
 
   const points: MutablePoint[] = resamplePolyline(initialPath, segmentCount).map((point) => ({ ...point }));

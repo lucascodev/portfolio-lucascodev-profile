@@ -19,13 +19,13 @@
   outline: none;
 }
 
-.tile[aria-pressed='true'] {
+.tile[aria-pressed="true"] {
   background: #cba6f7;
   color: #11111b;
 }
 
-.tile[aria-pressed='true']:hover,
-.tile[aria-pressed='true']:focus-visible {
+.tile[aria-pressed="true"]:hover,
+.tile[aria-pressed="true"]:focus-visible {
   background: #d9bdfa;
 }
 

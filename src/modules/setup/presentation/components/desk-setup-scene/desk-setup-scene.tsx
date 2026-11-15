@@ -44,7 +44,6 @@ const ARM_CLAMP_INSET_FROM_DESK_BACK = 0.06;
 const MAT_THICKNESS = 0.003;
 const CABLES_LABEL = 'Cabos';
 const BEACON_ABOVE_SCREEN_METERS = 0.11;
-// Waits for the monitor's blueprint drawing (about 1.8s) before inviting the visitor in.
 const BEACON_DELAY_AFTER_REVEAL_SECONDS = 2.2;
 
 const degreesToRadians = (degrees: number): number => (degrees * Math.PI) / 180;
@@ -60,9 +59,7 @@ export function DeskSetupScene({ setup, isFocusedOnScreen, onPrimaryMonitorSelec
   const screenFrame = useMemo(() => calculatePrimaryScreenFrame(setup), [setup]);
   const fadedAccessories = useMemo(
     () =>
-      isFocusedOnScreen && screenFrame
-        ? accessories.filter((accessory) => isBlockingScreenView(accessory, screenFrame, deskTop))
-        : [],
+      isFocusedOnScreen && screenFrame ? accessories.filter((accessory) => isBlockingScreenView(accessory, screenFrame, deskTop)) : [],
     [isFocusedOnScreen, screenFrame, accessories, deskTop],
   );
   const fadedEndpoints = fadedAccessories.flatMap((accessory) => ACCESSORY_CABLE_ENDPOINTS[accessory.kind] ?? []);
@@ -94,7 +91,21 @@ export function DeskSetupScene({ setup, isFocusedOnScreen, onPrimaryMonitorSelec
       monitorArmClamp: monitorArm ? armClamp : undefined,
     });
     return buildCableRoutes(setup.cables ?? [], anchors, desk.depthMeters, { obstacles, floorY: -deskTop });
-  }, [desk, deskMat, keyboard, mouse, monitors, laptop, accessories, peripheralsY, deskTop, towerPosition, monitorArm, armClamp, setup.cables]);
+  }, [
+    desk,
+    deskMat,
+    keyboard,
+    mouse,
+    monitors,
+    laptop,
+    accessories,
+    peripheralsY,
+    deskTop,
+    towerPosition,
+    monitorArm,
+    armClamp,
+    setup.cables,
+  ]);
 
   let revealOrder = 1;
   const deskMatOrder = deskMat ? revealOrder++ : revealOrder;
@@ -109,7 +120,12 @@ export function DeskSetupScene({ setup, isFocusedOnScreen, onPrimaryMonitorSelec
 
   return (
     <group>
-      <SetupItem isInteractive={isInteractive} label={desk.label} revealDelaySeconds={revealDelay(0)} tooltipPosition={[0, deskTop + 0.02, desk.depthMeters / 2]}>
+      <SetupItem
+        isInteractive={isInteractive}
+        label={desk.label}
+        revealDelaySeconds={revealDelay(0)}
+        tooltipPosition={[0, deskTop + 0.02, desk.depthMeters / 2]}
+      >
         <Desk desk={desk} />
       </SetupItem>
 

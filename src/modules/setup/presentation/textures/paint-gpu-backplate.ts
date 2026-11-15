@@ -88,7 +88,6 @@ function paintVentPanel(context: CanvasRenderingContext2D, size: Dimensions): vo
   }
 }
 
-/** The plate on top of the card: angular line art, the brand, the stickers and the slatted metal end. */
 export function paintGpuBackplate(context: CanvasRenderingContext2D, size: Dimensions): void {
   context.fillStyle = '#121216';
   context.fillRect(0, 0, size.width, size.height);

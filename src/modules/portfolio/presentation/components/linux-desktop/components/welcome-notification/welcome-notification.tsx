@@ -22,8 +22,8 @@ export function WelcomeNotification({ visitorName }: WelcomeNotificationProps) {
       <div className={styles.content}>
         <p className={styles.title}>Bem-vindo ao sistema do {visitorName} 👋</p>
         <p className={styles.body}>
-          Abra <strong>Sobre</strong>, <strong>Projetos</strong>, <strong>Stack</strong> e <strong>Contato</strong> pela dock,
-          ou digite <code>help</code> no terminal. Para voltar ao setup, use <kbd>Esc</kbd> ou o botão ⏻.
+          Abra <strong>Sobre</strong>, <strong>Projetos</strong>, <strong>Stack</strong> e <strong>Contato</strong> pela dock, ou digite{' '}
+          <code>help</code> no terminal. Para voltar ao setup, use <kbd>Esc</kbd> ou o botão ⏻.
         </p>
       </div>
       <button type="button" className={styles.close} onClick={() => setIsOpen(false)} aria-label="Fechar notificação">

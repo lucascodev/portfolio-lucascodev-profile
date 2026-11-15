@@ -18,14 +18,14 @@
   background: rgb(255 255 255 / 0.1);
 }
 
-.segment[data-filled='true'] {
+.segment[data-filled="true"] {
   background: var(--group-tone, #a6adc8);
 }
 
 .label {
   overflow: hidden;
   color: #a6adc8;
-  font: 11px/1 var(--font-mono);
+  font: 11px / 1 var(--font-mono);
   text-overflow: ellipsis;
   white-space: nowrap;
 }

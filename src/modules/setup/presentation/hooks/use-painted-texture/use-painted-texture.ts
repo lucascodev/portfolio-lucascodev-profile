@@ -6,7 +6,6 @@ type StaticPainter = (context: CanvasRenderingContext2D, size: Dimensions) => vo
 
 const TEXTURE_ANISOTROPY = 8;
 
-/** Paints a canvas once and exposes it as a texture; the painter must be stable (module-level or memoized). */
 export function usePaintedTexture(size: Dimensions, paint: StaticPainter): CanvasTexture {
   const { width, height } = size;
 

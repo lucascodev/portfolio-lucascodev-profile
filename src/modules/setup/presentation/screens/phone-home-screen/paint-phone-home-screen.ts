@@ -10,8 +10,22 @@ const GRID_COLUMNS = 4;
 const GRID_ROWS = 4;
 const DOCK_APPS = 4;
 const APP_COLORS = [
-  '#22c55e', '#3b82f6', '#f97316', '#ec4899', '#a855f7', '#eab308', '#14b8a6', '#ef4444',
-  '#6366f1', '#0ea5e9', '#84cc16', '#f43f5e', '#8b5cf6', '#06b6d4', '#f59e0b', '#10b981',
+  '#22c55e',
+  '#3b82f6',
+  '#f97316',
+  '#ec4899',
+  '#a855f7',
+  '#eab308',
+  '#14b8a6',
+  '#ef4444',
+  '#6366f1',
+  '#0ea5e9',
+  '#84cc16',
+  '#f43f5e',
+  '#8b5cf6',
+  '#06b6d4',
+  '#f59e0b',
+  '#10b981',
 ] as const;
 const DOCK_COLORS = ['#22c55e', '#3b82f6', '#f8fafc', '#f97316'] as const;
 

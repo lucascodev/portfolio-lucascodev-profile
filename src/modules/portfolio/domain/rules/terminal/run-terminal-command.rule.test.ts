@@ -50,6 +50,25 @@ describe('runTerminalCommand', () => {
     expect(runTerminalCommand('exit', context).effect).toEqual({ kind: 'power-off' });
   });
 
+  it.each(['constructor', '__proto__', 'toString', 'hasOwnProperty'])(
+    'treats %s, a name every object inherits, as an unknown command',
+    (inheritedName) => {
+      const [result] = runTerminalCommand(inheritedName, context).lines;
+
+      expect(result.tone).toBe('error');
+      expect(result.text).toContain('comando não encontrado');
+    },
+  );
+
+  it('does not find files or apps under names every object inherits', () => {
+    const openResult = runTerminalCommand('open constructor', context);
+
+    expect(texts('cat constructor')).toEqual(['cat: constructor: arquivo não encontrado']);
+    expect(texts('cat __proto__')).toEqual(['cat: __proto__: arquivo não encontrado']);
+    expect(openResult.effect).toBeUndefined();
+    expect(openResult.lines.map((outputLine) => outputLine.tone)).toEqual(['error']);
+  });
+
   it('explains unknown commands', () => {
     const [result] = runTerminalCommand('rm -rf /', context).lines;
 
